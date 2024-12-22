@@ -1,4 +1,4 @@
-let version = "26"
+let version = "27"
 
 let cacheName = `v${version}_data`
 
@@ -14,7 +14,11 @@ let cachedAssetPaths = [
     'brightspot.js',
     'fuzzysort.min.js',
     // DATA
-    'oplist.json',
+    '/data/sort-data.json',
+    '/data/citation-data.js',
+    '/data/diagnosis-data.js',
+    '/data/publication-data.js',
+
     // IMAGES
     'icons/gasper.png',
     'icons/gasper_nobellows.png',

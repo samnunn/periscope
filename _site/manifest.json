@@ -1,7 +1,7 @@
 {
   "name": "Clinic Helper",
-  "theme_color": "#3498db",
-  "background_color": "#3498db",
+  "theme_color": "#60a3bc",
+  "background_color": "#60a3bc",
   "display": "standalone",
   "scope": "/",
   "start_url": "/"

@@ -2,11 +2,12 @@
 <html>
 <head>
     <title>Clinic Helper</title>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="/main.css">
     <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#3498db" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="#3498db" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#60a3bc" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#60a3bc" media="(prefers-color-scheme: light)">
     <link rel="icon" type="image/x-icon" href="/icons/gasper_favicon.png">
     <!-- OpenGraph Nonsense -->
     <meta property="og:type" content="website">
@@ -73,22 +74,21 @@
                     <span class="left">Quick-Add</span>
                     <span class="right">⌘B</span>
                 </li>
-                <li title="Quick-Find (⌘K)" role="button" id="quick-find-button">
+                <li title="Shortcuts" role="button" id="shortcuts-button">
+                    <span class="icon"><img src="/icons/colour_fast_forward.svg"></span>
+                    <span class="left">Shortcuts</span>
+                    <!-- <span class="right">⌘J</span> -->
+                </li>
+                <li title="Search (⌘K)" role="button" id="quick-find-button">
                     <span class="icon"><img src="/icons/colour_search.svg"></span>
-                    <span class="left">Quick-Find</span>
+                    <span class="left">Search</span>
                     <span class="right">⌘K</span>
                 </li>
-                <!-- <li title="Text Snippets" role="button">
-                    <span class="icon"><img src="/icons/colour_edit.svg"></span>
-                    <span class="left">Text Snippets</span>
-                </li> -->
+                <h4>Export</h4>
+                <hr>
                 <li id="download" title="Download" role="button">
                     <span class="icon"><img src="/icons/colour_arrow_down_circle.svg"></span>
                     <span class="left">Download</span>
-                </li>
-                <li id="copy-note" title="Copy Note" role="button">
-                    <span class="icon"><img src="/icons/copy.svg"></span>
-                    <span class="left">Copy Note</span>
                 </li>
                 <li id="reset" title="Reset" role="button">
                     <span class="icon"><img src="/icons/x_octagon.svg"></span>
@@ -102,10 +102,10 @@
                         <span class="left">Made by Sam</span>
                     </li>
                 </a>
-                <a class="invisible-link" href="https://github.com/samnunn/gasnotes-clinic">
-                    <li title="Link to this tool's source code on GitHub" role="button">
-                        <span class="icon"><img src="/icons/github-mark.svg"></span>
-                        <span class="left">Source Code</span>
+                <a class="invisible-link" href="mailto:hello@gasnotes.net?subject=Feedback%20on%20Clinic%20Helper">
+                    <li title="Email feedback" role="button">
+                        <span class="icon"><img src="/icons/colour_mail.svg"></span>
+                        <span class="left">Feedback</span>
                     </li>
                 </a>
                 <!-- <a href="https://github.com/samnunn/gasnotes-clinic/blob/main/LICENSE.txt">
@@ -114,7 +114,7 @@
                         <span class="left">License</span>
                     </li>
                 </a> -->
-                <li title="Link to this tool's MIT license" onclick="welcomeDialog.showModal()" role="button">
+                <li title="Link to this tool's MIT license" onclick="document.querySelector('#big-welcome').showModal()" role="button">
                     <span class="icon"><img src="/icons/colour_edit.svg"></span>
                     <span class="left">Terms</span>
                 </li>
@@ -125,7 +125,7 @@
                 <div class="section-topper">
                     <img class="icon" src="/icons/colour_bookmark.svg">
                     <h2>Patient Details</h2>
-                    <button tabindex="2" class="section-copy">Copy Text</button>
+                    <!-- <button tabindex="2" class="section-copy">Copy Section</button> -->
                 </div>
                 <div class="vstack">
                     <div class="hstack">
@@ -160,9 +160,17 @@
                             <input type="text" id="" clinic-parameter="freetext-operation" clinic-search="Operation Name" autocomplete="off">
                         </label>
                         <label>
-                            Surgical Risk
+                            <span>
+                                Surgical Risk
+                                <clinic-modal-popup>
+                                    <button class="infobutton"></button>
+                                    <template>
+                                        <clinic-citation-snippet citation-id="esc-2022-severity"></clinic-citation-snippet>
+                                    </template>
+                                </clinic-modal-popup>
+                            </span>
                             <div class="selectbox">
-                                <select id="mode" clinic-parameter="operation-risk" clinic-search="Operation Severity">
+                                <select clinic-parameter="operation-risk" clinic-search="Operation Severity">
                                     <option value="" selected></option>
                                     <option value="low">Low</option>
                                     <option value="intermediate">Intermediate</option>
@@ -177,7 +185,7 @@
                 <div class="section-topper">
                     <img class="icon" src="/icons/colour_heart.svg">
                     <h2>Medical History</h2>
-                    <button tabindex="2" class="section-copy">Copy Text</button>
+                    <button tabindex="2" class="section-copy">Copy Section</button>
                 </div>
                 <div class="hstack">
                     <div id="diagnosis-box" class="vstack">
@@ -185,7 +193,12 @@
                             <div class="vstack" id="diagnosis-search">
                                 <label>
                                     PMHx
-                                    <input type="text" placeholder="Search for a condition" clinic-search="Past Medical History (PMHx)">
+                                    <div class="input-with-hints">
+                                        <input type="text" placeholder="Search for a condition" clinic-search="Past Medical History (PMHx)">
+                                        <div class="hints">
+                                            <span class="key"><img src="/icons/arrow_up.svg"></span><span class="key"><img src="/icons/arrow_down.svg"></span> to select  <span class="key"><img src="/icons/arrow_down_left.svg"></span> to add  <span class="key">esc</span> to reset
+                                        </div>
+                                    </div>
                                 </label>
                                 <div id="diagnosis-results">
                                     <ul class="pill-list">
@@ -349,7 +362,7 @@
                 <div class="section-topper">
                     <img class="icon" src="/icons/colour_pill.svg">
                     <h2>Medication List</h2>
-                    <button tabindex="2" class="section-copy">Copy Text</button>
+                    <button tabindex="2" class="section-copy">Copy Section</button>
                 </div>
                 <div class="hstack">
                     <div class="vstack">
@@ -374,7 +387,7 @@
                 <div class="section-topper">
                     <img class="icon" src="/icons/colour_gas_mask.svg">
                     <h2>Anaesthetic History</h2>
-                    <button tabindex="2" class="section-copy">Copy Text</button>
+                    <button tabindex="2" class="section-copy">Copy Section</button>
                 </div>
                 <div class="hstack">
                     <div class="vstack">
@@ -382,38 +395,24 @@
                             Previous Anaesthesia
                             <textarea autocomplete="off" autocapitalize="off" spellcheck="false" id="" clinic-parameter="pahx" clinic-search="Surgical and Anaesthetic History" class="bigbox autotall"></textarea>
                         </label>
-                        <div class="hstack">
-                            <div class="vstack">
-                                <label>
-                                    BVM
-                                    <input type="text" clinic-parameter="bvm" clinic-search="BVM" autocomplete="off" placeholder="Difficulty, adjuncts">
-                                </label>
-                                <label>
-                                    LMA
-                                    <input type="text" clinic-parameter="lma" clinic-search="LMA" autocomplete="off" placeholder="Type, size">
-                                </label>
-                                <label>
-                                    ETT
-                                    <input type="text" clinic-parameter="ett" clinic-search="ETT" autocomplete="off" placeholder="Scope, view, BURP">
-                                </label>
-                            </div>
-                            <div class="vstack">
-                                <label>
-                                    Agents Used
-                                    <input type="text" clinic-parameter="agents" clinic-search="Previous Anaesthetic Agents Used" autocomplete="off">
-                                </label>
-                                <label>
-                                    Haemodynamics
-                                    <input type="text" clinic-parameter="haemodynamics" clinic-search="Haemodynamics Under Anaesthesia" autocomplete="off">
-                                </label>
-                                <label>
-                                    Complications
-                                    <input type="text" clinic-parameter="gas-issues" clinic-search="Complications from Anaesthesia" autocomplete="off">
-                                </label>
-                            </div>
+                        <div class="vstack">
+                            <label>
+                                BVM
+                                <input type="text" clinic-parameter="bvm" clinic-search="BVM" autocomplete="off" placeholder="Difficulty, adjuncts">
+                            </label>
+                            <label>
+                                LMA
+                                <input type="text" clinic-parameter="lma" clinic-search="LMA" autocomplete="off" placeholder="Type, size">
+                            </label>
+                            <label>
+                                ETT
+                                <input type="text" clinic-parameter="ett" clinic-search="ETT" autocomplete="off" placeholder="Scope, view, BURP">
+                            </label>
+                            <label>
+                                Complications
+                                <input type="text" clinic-parameter="gas-issues" clinic-search="Complications from Anaesthesia" autocomplete="off" placeholder="Airway problems, ICU admissions, etc.">
+                            </label>
                         </div>
-                        <hr>
-
                         <label>
                             Family Issues with Anaesthesia
                             <div class="hstack">
@@ -551,7 +550,7 @@
                 <div class="section-topper">
                     <img class="icon" src="/icons/colour_droplet.svg">
                     <h2>Investigations</h2>
-                    <button tabindex="2" class="section-copy">Copy Text</button>
+                    <button tabindex="2" class="section-copy">Copy Section</button>
                 </div>
                 <div class="hstack">
                     <div class="vstack">
@@ -607,7 +606,7 @@
                 <div class="section-topper">
                     <img class="icon" src="/icons/colour_pen_tool.svg">
                     <h2>Consent</h2>
-                    <button tabindex="2" class="section-copy">Copy Text</button>
+                    <button tabindex="2" class="section-copy">Copy Section</button>
                 </div>
                 <div class="hstack">
                     <div class="vstack label-ish">
@@ -634,7 +633,7 @@
                 <div class="section-topper">
                     <img class="icon" src="/icons/colour_life_buoy.svg">
                     <h2>Risk Profile</h2>
-                    <button tabindex="2" class="section-copy">Copy Text</button>
+                    <button tabindex="2" class="section-copy">Copy Section</button>
                 </div>
                 <div class="vstack">
                     <div class="hstack">
@@ -707,7 +706,13 @@
                                     <label>
                                         SORT Search ✨
                                         <div class="hstack">
-                                            <input type="search" name="embed" clinic-search="SORT Score Calculator" autocomplete="off">
+
+                                            <div class="input-with-hints">
+                                                <input type="search" name="embed" clinic-search="SORT Score Calculator" autocomplete="off">
+                                                <div class="hints">
+                                                    <span class="key"><img src="/icons/arrow_up.svg"></span><span class="key"><img src="/icons/arrow_down.svg"></span> to select  <span class="key"><img src="/icons/arrow_down_left.svg"></span> to add  <span class="key">esc</span> to reset
+                                                </div>
+                                            </div>
                                             <!-- <button>Search</button> -->
                                         </div>
                                     </label>
@@ -757,9 +762,9 @@
                             <div class="hstack">
                                 <label>Age<input type="number" clinic-parameter="age" clinic-sync="age" id="sort-age" min="0" max="125" step="1" required autocomplete="off"></label>
                                 <label>
-                                    ASA-PS
+                                    ASA
                                     <div class="selectbox">
-                                        <select clinic-parameter="asa" clinic-sync="asa" clinic-search="ASA-PS Score" autocomplete="off">
+                                        <select clinic-parameter="asa" clinic-sync="asa" clinic-search="ASA Physical Status Score" autocomplete="off">
                                             <option value="" selected></option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -825,7 +830,7 @@
                 <div class="section-topper">
                     <img class="icon" src="/icons/colour_check_circle.svg">
                     <h2>Plan</h2>
-                    <button tabindex="2" class="section-copy">Copy Text</button>
+                    <button tabindex="2" class="section-copy">Copy Section</button>
                 </div>
                 <div class="vstack">
                     <div class="hstack">
@@ -866,8 +871,8 @@
         <div id="blurb">
             <h2>Security 🔐</h2>
             <p>The information you add to Clinic Helper never leaves your device. Absolutely no patient data is collected.</p>
-            <img src="/clinic_data_safety.svg" alt="">
-            <p>All computations, scores, and data-processing happen on-device. As long as you use this on a work-approved computer, your data is safe.</p>
+            <img src="/clinic_data_safety.webp" alt="">
+            <p>All computations, scores, and data-processing happen right here in this browser tab. As long as you use this on a work-approved computer, your data is safe.</p>
             <h2>Responsiblity ⚖️</h2>
             <p>All efforts have been made to ensure that Clinic Helper won't steer you wrong, but <strong>you are still the doctor</strong>. You are responsible for double-checking your work and treating your own patients.</p>
             <p>This software is proudly provided free of charge under the <a href="https://github.com/samnunn/gasnotes-clinic/blob/main/LICENSE.txt">MIT License</a>, which you must accept before using it.</p>
@@ -906,9 +911,27 @@
             <button>Close</button>
         </form>
     </dialog>
+    <dialog id="shortcuts-menu">
+        <table id="shortcuts-table">
+            <thead>
+                <tr>
+                    <th>Shortcut</th>
+                    <th>Snippet</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        
+        <form method="dialog" style="margin: 1rem 0 0 0; float: right;">
+            <span style="color: white; font-weight: bold;">Shortcuts will auto-expand when you type their keyword.</span>
+            <button>Close</button>
+        </form>
+    </dialog>
 
     <!-- SCRIPTS -->
     <script src="/fuzzysort.min.js"></script>
-    <script src="/main.js"></script>
+    <script src="/main.js" type="module"></script>
 </body>
 </html>

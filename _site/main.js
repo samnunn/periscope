@@ -17,7 +17,7 @@ if ("serviceWorker" in navigator) {
 // Load SNAP2 procedure list
 window.addEventListener('load', async (e) => {
     try {
-        const response = await fetch('/oplist.json')
+        const response = await fetch('/data/sort-data.json')
         if (!response.ok) {
             throw new Error(`HTTP error while downloading operation list. Status: ${response.status}`)
         }
@@ -105,7 +105,7 @@ function calculateSortScore(data) {
         console.debug('SORT not calculated due to incomplete data:', data)
         return ""
     } else {
-        console.info(`SORT Calculator ran with data: \n${JSON.stringify(data, space="    ")}`)
+        console.info(`SORT Calculator ran with data: \n${JSON.stringify(data, undefined, "    ")}`)
     }
 
     // get operation severity
@@ -173,7 +173,7 @@ sortContainer?.addEventListener('input', (e) => {
 //   |____/ \___|\__,_|\__, |_|\___|  *    ***********    *                        
 //                     |___/           ****           ****                         
 
-let beagle = new Worker("/beagle.js")
+let beagle = new Worker("/beagle.js", { type: "module" })
 let boneList = document.querySelector('#warnings')
 let planInput = document.querySelector('[clinic-parameter="plan"]')
 let boneInput = document.querySelector('[clinic-parameter="issues"]')
@@ -289,6 +289,12 @@ searchForm.addEventListener('input', (e) => {
     })
 })
 
+searchForm.addEventListener('keydown', (e) => {
+    if (e.key == "Escape") {
+        searchResults.innerHTML = ''
+    }
+})
+
 brightspot.addEventListener('message', (m) => {
     let results = m.data
 
@@ -332,6 +338,8 @@ searchResults.addEventListener('click', (e) => {
         searchForm.reset()
 
         document.querySelector('[clinic-parameter="asa"]').focus()
+
+        searchResults.innerHTML = ''
 
     } catch (err) {
         console.error('failed to set operation using beagle result')
@@ -508,7 +516,7 @@ function setAnyInputValue(inputElement, value) {
 function getRenderedSection(id) {
     let template = outputTemplates[id]
 
-    // get consent if needed
+    // special case: consent
     if (id == 'consent') {
         let consentSwitches = document.querySelectorAll('section#consent input[type="checkbox"]')
         let consent = ''
@@ -524,12 +532,11 @@ function getRenderedSection(id) {
         template = template.replace('{{consent-output}}', consent)
     }
 
+    // special case: pmhx
     if (id == 'medicalhx') {
         let output = ""
 
         for (let d of document.querySelectorAll('clinic-diagnosis')) {
-            // if (!getAnyInputValue(d)) continue
-
             output += d.renderText()
             output += '\n'
         }
@@ -539,21 +546,28 @@ function getRenderedSection(id) {
         template = template.replace('{{pmhx}}', output)
     }
 
+    // special case: citations
     if (id == 'plan' && persistentDataProxy['citations']?.length > 0) {
         let output = ""
         let count = 1
 
+        let publications = []
         for (let c of persistentDataProxy['citations']) {
             let citation = citationSnippets.find(s => s.id == c)
+            if (!citation) continue
             let publication = allPublications.find((p) => p.id == citation.publication)
-            output += `${count}. ${publication.ugly}\n`
+            if (!publication) continue
+            if (!publications.includes(publication)) publications.push(publication)
+        }
+        for (let p of publications) {
+            output += `${count}. ${p.ugly}\n`
             count += 1
         }
 
         template = template.replace('{{citations}}', output)
     }
 
-    // replace known values
+    // general case
     for (let c of template.matchAll(/\{\{(.*?)\}\}/gmi)) {
         let stringToReplace = c[0]
         let dataKey = c[1]
@@ -690,15 +704,18 @@ document.body.addEventListener('keydown', (e) => {
 })
 
 // TEXT EXPANDER
-let shortcuts = [
-    { shortcut: '!rx', expansion: 'Withhold mediations as per pharmacy letter' },
-    { shortcut: '!fast', expansion: 'Routine fasting advice provided' },
-    { shortcut: '!end', expansion: '- Routine fasting advice provided\n- Withhold mediations as per pharmacy letter' },
-    { shortcut: '!gas', expansion: 'no issues with anaesthesia (PONV, FHx, airway disaster, unplanned ICU admission, etc.)'},
-    { shortcut: '!dent', expansion: 'own teeth, none loose, no caps/crowns/dentures'},
-    { shortcut: '!met', expansion: 'walking > 2km and > 2 flights of stairs without dyspnoea or chest pain' },
-    { shortcut: '!nsr', expansion: 'normal sinus rhythm with no ischaemic features' },
-    { shortcut: '!af', expansion: 'atrial fibrillation with no ischaemic features' },
+let shortcutsButton = document.querySelector('#shortcuts-button')
+let shortcutsMenu = document.querySelector('#shortcuts-menu')
+let shortcutsTable = document.querySelector('#shortcuts-table tbody')
+let shortcutsList = [
+    { shortcut: '@gas', expansion: 'no issues with anaesthesia (PONV, FHx, airway disaster, unplanned ICU admission, etc.)'},
+    { shortcut: '@dent', expansion: 'own teeth, none loose, no caps/crowns/dentures'},
+    { shortcut: '@met', expansion: 'walking > 2km and > 2 flights of stairs without dyspnoea or chest pain' },
+    { shortcut: '@end', expansion: '- Routine fasting advice provided\n- Withhold mediations as per pharmacy letter' },
+    { shortcut: '@rx', expansion: 'Withhold mediations as per pharmacy letter' },
+    { shortcut: '@fast', expansion: 'Routine fasting advice provided' },
+    { shortcut: '@nsr', expansion: 'normal sinus rhythm with no ischaemic features' },
+    { shortcut: '@af', expansion: 'atrial fibrillation with no ischaemic features' },
 ]
 document.body.addEventListener('input', (e) => {
     if (e.target.matches('textarea, input')) {
@@ -706,7 +723,7 @@ document.body.addEventListener('input', (e) => {
         let initialCursorPosition = target.selectionStart
         let precedingText = target.value.slice(0, initialCursorPosition)
 
-        for (let s of shortcuts) {
+        for (let s of shortcutsList) {
             let shortcut = s['shortcut']
             if (precedingText.endsWith(shortcut)) {
                 // get expansion
@@ -722,6 +739,14 @@ document.body.addEventListener('input', (e) => {
                 target.setSelectionRange(newCursorPosition, newCursorPosition)
             }
         }
+    }
+})
+shortcutsButton.addEventListener('click', (e) => {
+    shortcutsMenu.showModal()
+})
+window.addEventListener('load', (e) => {
+    for (let s of shortcutsList) {
+        shortcutsTable.insertAdjacentHTML('beforeend', `<tr><td>${s['shortcut']}</td><td>${s['expansion'].charAt(0).toUpperCase() + s['expansion'].slice(1).replaceAll("\n", "<br>")}</td></tr>`)
     }
 })
 
@@ -846,9 +871,9 @@ function downloadDocument() {
     let formattedDate = new Date().toISOString().slice(0,10)
 
     // Fabricate a filename (date + UMRN)
-    let filename = `${formattedDate} ${document.querySelector('#umrn')?.value || 'Clinic Patient'}.txt`
+    let filename = `${formattedDate} Clinic Patient.txt`
 
-    textDump = renderEntireDocument()
+    let textDump = renderEntireDocument()
 
     // Create sham download link
 	let downloadLink = document.createElement('a')
@@ -863,11 +888,6 @@ function downloadDocument() {
 
 document.querySelector('#download')?.addEventListener('click', (e) => {
     downloadDocument()
-})
-
-document.querySelector('#copy-note')?.addEventListener('click', (e) => {
-    let output = renderEntireDocument()
-    navigator.clipboard.writeText(output.trim())
 })
 
 // RESET
@@ -1140,1053 +1160,7 @@ function setScrollSpySelection(id) {
 let diagnosisList = document.querySelector('#diagnosis-list')
 let diagnosisSearchBox = document.querySelector('#diagnosis-search input')
 let diagnosisSearchResultsList = document.querySelector('#diagnosis-results ul')
-let allDiagnoses = [
-    {
-        matchable_string: "T2DM type two 2 II insulin dependent diabetes mellitus IDDM",
-        name: "T2DM",
-        id: "diagnosis-t2dm",
-        html: `
-            <div class="hstack">
-                <label>
-                    Insulin Dependent
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Insulin dependent">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Hypo Aware
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Hypoglycaemia awareness">
-                            <option value="" selected></option>
-                            <option value="intact">Yes</option>
-                            <option value="NO">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    HbA1c
-                    <input type="number" min="0" max="30" step="0.1" diagnosis-parameter="HbA1c" clinic-parameter="hba1c">
-                </label>
-            </div>
-            <label>
-                Microvascular Complications
-                <input type="text" diagnosis-parameter="Microvascular complications">
-            </label>
-            <label>
-                Macrovascular Complications
-                <input type="text" diagnosis-parameter="Macrovascular complications">
-            </label>`
-    },
-    {
-        matchable_string: "T1DM type one 1 I insulin dependent diabetes mellitus IDDM",
-        name: "T1DM",
-        id: "diagnosis-t1dm",
-        html: `
-            <div class="hstack">
-                <label>
-                    Year Diagnosed
-                    <input type="text" diagnosis-parameter="Year diagnosed">
-                </label>
-                <label>
-                    Hypo Aware
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Hypoglycaemia awareness">
-                            <option value="" selected></option>
-                            <option value="intact">Yes</option>
-                            <option value="NO">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    HbA1c
-                    <input type="number" diagnosis-parameter="HbA1c" clinic-parameter="hba1c">
-                </label>
-            </div>
-            <label>
-                Microvascular Complications
-                <input type="text" diagnosis-parameter="Microvascular complications">
-            </label>
-            <label>
-                Microvascular Complications
-                <input type="text" diagnosis-parameter="Macrovascular complications">
-            </label>`
-    },
-    {
-        matchable_string: "HF HFpEF HFrEF congestive cardiac heart failure",
-        name: "Heart failure",
-        id: "diagnosis-ccf",
-        addedCallback: () => { persistentDataProxy['rcri-ccf'] = true },
-        removedCallback: () => { persistentDataProxy['rcri-ccf'] = false },
-        html: `
-            <div class="hstack">
-                <label>
-                    NYHA
-                    <div class="selectbox">
-                        <select diagnosis-parameter="NYHA">
-                            <option value="" selected></option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Aetiology
-                    <input type="text" diagnosis-parameter="Aetiology">
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "essential hypertension htn",
-        name: "Hypertension",
-        id: "diagnosis-hypertension",
-        addedCallback: () => { persistentDataProxy['hypertensive'] = true },
-        removedCallback: () => { persistentDataProxy['hypertensive'] = false },
-        html: `
-            <div class="hstack">
-                <label>
-                    Baseline BP
-                    <input type="text" diagnosis-parameter="Baseline BP">
-                </label>
-                <label>
-                    End Organ Damage
-                    <div class="selectbox">
-                        <select diagnosis-parameter="End-organ damage">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "dyslipiaemia hyperlipidaemia hypercholesterolaemia",
-        name: "Dyslipidaemia",
-        id: "diagnosis-dyslipidaemia",
-        html: ``
-    },
-    {
-        matchable_string: "depression",
-        name: "Depression",
-        id: "diagnosis-depression",
-        html: ``
-    },
-    {
-        matchable_string: "social anxiety gad",
-        name: "Anxiety",
-        id: "diagnosis-anxiety",
-        html: ``
-    },
-    {
-        matchable_string: "post traumatic stress disorder",
-        name: "PTSD",
-        id: "diagnosis-ptsd",
-        html: ``
-    },
-    {
-        matchable_string: "borderline emotionally unstable personality disorder",
-        name: "EUPD",
-        id: "diagnosis-eupd",
-        html: ``
-    },
-    {
-        matchable_string: "rheumatoid arthritis",
-        name: "Rheumatoid arthritis",
-        id: "diagnosis-rheumatoid-arthritis",
-        html: `
-            <div class="hstack">
-                <label>
-                    C-Spine Involvement
-                    <div class="selectbox">
-                        <select diagnosis-parameter="C-Spine involvement">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Immune Suppressed
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Immune suppressed">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "chronic obstructive pulmonary airways disease",
-        name: "COPD",
-        id: "diagnosis-copd",
-        html: `
-            <div class="hstack">
-                <label>
-                    GOLD Class
-                    <div class="selectbox">
-                        <select diagnosis-parameter="GOLD classification">
-                            <option value="" selected></option>
-                            <option value="mild (FEV1 ≥ 80% predicted)">Mild – FEV1 ≥ 80% predicted</option>
-                            <option value="moderate (FEV1 50-79% predicted)">Moderate – FEV1 50-79% predicted</option>
-                            <option value="severe (FEV1 &lt; 49% predicted)">Severe – FEV1 &lt; 49% predicted</option>
-                            <option value="very severe (FEV1 &lt; 30% predicted)">Very severe – FEV1 &lt; 30% predicted</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Smoking
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Smoking" clinic-parameter="smoking" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="active smoker">Active smoker</option>
-                            <option value="ex-smoker">Ex-smoker</option>
-                            <option value="never smoked">Never smoked</option>
-                        </select>
-                    </div>
-                </label>
-            </div>
-            <div class="hstack">
-                <label>
-                    pHTN or RV Failure
-                    <div class="selectbox">
-                        <select diagnosis-parameter="PHTN/RV failure" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    <span>Home <span>O<sub>2</sub></span>
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Home O2" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>
-            <label>
-                mMRC Dyspnoea Scale
-                <div class="selectbox">
-                    <select diagnosis-parameter="mMRC dyspnoea" autocomplete="off">
-                        <option value="" selected></option>
-                        <option value="0">0 – Dyspnea only with strenuous exercise</option>
-                        <option value="1">1 – Dyspnea when hurrying or walking up a slight hill</option>
-                        <option value="2">2 – Walks slower than people of the same age because of dyspnea or has to stop for breath when walking at own pace</option>
-                        <option value="3">3 – Stops for breath after walking 100 yards (91 m) or after a few minutes</option>
-                        <option value="4">4 – Too dyspneic to leave house or breathless when dressing</option>
-                    </select>
-                </div>
-            </label>
-            <label>
-                Recent Exacerbations
-                <input type="text" diagnosis-parameter="Recent exacerbations">
-            </label>
-            `
-    },
-    {
-        matchable_string: "asthma",
-        name: "Asthma",
-        id: "diagnosis-asthma",
-        html: `
-            <div class="hstack">
-                <label>
-                    NSAID Reactive
-                    <div class="selectbox">
-                        <select diagnosis-parameter="NSAID reactive">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Admissions
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Previous admissions">
-                            <option value="" selected></option>
-                            <option value="has been admitted to ICU for asthma">ICU admissions</option>
-                            <option value="ward-based admissions only">Ward-based admissions only</option>
-                            <option value="none, but flares have been managed in community">Community-managed flares only</option>
-                            <option value="none">None</option>
-                        </select>
-                    </div>
-                </label>
-            </div>
-            <hr>
-            <span>In the past <b>four weeks</b>, has the patient had:</span>
-            <div class="hstack">
-                <label>
-                    Day Symptoms
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Daytime symptoms">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Night Symptoms
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Night symptoms">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>
-            <div class="hstack">
-                <label>
-                    Used SABA ≥ 2x Weekly
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Heavy reliever use">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Activity Limitation
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Activity limitation">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>
-            <hr>`
-    },
-    {
-        matchable_string: "AS aortic stenosis",
-        name: "Aortic stenosis",
-        id: "diagnosis-aortic-stenosis",
-        html: `
-            <label>
-                Radiographic Severity
-                <input type="text" diagnosis-parameter="Radiographic severity">
-            </label>
-            <label>
-                Symptom Burden
-                <input type="text" diagnosis-parameter="Symptoms">
-            </label>`
-    },
-    {
-        matchable_string: "AF atrial fibrillation",
-        name: "Atrial fibrillation",
-        id: "diagnosis-atrial-fibrillation",
-        html: `
-            <div class="hstack">
-                <label>
-                    Type
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Type" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="paroxysmal">Paroxysmal (≥ 7 days)</option>
-                            <option value="persistent">Persistent (≥ 7 days)</option>
-                            <option value="longstanding">Longstanding (≥ 1 year)</option>
-                            <option value="permanent">Permanent (cardioversion-resistant)</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    <span>CHA<sub>2</sub>DS<sub>2</sub>-VASc</span>
-                    <input type="number" step="1" min="0" max="8" diagnosis-parameter="CHADS-VASc">
-                </label>
-            </div>
-            <div class="hstack">
-                <label>
-                    Rate Control
-                    <input type="text" step="1" min="0" max="8" diagnosis-parameter="Rate control">
-                </label>
-                <label>
-                    Rhythm Control
-                    <input type="text" step="1" min="0" max="8" diagnosis-parameter="Rhythm control">
-                </label>
-            </div>
-            <label>
-                Anticoagulated
-                <div class="selectbox">
-                    <select diagnosis-parameter="Anticoagulated" autocomplete="off">
-                        <option value="" selected></option>
-                        <option value="YES">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-            </label>`
-    },
-    {
-        matchable_string: "hypothyroidism low T4",
-        name: "Hypothyroidism",
-        id: "diagnosis-hypothyroidism",
-        html: ``
-    },
-    {
-        matchable_string: "hyperthyroidism high T4",
-        name: "Hyperthyroidism",
-        id: "diagnosis-hyperthyroidism",
-        html: `
-            <div class="hstack">
-                <label>
-                    Symptomatic
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Symptomatic" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Aetiology
-                    <input type="text" diagnosis-parameter="Aetiology">
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "ischaemic heart disease NSTEMI",
-        name: "Ischaemic heart disease",
-        id: "diagnosis-ihd",
-        addedCallback: () => { persistentDataProxy['rcri-ihd'] = true },
-        removedCallback: () => { persistentDataProxy['rcri-ihd'] = false },
-        html: `
-            <div class="hstack">
-                <label>
-                    Stable Disease
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Stable disease" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="yes">Yes</option>
-                            <option value="NO">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Antiplatets
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Antiplatelets" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="single">Single</option>
-                            <option value="dual">Dual</option>
-                            <option value="none">None</option>
-                        </select>
-                    </div>
-                </label>
-            </div>
-            <label>
-                Last Stress Test
-                <input type="text" diagnosis-parameter="Last stress test" placeholder="Date and findings">
-            </label>`
-    },
-    {
-        matchable_string: "chronic pain CRPS",
-        name: "Chronic pain",
-        id: "diagnosis-chronic-pain",
-        html: `
-            <div class="hstack">
-                <label>
-                    Opioid Tolerance
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Opioid tolerance" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    CRPS Features
-                    <div class="selectbox">
-                        <select diagnosis-parameter="CRPS features" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>
-            <div class="hstack">
-                <label>
-                    Pain Specialist
-                    <input type="text" diagnosis-parameter="Treating specialist">
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "stroke TIA CVA",
-        name: "Cerebrovascular accident",
-        id: "diagnosis-cva",
-        addedCallback: () => { persistentDataProxy['rcri-cva'] = true },
-        removedCallback: () => { persistentDataProxy['rcri-cva'] = false },
-        html: `
-            <div class="hstack">
-                <label>
-                    Details of Infarct(s)
-                    <input type="text" diagnosis-parameter="Infarct details">
-                </label>
-            </div>
-            <div class="hstack">
-                <label>
-                    Motor Weakness
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Residual motor weakness" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Pharyngeal Symptoms
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Residual pharyngeal symptoms" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "epilepsy seizure",
-        name: "Seizure disorder",
-        id: "diagnosis-seizures",
-        html: `
-            <label>
-                Triggers
-                <input type="text" diagnosis-parameter="Triggers">
-            </label>
-            <label>
-                Seizure Frequency
-                <input type="text" diagnosis-parameter="Frequency">
-            </label>
-            <div class="hstack">
-                <label>
-                    AED Compliant
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Compliant with AEDs" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="yes">Yes</option>
-                            <option value="NO">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Previous Status Epilepticus
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Previous status epilepticus" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "ckd chronic kidney disease",
-        name: "CKD",
-        id: "diagnosis-ckd",
-        html: `
-            <div class="hstack">
-                <label>
-                    KDIGO Stage
-                    <div class="selectbox">
-                        <select diagnosis-parameter="KDIGO stage" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="1">1 (GFR ≥ 90)</option>
-                            <option value="2">2 (GFR 60–89)</option>
-                            <option value="3a">3a (GFR 45–59)</option>
-                            <option value="3b">3b (GFR 30–44)</option>
-                            <option value="4">4 (GFR 15–29)</option>
-                            <option value="5">5 (GFR ≤ 14 or on dialysis)</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Aetiology
-                    <input type="text" diagnosis-parameter="Aetiology">
-                </label>
-            </div>
-            <div class="hstack">
-                <label>
-                    Dialysis Dependent
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Dialysis-dependent" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                     
-                    <input type="text" diagnosis-parameter="Dialysis details" placeholder="Details">
-                </label>
-            </div>
-            <label>
-                Renal Physician
-                <input type="text" diagnosis-parameter="Renal physician">
-            </label>`
-    },
-    {
-        matchable_string: "iron deficiency anaemia",
-        name: "Anaemia",
-        id: "diagnosis-anaemia",
-        html: `
-            <label>
-                Aetiology
-                <input type="text" diagnosis-parameter="Aetiology">
-            </label>
-            <label>
-                Treatment
-                <input type="text" diagnosis-parameter="Treatment">
-            </label>`
-    },
-    {
-        matchable_string: "OA osteoarthritis",
-        name: "Osteoarthritis",
-        id: "diagnosis-osteoarthritis",
-        html: `
-            <label>
-                Affected Joints
-                <input type="text" diagnosis-parameter="Affected joints">
-            </label>
-            <div class="hstack">
-                <label>
-                    Opioid Dependent
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Opioid dependent" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "human immunodeficiency virus",
-        name: "HIV",
-        id: "diagnosis-hiv",
-        html: `
-            <div class="hstack">
-                <label>
-                    CD4 Count
-                    <input type="text" diagnosis-parameter="CD4 count">
-                </label>
-                <label>
-                    Viral Load
-                    <input type="text" diagnosis-parameter="Viral load">
-                </label>
-            </div>
-            <label>
-                Infectious Complications
-                <input type="text" diagnosis-parameter="Viral load">
-            </label>
-            <label>
-                Antiviral Regimen
-                <input type="text" diagnosis-parameter="Antiviral regimen">
-            </label>`
-    },
-    {
-        matchable_string: "child pugh liver cirrhosis",
-        name: "Liver cirrhosis",
-        id: "diagnosis-cirrhosis",
-        html: `
-            <label>
-                Aetiology
-                <input type="text" diagnosis-parameter="Aetiology">
-            </label>
-            <div class="hstack">
-                <label>
-                    Child-Pugh Class
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Child-Pugh" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="A (100% one-year survival)">A (100% one-year survival)</option>
-                            <option value="B (80% one-year survival)">B (80% one-year survival)</option>
-                            <option value="C (45% one-year survival)">C (45% one-year survival)</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    MELD Score
-                    <input type="number" min="0" max="100" step="1" diagnosis-parameter="MELD">
-                </label>
-            </div>
-            <div class="hstack">
-                <label>
-                    Varices
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Varices" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Coagulopathy
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Coagulopathy" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>
-            <label>
-                Ascites Management
-                <input type="text" diagnosis-parameter="Ascites management">
-            </label>`
-    },
-    {
-        matchable_string: "obstructive sleep apnoea",
-        name: "OSA",
-        id: "diagnosis-osa",
-        html: `
-            <div class="hstack">
-                <label>
-                    AHI
-                    <input type="number" min="0" max="300" step="1" diagnosis-parameter="AHI">
-                </label>
-                <label>
-                    CPAP User
-                    <div class="selectbox">
-                        <select diagnosis-parameter="CPAP" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="yes">Yes</option>
-                            <option value="NO">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "alzheimer's cognitive impairment dementia",
-        name: "Cognitive impairment",
-        id: "diagnosis-alzheimers",
-        html: `
-            <label>
-                Type
-                <input type="text" diagnosis-parameter="Type">
-            </label>
-            <label>
-                Aetiology
-                <input type="text" diagnosis-parameter="Aetiology">
-            </label>
-            <div class="hstack">
-                <label>
-                    Baseline MoCA/MMSE
-                    <input type="number" min="0" max="30" step="1" diagnosis-parameter="Baseline MoCA/MMSE">
-                </label>
-                <label>
-                    Can Lay Still
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Can lay still" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="yes">Yes</option>
-                            <option value="NO">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "steatohepatitis nonalcoholic fatty liver disease",
-        name: "Steatohepatitis",
-        id: "diagnosis-steatohepatitis",
-        html: ``
-    },
-    {
-        matchable_string: "peptic gastric ulcers disease",
-        name: "Peptic ulcer disease",
-        id: "diagnosis-pud",
-        html: ``
-    },
-    {
-        matchable_string: "cataracts",
-        name: "Cataracts",
-        id: "diagnosis-cataracts",
-        html: ``
-    },
-    {
-        matchable_string: "glaucoma",
-        name: "Glaucoma",
-        id: "diagnosis-glaucoma",
-        html: ``
-    },
-    {
-        matchable_string: "gastro-oesophageal reflux disease",
-        name: "GORD",
-        id: "diagnosis-gord",
-        html: `
-            <div class="hstack">
-                <label>
-                    Medicated
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Medicated">
-                            <option value="" selected></option>
-                            <option value="yes">Yes</option>
-                            <option value="NO">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Ongoing Symptoms
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Ongoing symptoms">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "anaphylaxis",
-        name: "Anaphylaxis",
-        id: "diagnosis-anaphylaxis",
-        html: `
-            <div class="hstack">
-                <label>
-                    Confirmed Diagnosis
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Confirmed diagnosis">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-            </div>
-            <label>
-                Triggers
-                <input type="text" diagnosis-parameter="Triggers">
-            </label>`
-    },
-    {
-        matchable_string: "permanent pacemaker",
-        name: "Pacemaker in situ",
-        id: "diagnosis-pacemaker",
-        html: `
-            <div class="hstack">
-                <label>
-                    Indication
-                    <input type="text" diagnosis-parameter="Indication">
-                </label>
-                <label>
-                    Last Checked
-                    <input type="text" diagnosis-parameter="Last checked">
-                </label>
-            </div>
-            <div class="hstack">
-                <label>
-                    Mode
-                    <input type="text" diagnosis-parameter="Mode">
-                </label>
-                <label>
-                    Manufacturer
-                    <input type="text" diagnosis-parameter="Manufacturer">
-                </label>
-            </div>
-            <label>
-                Pacing Dependence
-                <input type="text" diagnosis-parameter="Pacing dependence">
-            </label>`
-    },
-    {
-        matchable_string: "internal cardiac defibrillator",
-        name: "ICD in situ",
-        id: "diagnosis-icd",
-        html: `
-            <div class="hstack">
-                <label>
-                    Indication
-                    <input type="text" diagnosis-parameter="Indication">
-                </label>
-                <label>
-                    Last Checked
-                    <input type="text" diagnosis-parameter="Last checked">
-                </label>
-            </div>
-            <div class="hstack">
-                <label>
-                    Diathermy in Use
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Diathermy in use" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-                <label>
-                    Manufacturer
-                    <input type="text" diagnosis-parameter="Manufacturer">
-                </label>
-            </div>
-            <label>
-                Trigger Frequency
-                <input type="text" diagnosis-parameter="Trigger frequency">
-            </label>`
-    },
-    {
-        matchable_string: "abdominal aortic aneurysm",
-        name: "AAA",
-        id: "diagnosis-aaa",
-        html: `
-            <div class="hstack">
-                <label>
-                    Size (cm)
-                    <input type="number" min="0" max="30" step="0.1" diagnosis-parameter="Size">
-                </label>
-                <label>
-                    Stable
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Stable" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="yes">Yes</option>
-                            <option value="NO">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "osteoporosis",
-        name: "Osteoporosis",
-        id: "diagnosis-osteoporosis",
-        html: ``
-    },
-    {
-        matchable_string: "transcatheter aortic valve implant replacment",
-        name: "TAVI",
-        id: "diagnosis-tavi",
-        html: `
-            <div class="hstack">
-                <label>
-                    Year Implanted
-                    <input type="text" diagnosis-parameter="Year implanted">
-                </label>
-                <label>
-                    Known Leak
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Known leak" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="YES">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "benign prostatic hypertrophy",
-        name: "BPH",
-        id: "diagnosis-bph",
-    },
-    {
-        matchable_string: "barrett's oesophagus",
-        name: "Barrett's oesophagus",
-        id: "diagnosis-barretts",
-    },
-    {
-        matchable_string: "Ehlers-Danlos syndrome",
-        name: "Ehlers-Danlos syndrome",
-        id: "diagnosis-ehlers-danlos",
-        html: `
-            <div class="hstack">
-                <label>
-                    Beighton score
-                    <input type="number" min="0" max="9" step="1" diagnosis-parameter="Beighton score">
-                </label>
-                <label>
-                    Manifestations
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Manifestations" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="hypermobility only">Hypermobility only</option>
-                            <option value="gastroparesis only">Gastroparesis only</option>
-                            <option value="BOTH gastroparesis and hypermobility">Both</option>
-                        </select>
-                    </div>
-                </label>
-            </div>`
-    },
-    {
-        matchable_string: "fibromyalgia",
-        name: "Fibromyalgia",
-        id: "diagnosis-fibromyalgia",
-    },
-    {
-        matchable_string: "pots postural orthostatic tachycardia syndrome",
-        name: "POTS",
-        id: "diagnosis-pots",
-    },
-    {
-        matchable_string: "PCOS polycystic ovarian syndrome",
-        name: "PCOS",
-        id: "diagnosis-pcos",
-    },
-    {
-        matchable_string: "pulmonary lung nodules",
-        name: "Pulonary nodule(s)",
-        id: "diagnosis-pumonary-nodules",
-    },
-    {
-        matchable_string: "diverticular diverticulosis disease",
-        name: "Diverticular disease",
-        id: "diagnosis-diverticular-disease",
-    },
-    {
-        matchable_string: "benign paroxysmal positional vertigo",
-        name: "BPPV",
-        id: "diagnosis-bppv",
-    },
-    {
-        matchable_string: "haemorrhoids piles",
-        name: "Haemorrhoids",
-        id: "diagnosis-haemorrhoids",
-    },
-    {
-        matchable_string: "monoclonal gammopathy of undetermined significance paraproteinaemia",
-        name: "MGUS",
-        id: "diagnosis-mgus",
-    },
-    {
-        matchable_string: "gout crystal arthropathy",
-        name: "Gout",
-        id: "diagnosis-gout",
-    },
-    {
-        matchable_string: "pseudogout crystal arthropathy",
-        name: "Pseudogout",
-        id: "diagnosis-pseudogout",
-    },
-    {
-        matchable_string: "gallstones cholelithiasis",
-        name: "Cholelithiasis",
-        id: "diagnosis-cholelithiasis",
-    },
-]
+import { allDiagnoses } from '/data/diagnosis-data.js';
 
 // UTILS
 function escapeHTML(html) {
@@ -2219,7 +1193,7 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
                     <input type="text" class="diagnosis-title" diagnosis-parameter="name" value="${this.data['name'] || ''}">
                 </label>
                 <button class="clinic-diagnosis-edit" tabindex="3">Edit</button>
-                <button class="clinic-diagnosis-close" tabindex="3" onclick="setFocusedDiagnosis(null)">Close</button>
+                <button class="clinic-diagnosis-close" tabindex="3" onclick="this.closest('clinic-diagnosis').unfocus()">Close</button>
             </div>
             <div class="clinic-diagnosis-body vstack">
                 ${this.data['html'] || ''}
@@ -2249,6 +1223,10 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         this.querySelector('[diagnosis-parameter]').dispatchEvent(new Event('input', {bubbles: true}))
     }
 
+    unfocus() {
+        setFocusedDiagnosis(null)
+    }
+
     renderText() {
         // return text
         let data = this.serialise()
@@ -2270,14 +1248,14 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
             if (`${value}`.length == 0) continue
 
             // append to output
-            output = output + `\n    - ${key}: ${value}`
+            output = output + `\n      - ${key}: ${value}`
         }
 
         // add in other details
         if (data['other-details']) {
             let otherDetails = data['other-details']
                 .split('\n')
-                .map((l) => '    ' + l)
+                .map((l) => '      ' + l)
                 .join('\n')
             output += `\n${otherDetails}`
         }
@@ -2301,7 +1279,7 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         if (answer) {
             // run removedCallback
             try {
-                if (this.data.removedCallback) this.data.removedCallback()
+                if (this.data.removedCallback) this.data.removedCallback(persistentDataProxy)
             } catch (err) {
                 console.error(`Attempted to call removedCallback() on diagnosis with id "${this.data.id}" and failed`, err)
             }
@@ -2411,26 +1389,26 @@ function insertSearchResult(target, data) {
     data['id'] = data['id']
 
     let newResult = document.createElement('li')
-    newResult.innerHTML = `${data['name']}<button>Add to PMHx</button></li>`
+    newResult.innerHTML = `${data['name']}<button tabindex="-1">Add</button></li>`
     newResult.data = data
     newResult.onclick = (e) => {
         // insert new diagnosis
         // or focus existing version
         let existingDiagnosis = document.querySelector(`[clinic-parameter="${data['id']}"]`)
         if (existingDiagnosis) {
-            setFocusedDiagnosis(existingDiagnosis)
+            setFocusedDiagnosis(existingDiagnosis, true)
         } else {
             // add diagnosis
             insertClinicDiagnosis(data, diagnosisList, "afterbegin", true)
             
             // run callback
             try {
-                if (data.addedCallback) data.addedCallback()
+                if (data.addedCallback) data.addedCallback(persistentDataProxy)
             } catch (err) {
                 console.error(`Attempted to call addedCallback() on diagnosis with id "${data.id}" and failed`, err)
             }
 
-            // dipatch drag event
+            // dispatch drag event
             diagnosisList.parentElement.dispatchEvent(new Event('clinic:draglist-reorder', {bubbles: true}))
         }
         // clear search
@@ -2470,8 +1448,17 @@ diagnosisSearchBox.addEventListener('input', (e) => {
     diagnosisSearchResultsList?.firstElementChild?.setAttribute('aria-selected', 'true')
 })
 
+diagnosisSearchBox.addEventListener('focusout', (e) => {
+    diagnosisSearchResultsList.innerHTML = ''
+    diagnosisSearchBox.value = ''
+
+})
+
 diagnosisSearchBox.addEventListener('keydown', (e) => {
     if (e.key == "Escape") {
+        if (diagnosisSearchBox.value.length == 0) {
+            diagnosisSearchBox.blur()
+        }
         e.target.value = ''
         e.target.dispatchEvent(new Event('input'))
     }
@@ -2524,6 +1511,8 @@ let persistentDataProxy = new Proxy(persistentDataStore, {
                 detail: { 'preventAutophagy': true } // prevents infinite loop
             }))
         }
+
+        return true
     },
     deleteProperty(object, key) {
         // Remove the property from the object
@@ -2724,142 +1713,8 @@ customElements.define('clinic-draglist', class extends HTMLElement {
 //   | |___| | || (_| | |_| | (_) | | | \__ \                                      
 //    \____|_|\__\__,_|\__|_|\___/|_| |_|___/                                      
         
-let citationSnippets = [
-    {
-        id: 'stopbang-interpretation',
-        body: `
-            <p>The STOP-BANG questionnaire is a concise and easy-to-use screening tool for OSA. It has been developed and validated in surgical patients at preoperative clinics.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Score</th>
-                        <th>OSA Risk</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>0-2</td>
-                        <td>Low</td>
-                    </tr>
-                    <tr>
-                        <td>2-4</td>
-                        <td>Intermediate</td>
-                    </tr>
-                    <tr>
-                        <td>≥ 5</td>
-                        <td rowspan="2">High</td>
-                    </tr>
-                    <tr>
-                        <td>≥ 2 STOP criteria<br><strong>and</strong><br>≥ 1 BNG criteria</td>
-                    </tr>
-                </tbody>
-            </table>
-        `,
-        publication: 'chung-stopbang-2008'
-    },
-    {
-        id: 'apfel-interpretation',
-        body: ``,
-        publication: 'fourthconsensus-ponv'
-    },
-    {
-        id: 'esc-2022',
-        body: ``,
-        publication: 'esc-2022'
-    },
-    {
-        id: 'ads-anzca-2022',
-        body: ``,
-        publication: 'ads-anzca-2022'
-    },
-    {
-        id: 'ads-anzca-2022-referral-advice',
-        body: `<p>The 2022 ADA-ANZCA guidelines recommend endocrinology referral for patients with:</p>
-        <ul>
-            <li>HbA1c > 9.0%</li>
-            <li>Hypoglycaemia unawareness</li>
-        </ul>`,
-        publication: 'ads-anzca-2022'
-    },
-    {
-        id: 'sort-calculator-explanation',
-        body: `<p>The Surgical Outcome Risk Tool (SORT) is designed to estimate 30-day mortality after surgery.</p>
-        <p>It was created using 16,788 cases from the <a href="https://www.ncepod.org.uk/">NCEPOD</a> database and later validated by <a href="https://doi.org/10.1371/journal.pmed.1003253">Wong et al.</a> against 22,631 cases from Australia, New Zealand, and the United Kinddom.</p>`,
-        publication: 'sort-original-paper'
-    },
-    {
-        id: 'rcri-interpretation',
-        body: `
-            <p>The Revised Cardiac Risk Index (RCRI) was originally published by <a href="https://doi.org/10.1056/nejm197710202971601">Goldman et al. (1977)</a>, though the original publication is widely understood to have under-estimated 30-day MAC risk. A more modern meta-analysis by <a href="https://doi.org/10.1016/j.cjca.2016.09.008">Duceppe et al. (2017)</a> has provided updated risk estimates:</a></p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Score</th>
-                        <th>30-day MACE Risk</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>0</td>
-                        <td>3.9% (2.8-5.4%)</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>6.0% (4.9-7.4%)</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>10.1% (8.1-12.6%)</td>
-                    </tr>
-                    <tr>
-                        <td>≥ 3</td>
-                        <td>15% (11.1-20.0%)</td>
-                    </tr>
-                </tbody>
-            </table>
-        `,
-        publication: 'duceppe-2017'
-    },
-]
-
-let allPublications = [
-    {
-        id: 'chung-stopbang-2008',
-        url: 'https://doi.org/10.1097/aln.0b013e31816d83e4',
-        ugly: `Chung F, Yegneswaran B, Liao P, Chung SA, Vairavanathan S, Islam S, et al. STOP Questionnaire. Anesthesiology. 2008 May 1;108(5):812–21.`,
-        pretty: `STOP questionnaire: a tool to screen patients for obstructive sleep apnea`,
-    },
-    {
-        id: 'esc-2022',
-        url: 'https://doi.org/10.1093/eurheartj/ehac270',
-        ugly: `Halvorsen S, Mehilli J, Cassese S, Hall TS, Abdelhamid M, Barbato E, et al. 2022 ESC Guidelines on cardiovascular assessment and management of patients undergoing non-cardiac surgery. European Heart Journal. 2022 Oct 14;43(39):3826–924.`,
-        pretty: `2022 ESC Guidelines on cardiovascular assessment and management of patients undergoing non-cardiac surgery`,
-    },
-    {
-        id: 'fourthconsensus-ponv',
-        url: 'https://doi.org/10.1213/ane.0000000000004833',
-        ugly: `Gan TJ, Belani KG, Bergese S, Chung F, Diemunsch P, Habib AS, et al. Fourth Consensus Guidelines for the Management of Postoperative Nausea and Vomiting. Anesthesia & Analgesia. 2020 Aug;131(2):411–48.`,
-        pretty: `Fourth Consensus Guidelines for the Management of Postoperative Nausea and Vomiting`,
-    },
-    {
-        id: 'duceppe-2017',
-        url: 'https://doi.org/10.1016/j.cjca.2016.09.008',
-        ugly: `Duceppe E, Parlow J, MacDonald P, Lyons K, McMullen M, Srinathan S, et al. Canadian Cardiovascular Society Guidelines on Perioperative Cardiac Risk Assessment and Management for Patients Who Undergo Noncardiac Surgery. Canadian Journal of Cardiology. 2017 Jan 1;33(1):17–32.`,
-        pretty: `Canadian Cardiovascular Society Guidelines on Perioperative Cardiac Risk Assessment and Management for Patients Who Undergo Noncardiac Surgery`,
-    },
-    {
-        id: 'ads-anzca-2022',
-        url: 'https://www.diabetessociety.com.au/guideline/ads-anzca-perioperative-diabetes-and-hyperglycaemia-guidelines-adults-november-2022/',
-        ugly: `ADS-ANZCA Perioperative Diabetes and Hyperglycaemia Guidelines Adults (November 2022) [Internet]. Australian Diabetes Society. [cited 2024 Nov 5]. Available from: https://www.diabetessociety.com.au/guideline/ads-anzca-perioperative-diabetes-and-hyperglycaemia-guidelines-adults-november-2022/`,
-        pretty: `ADS-ANZCA Perioperative Diabetes and Hyperglycaemia Guidelines Adults (November 2022)`,
-    },
-    {
-        id: 'sort-original-paper',
-        url: 'https://doi.org/10.1002/bjs.9638',
-        ugly: `Protopapa KL, Simpson JC, Smith NCE, Moonesinghe SR. Development and validation of the Surgical Outcome Risk Tool (SORT). BJS (British Journal of Surgery). 2014;101(13):1774–83.`,
-        pretty: `Development and validation of the Surgical Outcome Risk Tool (SORT)`,
-    },
-]
+import { citationSnippets } from '/data/citation-data.js'
+import { allPublications } from '/data/publication-data.js'
 
 function placeBelow(anchor, follower) {
     let anchorBox = anchor.getBoundingClientRect()
@@ -2928,7 +1783,7 @@ customElements.define('clinic-citation-snippet', class extends HTMLElement {
         let publicationInfo = allPublications.find(p => p.id == this.snippetInfo.publication)
         if (publicationInfo) {
             let cite = document.createElement('cite')
-            cite.innerHTML = `<a href="${publicationInfo.url}">${publicationInfo.pretty}</a>`
+            cite.innerHTML = `<a href="${publicationInfo.url}" target="_blank">${publicationInfo.pretty}</a>`
             this.appendChild(cite)
         }
     }
