@@ -59,7 +59,7 @@
             
             <hr>
             <li title="RedCap" role="button" id="redcap-button">
-                <span class="icon"><img src="/static/icons/colour_bookmark.svg"></span>
+                <span class="icon"><img src="/static/icons/colour_cap.svg"></span>
                 <span class="left">REDCap</span>
             </li>
             <li id="download" title="Download" role="button">
@@ -70,6 +70,9 @@
                 <span class="icon"><img src="/static/icons/x_octagon.svg"></span>
                 <span class="left">Reset</span>
             </li>
+            <!-- <h4>Links</h4>
+            <hr>
+            <div id="deeplinks"></div> -->
             <h4>About</h4>
             <hr>
             <!-- <a class="invisible-link" href="https://nunn.au">
@@ -841,17 +844,17 @@
 <!-- DIALOGUES -->
 <dialog id="big-welcome">
     <div id="top">
-        <h1>Welcome to Clinic Helper <span id="wave">👋</span></h1>
+        <h1>Welcome to Periscope <span id="wave">👋</span></h1>
         <h3>A little app to help perioperative doctors get through their clinic days.</h3>
     </div>
     <div id="blurb">
         <h2>Security 🔐</h2>
-        <p>The information you add to Clinic Helper never leaves your device. Absolutely no patient data is collected.</p>
+        <p>The information you add to Periscope never leaves your device. Absolutely no patient data is collected.</p>
         <img src="/static/clinic_data_safety.webp" alt="">
         <p>All computations, scores, and data-processing happen right here in this browser tab. As long as you use this on a work-approved computer, your data is safe.</p>
         <h2>Responsiblity ⚖️</h2>
-        <p>All efforts have been made to ensure that Clinic Helper won't steer you wrong, but <strong>you are still the doctor</strong>. You are responsible for double-checking your work and treating your own patients.</p>
-        <p>This software is proudly provided free of charge under the <a href="https://github.com/samnunn/gasnotes-clinic/blob/main/LICENSE.txt">MIT License</a>, which you must accept before using it.</p>
+        <p>All efforts have been made to ensure that Periscope won't steer you wrong, but <strong>you are still the doctor</strong>. You are responsible for double-checking your work and treating your own patients.</p>
+        <p>This software is proudly provided free of charge under the <a href="https://github.com/samnunn/periscope/blob/main/LICENSE.txt">MIT License</a>, which you must accept before using it.</p>
     </div>
     <h3>Do you accept these terms?</h3>
     <div id="buttons">
@@ -860,6 +863,20 @@
             <button autofocus>Accept</button>
         </form>
     </div>
+</dialog>
+<dialog id="auth-connect">
+    <p>If your hospital has a SiteCode, you can enter it here to enable extra features just for your institution, like:</p>
+    <ul>
+        <li>Integration with REDCap</li>
+        <li>Deeplinks to your institution's clinical apps</li>
+    </ul>
+    <form action="/auth" id="auth-check">
+        <input type="text" name="tenant_name">
+        <input type="submit" value="Go">
+    </form>
+    <form method="dialog">
+        <button autofocus>Close</button>
+    </form>
 </dialog>
 <dialog id="quick-add">
     <div class="hstack">
@@ -909,6 +926,7 @@
 <!-- SCRIPTS -->
 <script src="/static/fuzzysort.min.js"></script>
 <script src="/static/main.js" type="module"></script>
+<script src="/static/redcap.js" type="module"></script>
 
 
 {% endblock %}

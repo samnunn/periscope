@@ -1,4 +1,13 @@
-from flask import Flask, send_file, request, abort, session, render_template
+from flask import (
+    Flask,
+    send_file,
+    request,
+    abort,
+    session,
+    render_template,
+    redirect,
+    url_for,
+)
 import os
 from functools import wraps
 from werkzeug.utils import secure_filename
@@ -24,7 +33,8 @@ def tenancy_required(f):
 # ROUTES
 @app.route("/")
 def index():
-    return render_template("welcome.html")
+    # return render_template("welcome.html")
+    return redirect(url_for("clinic"))
 
 
 @app.route("/clinic")

@@ -1810,41 +1810,77 @@ document.addEventListener('click', (e) => {
 // /_/ |_/_____/_____/\____/\__,_/ .___/             
 //                              /_/                  
 
-import { diagnosisExists } from '/static/beagle.js'
-
 let redCapButton = document.querySelector('#redcap-button')
-redCapButton.addEventListener('click', (e) => {
-    // serialise data
-    let data = {
-        'patient_ihd': (inputData) => diagnosisExists(inputData, 'diagnosis-ihd') ? 1 : 0,
-        'patient_ccf': (inputData) => diagnosisExists(inputData, 'diagnosis-ccf') ? 1 : 0,
-        'patient_diabetes': (inputData) => {
-            if (diagnosisExists(inputData, 'diagnosis-t2dm')) {
-                return 1
-            } else if (diagnosisExists(inputData, 'diagnosis-t1dm')) {
-                return 2
-            } else {
-                return 3
-            }
-        },
-    }
+let authDialogue = document.querySelector('#auth-connect')
+let authTestForm = document.querySelector('form#auth-check')
 
-    let queryString = ''
-    for (let key in data) {
-        let result = ''
+async function uploadToREDCap() {
+    let redcap_url = document.redcap_data.surveys[0].url
+    let redcap_params = document.redcap_data.surveys[0].parameters
+
+    // make turn
+    for (let param in redcap_params) {
         try {
-            result = data[key](persistentDataProxy)
-        } catch (err) {
-            console.error(err)
-            continue
+            let rule = redcap_params[param]
+            let result = rule(persistentDataStore)
+            redcap_url += `&${param}=${result}`
+        } catch (e) {
+            console.error(`Failed to calculate REDCap parameter "${param}`, e)
         }
-        queryString += '&'
-        queryString += key
-        queryString += '='
-        queryString += result
     }
+    
+    // open REDCap
+    let linkTag = document.createElement('a')
+    linkTag.href = redcap_url
+    linkTag.target = "_blank"
+    document.body.appendChild(linkTag)
+    linkTag.click()
+}
 
-    // assemble url
-    let url = `https://datalibrary-rc.health.wa.gov.au/surveys/?s=M8PADXXDYW3DN9JM${queryString}`
-    window.open(url)
+async function downloadREDCapData() {
+    let redCapData = await import('/redcap.js')
+    return redCapData
+}
+
+async function checkAuthOnServer(sitecode) {
+    let url = "/auth"
+    let data = new FormData()
+    data.append("tenant_name", sitecode)
+    let response = await fetch(url, {
+        body: data,
+        method: "POST",
+    })
+    if (response.status == 200) {
+        localStorage.setItem("sitecode", sitecode)
+        document.redcap_data = await downloadREDCapData()
+        return true
+    }
+    document.redcap_data = null
+    localStorage.removeItem("sitecode")
+    return false
+}
+
+window.addEventListener("load", (e) => {
+    let stored_sitecode = localStorage.getItem("sitecode") || ""
+    checkAuthOnServer(stored_sitecode)
+})
+
+redCapButton.addEventListener('click', async (e) => {
+    if (document.redcap_data) {
+        // if authenticated, upload
+        let result = await uploadToREDCap()
+    } else {
+        // if not authenticated, show auth dialogue
+        authDialogue.showModal()
+    }
+})
+
+authTestForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    let siteCode = e.target.querySelector('input[name="tenant_name"').value
+    let authenticated = await checkAuthOnServer(siteCode)
+    if (authenticated) {
+        authDialogue.close()
+        redCapButton.click()
+    }
 })

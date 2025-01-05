@@ -4,7 +4,7 @@
     --colour-blue: #3498db;
     --colour-navy: #60a3bc;
     --colour-red: #c23616;
-    --colour-darkgrey: #353b48;
+    --colour-darkgrey: #2d3436;
     --colour-middlegrey: #576574;
     --colour-lightgrey: #f0f1f4;
     --greydient: linear-gradient(140deg, color-mix(in oklab, var(--colour-darkgrey) 2.5%, white) 0%, color-mix(in oklab, var(--colour-darkgrey) 5%, white) 100%);
@@ -14,7 +14,7 @@
     --input-box-height: 2.5rem;
 
     --tab-box-gap: 0.75rem;
-    --navbar-top-height: 2.5rem;
+    --navbar-top-height: 3rem;
 }
 
 ::view-transition-old(root),
@@ -37,7 +37,7 @@ body {
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--colour-darkgrey);
+    background-color: var(--colour-navy);
     position: relative;
 }
 hr {
@@ -58,9 +58,8 @@ hr {
     flex-direction: row;
     justify-content: center;
 
-    background-color: white;
-    background: VAR(--greydient);
-    color: black;
+    background-color: var(--colour-darkgrey);
+    color: white;
 
     position: sticky;
     top: 0;
@@ -117,7 +116,7 @@ hr {
     background-color: white;
     background: VAR(--greydient);
     padding: 1rem;
-    border-radius: 1rem;
+    border-radius: 0.75rem;
     box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
     border: 1px solid transparent;
 }
@@ -309,7 +308,7 @@ label:has(>input[type="checkbox"]) {
 /* Wrapper */
 
 .wrapped {
-    width: calc(100vw - 2rem);
+    width: calc(100vw - 1.5rem);
     max-width: 1500px;
     margin: 0 auto;
 }
@@ -584,7 +583,8 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
 
 #tab-picker {
     position: sticky;
-    top: calc(var(--navbar-top-height) + 0.75rem);
+    /* top: calc(var(--navbar-top-height) + 0.75rem); */
+    top: 0.75rem;
     margin: 0.75rem 0 0 0;
     padding: 1rem 0.75rem !important;
     /* prevent #tab-picker from growing vertically */
