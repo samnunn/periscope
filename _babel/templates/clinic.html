@@ -5,6 +5,11 @@
     <img id="secret-propofol" src="/static/propofol_molecule.svg" alt="">
     <nav class="island" id="tab-picker">
         <ul>
+            <div id="site-title">
+                <p>Periscope</p>
+                <img src="/static/icons/gasper_favicon.png" alt="">
+            </div>
+            <hr>
             <li title="Patient Details" role="button" scroll-target="details">
                 <span class="icon"><img src="/static/icons/colour_bookmark.svg"></span>
                 <span class="left">Patient Details</span>
@@ -58,10 +63,10 @@
             <h4>Export</h4>
             
             <hr>
-            <li title="RedCap" role="button" id="redcap-button">
+            <!-- <li title="RedCap" role="button" id="redcap-button">
                 <span class="icon"><img src="/static/icons/colour_cap.svg"></span>
                 <span class="left">REDCap</span>
-            </li>
+            </li> -->
             <li id="download" title="Download" role="button">
                 <span class="icon"><img src="/static/icons/colour_arrow_down_circle.svg"></span>
                 <span class="left">Download</span>
@@ -140,7 +145,7 @@
                     </label>
                     <label>
                         <span>
-                            Surgical Risk
+                            Risk
                             <clinic-modal-popup>
                                 <button class="infobutton"></button>
                                 <template>

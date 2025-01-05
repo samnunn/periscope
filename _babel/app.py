@@ -45,6 +45,7 @@ def clinic():
 @app.route("/auth", methods=["POST"])
 def secrets_auth():
     tenant_name = secure_filename(request.form.get("tenant_name", ""))
+    tenant_name = tenant_name.upper()
 
     # empty requests
     if not tenant_name:

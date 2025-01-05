@@ -137,7 +137,7 @@ section {
         gap: 0.5rem;
         width: 100%;
         h2 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-family: var(--font-rounded);
             font-weight: bold;
             margin: 0;
@@ -646,8 +646,21 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
         li:active:not([aria-selected="true"]) {
             background-color: color-mix(in oklab, black, var(--colour-lightgrey) 80%);
         }
+        li.warning {
+            /* animation: warning-outline 1200ms linear infinite alternate; */
+            background-color: color-mix(in oklab, rgba(231, 76, 60,1.0), lightgray 75%);
+        }
     }
 }
+@keyframes warning-outline {
+    0% {
+        outline: 2px solid rgba(231, 76, 60,0.5);
+    }
+    100% {
+        outline: 2px solid rgba(231, 76, 60,1.0);
+    }
+}
+
 #tab-display {
     margin: 0.75rem 0;
     display: grid;
@@ -678,6 +691,24 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     }
 }
 
+#site-title {
+    margin: 0 0 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    p {
+        margin: 0;
+        font-family: var(--font-rounded);
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+    img {
+        height: 1.5rem;
+    }
+}
+
+
 @media (max-width: 800px) {
     #site-title {
         margin: 0;
@@ -689,7 +720,6 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
         }
         img {
             width: 75%;
-            margin-bottom: 1rem;
         }
     }
     #tab-box {
