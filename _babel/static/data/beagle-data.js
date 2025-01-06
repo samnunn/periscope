@@ -647,41 +647,67 @@ export let boneData = [
         ],
     },
     {
-        static_name: "NSAID-reactive asthma",
-		id: "beagle-asthma-nsaids",
+        static_name: "Asthmatic",
+        dynamic_name: (inputData) => {
+            let parenthetical = []
+
+            // check control
+            if (
+                /n/i.test(inputData['diagnosis-asthma']['Daytime symptoms']) &&
+                /n/i.test(inputData['diagnosis-asthma']['Night symptoms']) &&
+                /n/i.test(inputData['diagnosis-asthma']['Heavy reliever use']) &&
+                /n/i.test(inputData['diagnosis-asthma']['Activity limitation'])
+            ) {
+                parenthetical.push("well controlled")
+            }
+
+            // check NSAID reactivity
+            if (/y/i.test(inputData['diagnosis-asthma']['NSAID reactive'])) {
+                parenthetical.push("NSAID-reactive")
+            }
+
+            if (parenthetical.length == 0) {
+                return "Asthmatic"
+            }
+
+            return `Asthmatic (${parenthetical.join(", ")})`
+        },
+		id: "beagle-asthmatic",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /y/i.test(inputData['diagnosis-asthma']['NSAID reactive']),
+            (inputData) => diagnosisExists(inputData, 'diagnosis-asthma'),
         ],
         defaultSuggestions: [
-            {
-                name: "Avoid NSAIDs",
-            },
         ],
         conditionalSuggestions: [
-        ],
-        severityGrades: [
-        ],
-    },
-    {
-        static_name: "Suboptimal asthma control",
-		id: "beagle-asthma-control",
-        matchStrategy: "any",
-        matchRules: [
-            (inputData) => {
-                if (/y/i.test(inputData['diagnosis-asthma']['Daytime symptoms'])) return true
-                if (/y/i.test(inputData['diagnosis-asthma']['Night symptoms'])) return true
-                if (/y/i.test(inputData['diagnosis-asthma']['Heavy reliever use'])) return true
-                if (/y/i.test(inputData['diagnosis-asthma']['Activity limitation'])) return true
-                return false
-            },
-        ],
-        defaultSuggestions: [
             {
-                name: "Referral for optimisation of asthma control",
+                matchStrategy: "any",
+                matchRules: [
+                    (inputData) => /y/i.test(inputData['diagnosis-asthma']['NSAID reactive']),
+                ],
+                suggestions: [
+                    {
+                        name: "Avoid NSAIDs",
+                    },
+                ],
             },
-        ],
-        conditionalSuggestions: [
+            {
+                matchStrategy: "any",
+                matchRules: [
+                    (inputData) => {
+                        if (/y/i.test(inputData['diagnosis-asthma']['Daytime symptoms'])) return true
+                        if (/y/i.test(inputData['diagnosis-asthma']['Night symptoms'])) return true
+                        if (/y/i.test(inputData['diagnosis-asthma']['Heavy reliever use'])) return true
+                        if (/y/i.test(inputData['diagnosis-asthma']['Activity limitation'])) return true
+                        return false
+                    },
+                ],
+                suggestions: [
+                    {
+                        name: "Referral for optimisation of asthma control",
+                    },
+                ],
+            },
         ],
         severityGrades: [
         ],
@@ -707,7 +733,7 @@ export let boneData = [
 		id: "beagle-immune-suppressed",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /y/i.test(inputData['diagnosis-rheumatoid-arthritis']['Immune suppressed'])
+            (inputData) => /y/i.test(inputData['diagnosis-rheumatoid-arthritis']['Immune suppressed']),
         ],
     },
     {
@@ -715,7 +741,7 @@ export let boneData = [
 		id: "beagle-copd",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => diagnosisExists(inputData, 'diagnosis-copd')
+            (inputData) => diagnosisExists(inputData, 'diagnosis-copd'),
         ],
     },
     {
@@ -723,7 +749,7 @@ export let boneData = [
 		id: "beagle-aortic-stenosis",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => diagnosisExists(inputData, 'diagnosis-aortic-stenosis')
+            (inputData) => diagnosisExists(inputData, 'diagnosis-aortic-stenosis'),
         ],
     },
     {
@@ -733,6 +759,19 @@ export let boneData = [
         matchRules: [
             (inputData) => /malig/i.test(inputData['fhx-anaesthesia-details']),
             (inputData) => /mh/i.test(inputData['fhx-anaesthesia-details']),
+        ],
+    },
+    {
+        static_name: "Cirrhosis",
+        dynamic_name: (inputData) => {
+            let cp = inputData['diagnosis-cirrhosis']['Child-Pugh']
+            if (!cp) return "Cirrhosis"
+            return `Child-Pugh ${cp.slice(0,2)} Cirrhosis`
+        },
+		id: "beagle-cirrhosis",
+        matchStrategy: "any",
+        matchRules: [
+            (inputData) => diagnosisExists(inputData, 'diagnosis-cirrhosis'),
         ],
     },
     // {

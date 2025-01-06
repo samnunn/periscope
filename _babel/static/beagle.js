@@ -196,9 +196,20 @@ class Bone {
 }
 
 import { boneData } from "/static/data/beagle-data.js"
+// let boneData = await import("/static/data/beagle-data.js")
 
 let bones = []
 for (let b of boneData) {
     // provide default empty array from non-essential items
-    bones.push(new Bone(b.dynamic_name, b.static_name, b.id, b.auto_hide, b.matchStrategy, b.matchRules, b.defaultSuggestions || [], b.conditionalSuggestions || [], b.severityGrades || []))
+    bones.push(new Bone(
+        b.dynamic_name,
+        b.static_name,
+        b.id,
+        b.auto_hide,
+        b.matchStrategy,
+        b.matchRules,
+        b.defaultSuggestions || [],
+        b.conditionalSuggestions || [],
+        b.severityGrades || []
+    ))
 }

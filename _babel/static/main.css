@@ -308,8 +308,7 @@ label:has(>input[type="checkbox"]) {
 /* Wrapper */
 
 .wrapped {
-    width: calc(100vw - 1.5rem);
-    width: calc(100svw - 1.5rem);
+    width: calc(100% - 1.5rem);
     max-width: 1500px;
     margin: 0 auto;
 }
@@ -392,7 +391,7 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
         &:hover:active:not(:has(clinic-modal-popup:active)) {
             border-color: var(--colour-darkgrey);
             background-color: var(--pill-colour);
-            transform: scale(0.99);
+            /* transform: scale(0.99); */
         }
     }
 

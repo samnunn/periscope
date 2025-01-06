@@ -124,13 +124,13 @@ export let allDiagnoses = [
             </div>`
     },
     {
-        matchable_string: "dyslipiaemia hyperlipidaemia hypercholesterolaemia",
+        matchable_string: "lipid dyslipiaemia hyperlipidaemia hypercholesterolaemia",
         name: "Dyslipidaemia",
         id: "diagnosis-dyslipidaemia",
         html: ``
     },
     {
-        matchable_string: "depression",
+        matchable_string: "depression low mood",
         name: "Depression",
         id: "diagnosis-depression",
         html: ``
@@ -408,13 +408,13 @@ export let allDiagnoses = [
             </label>`
     },
     {
-        matchable_string: "hypothyroidism low T4",
+        matchable_string: "hypothyroidism low T4 T3",
         name: "Hypothyroidism",
         id: "diagnosis-hypothyroidism",
         html: ``
     },
     {
-        matchable_string: "hyperthyroidism high T4",
+        matchable_string: "hyperthyroidism high T4 T3",
         name: "Hyperthyroidism",
         id: "diagnosis-hyperthyroidism",
         html: `
@@ -716,7 +716,7 @@ export let allDiagnoses = [
     },
     {
         matchable_string: "child pugh liver cirrhosis",
-        name: "Liver cirrhosis",
+        name: "Cirrhosis",
         id: "diagnosis-cirrhosis",
         html: `
             <label>

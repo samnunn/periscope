@@ -4,9 +4,17 @@
 //    ___) |  __/ |   \ V /| | (_|  __/   \ V  V / (_) | |  |   <  __/ |           
 //   |____/ \___|_|    \_/ |_|\___\___|    \_/\_/ \___/|_|  |_|\_\___|_|           
                                                                                 
+// if ("serviceWorker" in navigator) {
+//     const registration = navigator.serviceWorker.register("/static/sw.js")
+// }
+// kill legacy serviceWorkers
 if ("serviceWorker" in navigator) {
-    const registration = navigator.serviceWorker.register("/static/sw.js")
+    let registrations = await navigator.serviceWorker.getRegistrations()
+    for (let r of registrations) {
+        r.unregister()
+    }
 }
+
 
 //    ____   ___  ____ _____   ____                                                
 //   / ___| / _ \|  _ \_   _| / ___|  ___ ___  _ __ ___                            
@@ -186,28 +194,32 @@ beagle.addEventListener('message', (m) => {
         
         // if (m.data.id == "beagle-anonymous") return
 
-        let toAdd = document.createElement('ul')
-        toAdd.classList.add('pill-list')
-        toAdd.setAttribute('beagle-bone-id', m.data.id)
+        let issuePillContainer = document.createElement('ul')
+        issuePillContainer.classList.add('pill-list')
+        issuePillContainer.setAttribute('beagle-bone-id', m.data.id)
 
         if (m.data.auto_hide == true) {
-            toAdd.classList.add('auto_hide')
+            issuePillContainer.classList.add('auto_hide')
         }
 
-        let firstPill = document.createElement('li')
-        firstPill.classList.add('issue-pill')
-        firstPill.innerHTML = `<span>${m.data.name}</span><button tabindex="1">Add</button>`
-        firstPill.addEventListener('click', (e) => {
+        let issuePill = document.createElement('li')
+        issuePill.classList.add('issue-pill')
+        issuePill.innerHTML = `<span>${m.data.name}</span><button tabindex="1">Add</button>`
+        issuePill.addEventListener('click', (e) => {
             e.target.closest('li').classList.add('added')
-            boneInput.value = boneInput.value == "" ? `- ${m.data.name}` : `${boneInput.value}\n- ${m.data.name}`
+            let label = document.querySelector(`[beagle-bone-id="${m.data.id}"] > li.issue-pill > span`)
+            boneInput.value = boneInput.value == "" ? `- ${label.innerText}` : `${boneInput.value}\n- ${label.innerText}`
             boneInput.dispatchEvent(new Event('input', {bubbles: true}))
         })
 
-        toAdd.appendChild(firstPill)
-        toAdd.insertAdjacentHTML('beforeend', '<ul class="pill-list"></ul>')
+        // add issue pill to container
+        issuePillContainer.appendChild(issuePill)
 
+        // insert nested list too
+        issuePillContainer.insertAdjacentHTML('beforeend', '<ul class="pill-list"></ul>')
 
-        boneList.insertAdjacentElement("afterbegin", toAdd)
+        // add container to boneList
+        boneList.insertAdjacentElement("afterbegin", issuePillContainer)
     }
     
     // update bones
