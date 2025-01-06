@@ -244,7 +244,15 @@
                     <div class="hstack">
                         <label>
                             <!-- METs -->
-                            <span>METs</span>
+                            <span>
+                                METs
+                                <!-- <clinic-modal-popup>
+                                    <button class="infobutton"></button>
+                                    <template>
+                                        <clinic-citation-snippet citation-id="mets-and-functional-capacity-assessment-methods"></clinic-citation-snippet>
+                                    </template>
+                                </clinic-modal-popup> -->
+                            </span>
                             <div class="selectbox">
                                 <select clinic-parameter="mets" clinic-search="Metabolic Equivalents (METs)">
                                     <option value="" selected></option>
@@ -403,8 +411,8 @@
                             <div class="selectbox">
                                 <select clinic-parameter="fhx-anaesthesia" clinic-search="Family History of Issues with Anaesthesia">
                                     <option value="" selected></option>
-                                    <option value="YES">Yes</option>
-                                    <option value="nil known">No</option>
+                                    <option value="Has a FHx of issues with anaesthesia">Yes</option>
+                                    <option value="No known FHx of issues with anaesthesia">No</option>
                                 </select>
                             </div>
                             <input type="text" clinic-parameter="fhx-anaesthesia-details" placeholder="Details">

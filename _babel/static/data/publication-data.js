@@ -35,4 +35,10 @@ export let allPublications = [
         ugly: `Protopapa KL, Simpson JC, Smith NCE, Moonesinghe SR. Development and validation of the Surgical Outcome Risk Tool (SORT). BJS (British Journal of Surgery). 2014;101(13):1774–83.`,
         pretty: `Development and validation of the Surgical Outcome Risk Tool (SORT)`,
     },
+    {
+        id: 'bjaed-functional-capacity-assessment-methods',
+        url: 'https://doi.org/10.1016/j.bjae.2022.02.007',
+        ugly: `Silvapulle E, Darvall J. Subjective methods for preoperative assessment of functional capacity. BJA Education. 2022 Jul 1;22(7):249–57.`,
+        pretty: `Subjective methods for preoperative assessment of functional capacity`,
+    },
 ]

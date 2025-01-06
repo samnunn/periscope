@@ -141,6 +141,21 @@ export let citationSnippets = [
         publication: 'sort-original-paper'
     },
     {
+        id: 'mets-and-functional-capacity-assessment-methods',
+        body: `
+            <p>There are no reliable methods of subjective functional status assessment. The most commonly-used techniques are:</p>
+            <ul>
+                <li>Stair-climbing</p>
+                <li>ADL assessment</p>
+                <li>The Duke Activity Status Index (DASI)</p>
+            </ul>
+            - All measures used to approximate four METS (definition)
+            - Even the utility of four METS is dubious
+            - The attached BJA Education article has a useful overview of the topic
+        `,
+        publication: 'bjaed-functional-capacity-assessment-methods'
+    },
+    {
         id: 'rcri-interpretation',
         body: `
             <p>The Revised Cardiac Risk Index (RCRI) was originally published by <a href="https://doi.org/10.1056/nejm197710202971601">Goldman et al. (1977)</a>, though the original publication is widely understood to have under-estimated 30-day MACE risk. A more modern meta-analysis by <a href="https://doi.org/10.1016/j.cjca.2016.09.008">Duceppe et al. (2017)</a> has provided updated risk estimates:</a></p>

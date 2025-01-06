@@ -435,10 +435,8 @@ let outputTemplates = {
 - BVM: {{bvm}}
 - LMA: {{lma}}
 - ETT: {{ett}}
-- Agents used: {{agents}}
-- Haemodynamics: {{haemodynamics}}
 - Complications: {{gas-issues}}
-- FHx: {{fhx-anaesthesia}}
+- {{fhx-anaesthesia}}
 --> {{fhx-anaesthesia-details}}
 
 # Airway Assessment
@@ -473,7 +471,7 @@ let outputTemplates = {
 'consent': `# Informed Consent
 {{consent-output}}
 
-# Special Notes
+## Special Notes
 {{consent-notes}}`,
 
 'risk': `# Risk Assessment
