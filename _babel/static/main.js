@@ -8,6 +8,7 @@
 //     const registration = navigator.serviceWorker.register("/static/sw.js")
 // }
 // kill legacy serviceWorkers
+<<<<<<< Updated upstream
 window.addEventListener("load", async (e) => {
     if ("serviceWorker" in navigator) {
         let registrations = await navigator.serviceWorker.getRegistrations()
@@ -16,6 +17,14 @@ window.addEventListener("load", async (e) => {
         }
     }
 })
+=======
+// if ("serviceWorker" in navigator) {
+//     let registrations = await navigator.serviceWorker.getRegistrations()
+//     for (let r of registrations) {
+//         r.unregister()
+//     }
+// }
+>>>>>>> Stashed changes
 
 
 //    ____   ___  ____ _____   ____                                                
