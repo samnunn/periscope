@@ -143,12 +143,13 @@ export let citationSnippets = [
     {
         id: 'mets-and-functional-capacity-assessment-methods',
         body: `
-            <p>There are no reliable methods of subjective functional status assessment. The most commonly-used techniques are:</p>
+            <p>The most commonly-used methods subjective functional status assessment are:</p>
             <ul>
                 <li>Stair-climbing</p>
                 <li>ADL assessment</p>
                 <li>The Duke Activity Status Index (DASI)</p>
             </ul>
+            <p>None of these methods are reliable for predicting CPET-measured VO2 nor adverse outcomes after surgery.</p>
             - All measures used to approximate four METS (definition)
             - Even the utility of four METS is dubious
             - The attached BJA Education article has a useful overview of the topic
