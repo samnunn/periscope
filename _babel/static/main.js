@@ -1211,7 +1211,7 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
             <div class="clinic-diagnosis-top">
                 <span class="draghandle"></span>
                 <label>
-                    <input type="text" class="diagnosis-title" diagnosis-parameter="name" value="${this.data['name'] || ''}">
+                    <input type="text" class="diagnosis-title" diagnosis-parameter="name" value="">
                 </label>
                 <button class="clinic-diagnosis-edit" tabindex="3">Edit</button>
                 <button class="clinic-diagnosis-close" tabindex="3" onclick="this.closest('clinic-diagnosis').unfocus()">Close</button>
@@ -1227,6 +1227,9 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
                 <button onclick="this.closest('clinic-diagnosis')?.delete()">Delete</button>
             </div>
         `
+        // set value post-hoc
+        // this enables quotes in the diagnosis name to be auto-escaped
+        this.querySelector('input.diagnosis-title').value = this.data['name'] || ''
 
         // populate data if available
         for (let key in this.data) {
