@@ -403,6 +403,10 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
         background-color: var(--colour-darkgrey);
         border-color: color-mix(in oklab, var(--colour-darkgrey) 80%, black);
         color: white;
+
+        &:active {
+            background-color: color-mix(in oklab, var(--colour-darkgrey) 90%, black) !important;
+        }
     }
     
     li.added {
