@@ -1,4 +1,4 @@
-import { gradeOSA, diagnosisExists} from '/static/beagle.js'
+import { gradeOSA, diagnosisExists} from '/static/beagle-utils.js'
 
 export let boneData = [
     {
