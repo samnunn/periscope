@@ -1032,10 +1032,10 @@ customElements.define('clinic-searchresults', class extends HTMLElement {
                 currentlySelected.removeAttribute('aria-selected')
                 if (nextElement) {
                     // go to next
-                    nextElement.setAttribute('aria-selected', 'true')
+                    this.setSelectedElement(nextElement)
                 } else {
                     // go to top
-                    this.resultsContainer.firstElementChild.setAttribute('aria-selected', 'true')
+                    this.setSelectedElement(this.resultsContainer.firstElementChild)
                 }
             }
 
@@ -1047,13 +1047,21 @@ customElements.define('clinic-searchresults', class extends HTMLElement {
                 currentlySelected.removeAttribute('aria-selected')
                 if (previousElement) {
                     // go to next
-                    previousElement.setAttribute('aria-selected', 'true')
+                    this.setSelectedElement(previousElement)
                 } else {
                     // go to top
-                    this.resultsContainer.lastElementChild.setAttribute('aria-selected', 'true')
+                    this.setSelectedElement(this.resultsContainer.lastElementChild)
                 }
             }
         })
+    }
+
+    setSelectedElement(el) {
+        let allSelected = this.resultsContainer.querySelectorAll('[aria-selected]')
+        for (let s of allSelected) {
+            s.setAttribute('aria-selected', 'false')
+        }
+        el.setAttribute('aria-selected', 'true')
     }
 })
 
@@ -1198,6 +1206,7 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         this.setAttribute('clinic-parameter', this.data['id'])
 
         // set innerHTML to boilerplate + custom template
+        console.log('FLOOP', this.data['name'])
         this.innerHTML = `
             <div class="clinic-diagnosis-top">
                 <span class="draghandle"></span>
@@ -1403,6 +1412,13 @@ function insertSearchResult(target, data) {
     let newResult = document.createElement('li')
     newResult.innerHTML = `${data['name']}<button tabindex="-1">Add</button></li>`
     newResult.data = data
+    newResult.onmousedown = (e) => {
+        e.preventDefault() // don't steal focus
+        let containingResultsList = e.target.closest('clinic-searchresults')
+        if (containingResultsList) {
+            containingResultsList.setSelectedElement(e.target)
+        }
+    }
     newResult.onclick = (e) => {
         // insert new diagnosis
         // or focus existing version
