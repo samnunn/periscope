@@ -202,7 +202,7 @@ export let allDiagnoses = [
             </div>`
     },
     {
-        matchable_string: "chronic obstructive pulmonary airways disease",
+        matchable_string: "copd chronic obstructive pulmonary airways disease",
         name: "COPD",
         id: "diagnosis-copd",
         html: `
@@ -471,7 +471,7 @@ export let allDiagnoses = [
             </label>`
     },
     {
-        matchable_string: "cortid stenosis peripheral vascular disease claudication",
+        matchable_string: "carotid stenosis peripheral vascular disease claudication",
         name: "Peripheral vascular disease",
         id: "diagnosis-pvd",
         // addedCallback: (inputData) => { inputData['rcri-ihd'] = true },
@@ -1105,5 +1105,17 @@ export let allDiagnoses = [
         matchable_string: "cerebral palsy",
         name: "Cerebral palsy",
         id: "diagnosis-cp",
+    },
+    {
+        matchable_string: "pregnancy pregnant",
+        name: "Pregnant",
+        id: "diagnosis-pregnant",
+        html: `
+            <div class="hstack">
+                <label>
+                    Due Date
+                    <input type="date" diagnosis-parameter="Current gestational age">
+                </label>
+            </div>`
     },
 ]

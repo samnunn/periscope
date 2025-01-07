@@ -622,7 +622,6 @@ export let boneData = [
 		id: "beagle-heart-failure",
         matchStrategy: "any",
         matchRules: [
-            // (inputData) => /hf|hfref|hfpef|heart failure|ccf|chf/i.test(inputData['pmhx']),
             (inputData) => diagnosisExists(inputData, 'diagnosis-ccf'),
         ],
         defaultSuggestions: [
@@ -633,13 +632,16 @@ export let boneData = [
         ],
     },
     {
-        static_name: "Recent illness",
-		id: "beagle-recent-illness",
+        static_name: "Pregnant",
+		id: "beagle-pregnant",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /y/i.test(inputData['recently-ill']),
+            (inputData) => diagnosisExists(inputData, 'diagnosis-pregnant'),
         ],
         defaultSuggestions: [
+            {
+                name: "Counselling regarding risks of anaesthesia during pregnancy",
+            },
         ],
         conditionalSuggestions: [
         ],
