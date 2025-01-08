@@ -470,6 +470,11 @@ export let boneData = [
         static_name: "OSA",
         dynamic_name: (inputData) => {
             if (diagnosisExists(inputData, 'diagnosis-osa')) {
+                // CPAP data absent
+                if (!inputData['diagnosis-osa']['CPAP']) {
+                    return "Diagnosed OSA"
+                }
+                // CPAP data available
                 if (/y/i.test(inputData['diagnosis-osa']['CPAP'])) {
                     return "Diagnosed OSA (on CPAP)"
                 } else {
@@ -483,6 +488,8 @@ export let boneData = [
         matchStrategy: "any",
         matchRules: [
             (inputData) => {
+                if (diagnosisExists(inputData, 'diagnosis-osa')) return true
+
                 let risk = gradeOSA(inputData)
                 if (risk == 'intermediate' || risk == 'high') return true
             },
