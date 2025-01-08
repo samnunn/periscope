@@ -109,32 +109,23 @@ export let boneData = [
                         // low risk
                         if (risk == 'low') return false
 
-                        // intermediate risk
-                        if (risk == 'intermediate') {
-                            // and over 65
-                            if (age >= 65) return true
+                        // under 65
+                        if (age < 65) return false
 
-                            // and has risk factors
+                        // intermediate/high risk
+                        if (risk == 'intermediate' || risk == 'high') {
+                            // three or more risk factors
                             if (riskFactorCount >= 3) return true
 
-                            // and has established CVD
+                            // established CVD
                             if (existingCVD == true) return true
+
+                            // diabetic
+                            if (diagnosisExists(inputData, 'diagnosis-t2dm') || diagnosisExists(inputData, 'diagnosis-t2dm')) return true
                         }
 
-                        // high risk
-                        if (risk == 'high') {
-                            // and over 45
-                            if (age > 45) return true
-
-                            // and over 65
-                            if (age >= 65) return true // redundant
-
-                            // and has risk factors
-                            if (riskFactorCount >= 3) return true
-
-                            // and has established CVD
-                            if (existingCVD == true) return true
-                        }
+                        // fallback
+                        return false
                     },
                 ],
                 suggestions: [
