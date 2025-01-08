@@ -193,9 +193,6 @@ beagle.addEventListener('message', (m) => {
     
     // add bones
     if (m.data['type'] == 'beagle-bone-add') {
-        
-        // if (m.data.id == "beagle-anonymous") return
-
         let issuePillContainer = document.createElement('ul')
         issuePillContainer.classList.add('pill-list')
         issuePillContainer.setAttribute('beagle-bone-id', m.data.id)
@@ -206,13 +203,17 @@ beagle.addEventListener('message', (m) => {
 
         let issuePill = document.createElement('li')
         issuePill.classList.add('issue-pill')
-        issuePill.innerHTML = `<span>${m.data.name}</span><button tabindex="1">Add</button>`
-        issuePill.addEventListener('click', (e) => {
-            e.target.closest('li').classList.add('added')
-            let label = document.querySelector(`[beagle-bone-id="${m.data.id}"] > li.issue-pill > span`)
-            boneInput.value = boneInput.value == "" ? `- ${label.innerText}` : `${boneInput.value}\n- ${label.innerText}`
-            boneInput.dispatchEvent(new Event('input', {bubbles: true}))
-        })
+        if (m.data.id == "beagle-anonymous") {
+            issuePill.innerHTML = `<span>${m.data.name}</span>`
+        } else {
+            issuePill.innerHTML = `<span>${m.data.name}</span><button tabindex="1">Add</button>`
+            issuePill.addEventListener('click', (e) => {
+                e.target.closest('li').classList.add('added')
+                let label = document.querySelector(`[beagle-bone-id="${m.data.id}"] > li.issue-pill > span`)
+                boneInput.value = boneInput.value == "" ? `- ${label.innerText}` : `${boneInput.value}\n- ${label.innerText}`
+                boneInput.dispatchEvent(new Event('input', {bubbles: true}))
+            })
+        }
 
         // add issue pill to container
         issuePillContainer.appendChild(issuePill)
@@ -1206,7 +1207,6 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         this.setAttribute('clinic-parameter', this.data['id'])
 
         // set innerHTML to boilerplate + custom template
-        console.log('FLOOP', this.data['name'])
         this.innerHTML = `
             <div class="clinic-diagnosis-top">
                 <span class="draghandle"></span>
