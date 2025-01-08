@@ -316,7 +316,11 @@ export let boneData = [
         ],
         defaultSuggestions: [
             {
-                name: "Check BSL and ketones on arrival",
+                name: "Check BSL on arrival",
+                citation: 'ads-anzca-2022',
+            },
+            {
+                name: "Check ketones on arrival",
                 citation: 'ads-anzca-2022',
             },
         ],
