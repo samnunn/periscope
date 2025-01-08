@@ -1603,7 +1603,7 @@ beagle.postMessage({
 document.body.addEventListener('input', (e) => {
     // prevent infinite loop when persistentDataProxy fires an input event
     if (e?.detail?.preventAutophagy == true) {
-        console.debug(`"input" event captured, skipping because preventAutophagy == true`, e.target)
+        // console.debug(`"input" event captured, skipping because preventAutophagy == true`, e.target)
         return
     }
 
