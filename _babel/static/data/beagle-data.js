@@ -567,7 +567,7 @@ export let boneData = [
 		id: "beagle-opioid-tolerance",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /morph|trama|tapen|lexi|bupr|adone|targin|oxyc/i.test(inputData['rx']),
+            (inputData) => /morph|trama|tapen|lexi|bupre|adone|targin|oxyc/i.test(inputData['rx']),
             (inputData) => /y/i.test(inputData['diagnosis-chronic-pain']['Opioid tolerance']),
         ],
         defaultSuggestions: [
@@ -582,7 +582,7 @@ export let boneData = [
 		id: "beagle-chronic-pain",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /morph|trama|tapen|lexi|bupr|adone|targin|oxyc/i.test(inputData['rx']),
+            (inputData) => /morph|trama|tapen|lexi|bupre|adone|targin|oxyc/i.test(inputData['rx']),
             (inputData) => diagnosisExists(inputData, 'diagnosis-chronic-pain'),
         ],
         defaultSuggestions: [
