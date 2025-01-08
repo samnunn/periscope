@@ -95,11 +95,11 @@ function getBones(inputData) {
             let allSuggestions = b.defaultSuggestions.concat(conditionalSuggestions)
             let name
             name = b.static_name
-            try {
-                name = b.dynamic_name(inputData)
-            } catch (e) {
-                console.debug(`Failed to execute dynamic_name for "${b.id}" (function may have failed or be non-existent). Assigning static_name.`, e)
-            }
+            if (b.dynamic_name) try {
+                    name = b.dynamic_name(inputData)
+                } catch (e) {
+                    console.debug(`Failed to execute dynamic_name for "${b.id}". Falling back to static_name.`, e)
+                }
 
             let foundBone = {
                 name: name,
