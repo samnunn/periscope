@@ -15,6 +15,17 @@ export let boneData = [
             // }
         ],
         conditionalSuggestions: [
+            {
+                matchStrategy: "any",
+                matchRules: [
+                    (inputData) => parseFloat(inputData['age']) >= 50,
+                ],
+                suggestions: [
+                    {
+                        name: "Pre-operative ECG",
+                    }
+                ],
+            },
             // {
             //     matchStrategy: "any",
             //     matchRules: [
@@ -133,10 +144,10 @@ export let boneData = [
                         name: "Pre-operative cardiac biomarker testing",
                         citation: 'esc-2022',
                     },
-                    {
-                        name: "Pre-operative ECG",
-                        citation: 'esc-2022',
-                    },
+                    // {
+                    //     name: "Pre-operative ECG",
+                    //     citation: 'esc-2022',
+                    // },
                 ],
             },
             {
