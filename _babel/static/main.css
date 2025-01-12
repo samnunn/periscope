@@ -685,29 +685,6 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     gap: var(--tab-box-gap)
 }
 
-.status-dot {
-    --status-background: grey;
-    display: block;
-    background-color: var(--status-background);
-    border: 1px solid color-mix(in srgb, var(--status-background) 70%, black);
-    height: 0.8rem;
-    border-radius: 50% 50%;
-    aspect-ratio: 1;
-
-    &.danger {
-        --status-background: #e74c3c;
-    }
-    &.warning {
-        --status-background: #ff871d;
-    }
-    &.ok {
-        --status-background: #27ae60;
-    }
-    &.blank {
-        --status-background: transparent;
-    }
-}
-
 #site-title {
     margin: 0;
     display: flex;
