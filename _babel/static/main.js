@@ -1833,3 +1833,33 @@ document.addEventListener('click', (e) => {
         e.clientX > rect.left + rect.width
     ) { e.target.close() }
 })
+
+
+// WINDOW RESIZING
+let tabPicker = document.querySelector("#tab-picker")
+tabPicker.expanded = true
+
+function autoCollapseTabPicker() {
+    if (tabPicker.manually_set == true) {
+        return
+    }
+
+    if (window.innerWidth < 800) {
+        tabPicker.expanded = false
+    } else {
+        tabPicker.expanded = true
+    }
+
+    tabPicker.setAttribute("aria-expanded", tabPicker.expanded)
+}
+window.addEventListener("resize", (e) => {
+    autoCollapseTabPicker()
+})
+window.addEventListener("DOMContentLoaded", (e) => {
+    autoCollapseTabPicker()
+})
+document.querySelector("#tab-bar-collapse-button")?.addEventListener("click", (e) => {
+    tabPicker.expanded = !tabPicker.expanded
+    tabPicker.manually_set = true
+    tabPicker.setAttribute("aria-expanded", tabPicker.expanded)
+})
