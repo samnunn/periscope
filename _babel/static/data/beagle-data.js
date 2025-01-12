@@ -506,12 +506,12 @@ export let boneData = [
         ],
     },
     {
-        static_name: "Impaired renal function",
+        static_name: "CKD",
+        dynamic_name: (inputData) => `CKD ${inputData['diagnosis-ckd']['KDIGO stage']}`,
 		id: "beagle-renal-function",
         matchStrategy: "any",
         matchRules: [
             (inputData) => diagnosisExists(inputData, 'diagnosis-ckd'),
-            (inputData) => /\d{3}/i.test(inputData['uec']),
             (inputData) => inputData['rcri-creatinine'] == true,
         ],
         defaultSuggestions: [
