@@ -1814,7 +1814,7 @@ customElements.define('clinic-citation-snippet', class extends HTMLElement {
         let publicationInfo = allPublications.find(p => p.id == this.snippetInfo.publication)
         if (publicationInfo) {
             let cite = document.createElement('cite')
-            cite.innerHTML = `<a href="${publicationInfo.url}" target="_blank">${publicationInfo.pretty}</a>`
+            cite.innerHTML = `<a target="_blank" href="${publicationInfo.url}" target="_blank">${publicationInfo.pretty}</a>`
             this.appendChild(cite)
         }
     }
