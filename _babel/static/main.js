@@ -1837,10 +1837,10 @@ document.addEventListener('click', (e) => {
 
 // WINDOW RESIZING
 let tabPicker = document.querySelector("#tab-picker")
-tabPicker.expanded = true
+localStorage.setItem('sidebar-overridden', 'false')
 
 function autoCollapseTabPicker() {
-    if (tabPicker.manually_set == true) {
+    if (localStorage.getItem('sidebar-overridden') == 'true') {
         return
     }
 
@@ -1855,11 +1855,11 @@ function autoCollapseTabPicker() {
 window.addEventListener("resize", (e) => {
     autoCollapseTabPicker()
 })
-window.addEventListener("DOMContentLoaded", (e) => {
+document.addEventListener("DOMContentLoaded", (e) => {
     autoCollapseTabPicker()
 })
 document.querySelector("#tab-bar-collapse-button")?.addEventListener("click", (e) => {
     tabPicker.expanded = !tabPicker.expanded
-    tabPicker.manually_set = true
+    localStorage.setItem('sidebar-overridden', 'true')
     tabPicker.setAttribute("aria-expanded", tabPicker.expanded)
 })
