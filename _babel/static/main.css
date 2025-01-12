@@ -742,26 +742,6 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     }
 }
 
-/* EASTER EGGS */
-#secret-propofol {
-    width: 4rem;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    padding: 0 0 1rem 1rem;
-    opacity: 0;
-    transform: scale(0.8) rotate(-3deg);
-
-    &:hover {
-        opacity: 0.6;
-        transform: scale(1) rotate(0deg);
-    }
-
-    &:hover:active {
-        transform: scale(0.9) rotate(0deg);
-    }
-}
-
 /* DIAGNOSIS ENTRY */
 #diagnosis-box {
     #diagnosis-placeholder {
