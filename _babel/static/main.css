@@ -20,7 +20,12 @@
     --tab-box-gap: 0.75rem;
     --vstack-gap: 0.5rem;
     --hstack-gap: var(--vstack-gap);
-    --navbar-top-height: 3rem;
+}
+
+@media screen and not (display-mode: browser) {
+    body {
+        --body-padding-top: 0;
+    }
 }
 
 ::view-transition-old(root),
