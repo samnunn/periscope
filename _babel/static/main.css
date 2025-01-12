@@ -13,6 +13,10 @@
     --font-rounded: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
     --input-box-height: 2.5rem;
 
+    --body-padding-top: 0.75rem;
+    --body-padding-bottom: 0.75rem;
+    --body-padding-left: 0.75rem;
+    --body-padding-right: 0.75rem;
     --tab-box-gap: 0.75rem;
     --vstack-gap: 0.5rem;
     --hstack-gap: var(--vstack-gap);
@@ -116,10 +120,10 @@ hr {
 
 .island {
     background-color: white;
-    background: VAR(--greydient);
+    background: var(--greydient);
     padding: calc(var(--vstack-gap) * 1.5);
     border-radius: 0.75rem;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+    /* box-shadow: 0px 0px 5px rgba(0,0,0,0.2); */
     border: 1px solid transparent;
 }
 
@@ -127,8 +131,6 @@ hr {
 section {
     margin: 0;
     width: 100%;
-    max-width: 100%;
-    /* transform: scale(0.995); */
     
     overflow: hidden;
 
@@ -173,9 +175,10 @@ section {
 section:focus-within {
     --shadow-colour: rgba(0,0,0,0.3);
     transform: scale(1.0);
-    border-color: color-mix(in oklab, var(--colour-darkgrey) 25%, white);
-    /* background-color: color-mix(in oklab, var(--colour-lightgrey) 80%, white); */
-    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+    /* border-color: color-mix(in oklab, var(--colour-darkgrey) 25%, white); */
+    /* box-shadow: 0px 5px 15px rgba(0,0,0,0.3); */
+    /* border-color: var(--colour-darkgrey); */
+    /* outline: 2px solid var(--colour-darkgrey); */
     img.icon {
         transform: scale(1.2);
     }
@@ -313,9 +316,7 @@ label:has(>input[type="checkbox"]) {
 /* Wrapper */
 
 .wrapped {
-    width: calc(100% - 1.5rem);
-    max-width: 1500px;
-    margin: 0 auto;
+    width: 100%;
 }
 
 textarea.bigbox {
@@ -593,11 +594,13 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
 #tab-picker {
     position: sticky;
     /* top: calc(var(--navbar-top-height) + 0.75rem); */
-    top: 0.75rem;
-    margin: 0.75rem 0 0 0;
-    padding: 1rem 0.55rem !important;
+    top: var(--body-padding-top);
+    margin: var(--body-padding-top) 0 0 0;
+    padding: 0.5rem !important;
     /* prevent #tab-picker from growing vertically */
-    block-size: min-content; 
+    block-size: min-content;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 
     ul {
         padding: 0;
@@ -671,7 +674,7 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
 }
 
 #tab-display {
-    margin: 0.75rem 0;
+    margin: var(--body-padding-top) var(--body-padding-right) var(--body-padding-bottom) 0;
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--tab-box-gap)
