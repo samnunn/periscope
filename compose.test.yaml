@@ -1,0 +1,10 @@
+services:
+  clinic:
+    restart: unless-stopped
+    build: .
+    ports:
+      - "8070:8070"
+    environment:
+      - CMD=pipenv run gunicorn -b 0.0.0.0:8070 --worker-class eventlet -w 1 app:app
+    env_file:
+      - www/.env
