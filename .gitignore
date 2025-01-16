@@ -1,6 +1,5 @@
 
 .DS_Store
-api-server/db/*
 _private
 www/tenants/*
 www/*.env
