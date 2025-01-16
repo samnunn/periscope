@@ -7,10 +7,10 @@ services:
     environment:
       - CMD=pipenv run gunicorn -b 0.0.0.0:8070 --worker-class eventlet -w 1 app:app
     env_file:
-      - _babel/.env
+      - www/.env
   tunnel:
     image: cloudflare/cloudflared:latest
     restart: unless-stopped
     command: tunnel --no-autoupdate run
     env_file:
-      - _babel/.env
+      - www/.env

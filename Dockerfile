@@ -4,14 +4,14 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install pipenv
-COPY _babel/Pipfile .
+COPY www/Pipfile .
 RUN pip install pipenv
 
 # Install the dependencies using pipenv
 RUN pipenv install
 
 # Copy all the files required to run the Flask app
-COPY _babel /app
+COPY www /app
 
 # Expose the port and set the command
 EXPOSE 8070

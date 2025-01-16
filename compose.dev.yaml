@@ -5,5 +5,5 @@ services:
     develop:
       watch:
         - action: sync
-          path: _babel
+          path: www
           target: /app
