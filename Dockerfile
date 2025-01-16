@@ -4,7 +4,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install pipenv
-COPY www/Pipfile .
+COPY Pipfile .
 RUN pip install pipenv
 
 # Install the dependencies using pipenv
