@@ -1,5 +1,5 @@
 services:
-  babel:
+  clinic:
     restart: unless-stopped
     build: .
     ports:
