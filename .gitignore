@@ -2,5 +2,5 @@
 .DS_Store
 api-server/db/*
 _private
-_babel/tenants/*
-_babel/*.env
+www/tenants/*
+www/*.env

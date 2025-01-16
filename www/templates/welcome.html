@@ -55,7 +55,9 @@
     }
 
     .wrapped {
+        width: calc(100% - 2rem);
         max-width: 960px;
+        margin: 0 auto;
     }
 
     #topper {
@@ -79,15 +81,8 @@
             color: white;
             text-align: center;
             font-weight: bold;
-            
-            h1 {
-                font-size: calc(var(--topper-height) * 0.12);
-            }
-            p {
-                font-size: calc(min(var(--topper-height) * 0.05, 1.5rem));
-            }
-            h1, p {
-                margin: 0;
+            img {
+                height: calc(var(--topper-height) * 0.17);
             }
             form {
                 display: flex;
@@ -258,14 +253,15 @@ a:has(>.button) {
 <main>
     <section id="topper">
         <div id="banner" class="wrapped">
-            <h1>Periscope</h1>
-            <p>An open perioperative platform.</p>
-            <form action="/auth" method="POST">
+            <!-- <h1>Periscope</h1> -->
+            <!-- <p>An open perioperative platform.</p> -->
+            <img src="/static/periscope_logo.svg" alt="Periscope: An Open Perioperative Platform">
+            <!-- <form action="/auth" method="POST">
                 <input type="text" placeholder="Enter Site Code">
                 <input type="submit" class="button pink" value="Go">
                 <span>or</span>
                 <a href="{{ url_for('clinic') }}" class="button pink">Try a Demo</a>
-            </form>
+            </form> -->
         </div>
 
         <div id="topper-bg"></div>
