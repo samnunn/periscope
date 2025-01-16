@@ -1,2 +1,2 @@
 #! /bin/sh
-docker compose -f compose.yaml up -d
+docker compose -f compose.base.yaml up -d
