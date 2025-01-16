@@ -18,8 +18,9 @@
     --body-padding-left: 0.75rem;
     --body-padding-right: 0.75rem;
     --tab-box-gap: 0.75rem;
-    --vstack-gap: 0.5rem;
+    --vstack-gap: 0.65rem;
     --hstack-gap: var(--vstack-gap);
+    --island-padding: 0.75rem;
 }
 
 @media screen and not (display-mode: browser) {
@@ -126,7 +127,7 @@ hr {
 .island {
     background-color: white;
     background: var(--greydient);
-    padding: calc(var(--vstack-gap) * 1.5);
+    padding: var(--island-padding);
     border-radius: 0.75rem;
     /* box-shadow: 0px 0px 5px rgba(0,0,0,0.2); */
     border: 1px solid transparent;
