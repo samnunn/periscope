@@ -1413,7 +1413,7 @@ function insertSearchResult(target, data) {
     data['id'] = data['id']
 
     let newResult = document.createElement('li')
-    newResult.innerHTML = `${data['name']}<button tabindex="-1">Add</button></li>`
+    newResult.innerHTML = `<span>${data['name']}</span><button tabindex="-1">Add</button></li>`
     newResult.data = data
     newResult.onmousedown = (e) => {
         e.preventDefault() // don't steal focus
