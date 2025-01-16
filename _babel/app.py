@@ -37,6 +37,11 @@ def index():
     return redirect(url_for("clinic"))
 
 
+@app.route("/welcome")
+def welcome():
+    return render_template("welcome.html")
+
+
 @app.route("/clinic")
 def clinic():
     return render_template("clinic.html")
