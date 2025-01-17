@@ -879,6 +879,7 @@ function renderEntireDocument() {
     }
     return textDump
 }
+document.renderEntireDocument = () => renderEntireDocument() // make available from main thread
 
 function downloadDocument() {
     let formattedDate = new Date().toISOString().slice(0,10)
@@ -1560,6 +1561,7 @@ let persistentDataProxy = new Proxy(persistentDataStore, {
         return true
     }
 })
+document.persistentDataProxy = persistentDataProxy // make accessible from the main thread
 
 function sendToBeagle(inputData) {
     beagle.postMessage({
