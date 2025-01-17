@@ -807,6 +807,9 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
             display: none;
         }
     }
+    #pmhx-divider {
+        display: none;
+    }
 }
 
 
