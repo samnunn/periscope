@@ -489,6 +489,17 @@ export let boneData = [
         defaultSuggestions: [
         ],
         conditionalSuggestions: [
+            {
+                matchStrategy: "any",
+                matchRules: [
+                    (inputData) => /y/i.test(inputData['diagnosis-osa']['CPAP']),
+                ],
+                suggestions: [
+                    {
+                        name: "Advised to bring home CPAP machine",
+                    },
+                ],
+            },
         ],
         severityGrades: [
         ],
