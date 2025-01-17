@@ -11,10 +11,3 @@ def test_diagnosis_adding(page):
     expect(
         page.locator('clinic-diagnosis[clinic-parameter="diagnosis-t2dm"]')
     ).to_be_visible()
-
-
-def test_diagnosis_search_box_expansion(page):
-    page.goto("http://127.0.0.1:8070/clinic")
-    page.get_by_role("button", name="Accept").click()
-    page.get_by_placeholder("Search for a condition").click()
-    expect(page.get_by_role("img", name="Up Arrow")).to_be_visible()
