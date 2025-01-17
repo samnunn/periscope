@@ -348,7 +348,7 @@ export let boneData = [
         ],
     },
     {
-        static_name: "SGTL2i in use",
+        static_name: "SGLT2 inhibitor in use",
 		id: "beagle-flozin",
         matchStrategy: "any",
         matchRules: [
