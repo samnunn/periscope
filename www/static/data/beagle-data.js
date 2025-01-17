@@ -400,7 +400,7 @@ export let boneData = [
         ],
     },
     {
-        static_name: "Known analphylaxis",
+        static_name: "Known anaphylaxis",
 		id: "beagle-analphylaxis",
         matchStrategy: "any",
         matchRules: [
