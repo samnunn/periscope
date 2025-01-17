@@ -741,6 +741,24 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     .autotall {
         min-height: 10rem;
     }
+    #diagnosis-placeholder {
+        display: none !important;
+    }
+    #pmhx-divider {
+        display: unset !important;
+    }
+    .double {
+        grid-column-end: unset;
+    }
+    .triple {
+        grid-column-end: unset;
+    }
+    .quadruple {
+        grid-column-end: unset;
+    }
+    .quintuple {
+        grid-column-end: unset;
+    }
 }
 
 /* DIAGNOSIS ENTRY */
