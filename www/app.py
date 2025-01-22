@@ -1,15 +1,16 @@
-from flask import (
-    Flask,
-    send_file,
-    request,
-    abort,
-    session,
-    render_template,
-    redirect,
-    url_for,
-)
 import os
 from functools import wraps
+
+from flask import (
+    Flask,
+    abort,
+    redirect,
+    render_template,
+    request,
+    send_file,
+    session,
+    url_for,
+)
 from werkzeug.utils import secure_filename
 
 # BOOTSTRAPPING
@@ -33,8 +34,8 @@ def tenancy_required(f):
 # ROUTES
 @app.route("/")
 def index():
-    # return render_template("welcome.html")
-    return redirect(url_for("clinic"))
+    return render_template("welcome.html")
+    # return redirect(url_for("clinic"))
 
 
 @app.route("/welcome")
