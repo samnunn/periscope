@@ -401,7 +401,7 @@ export let boneData = [
     },
     {
         static_name: "Known anaphylaxis",
-		id: "beagle-analphylaxis",
+		id: "beagle-anaphylaxis",
         matchStrategy: "any",
         matchRules: [
             (inputData) => diagnosisExists(inputData, 'diagnosis-anaphylaxis'),
