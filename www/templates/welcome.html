@@ -1,283 +1,61 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- <link rel="stylesheet" href="/static/gasnotes.css"> -->
 <style>
-    :root {
-    /*Colours*/
-    --color-white: #ffffff;
-    --color-black: black;
-    --light-grey: #bbb;
-    --dark-grey: rgb(24, 26, 26);
-    --header-decorator-color: #bdc3c7;
-    --gasnotes-blue: #3498db;
-    --gasnotes-darkblue: rgb(55, 109, 161);
-
-    --color-navy: #34495e;
-    --color-light-one: #ecf0f1;
-    --color-green: rgb(76, 209, 55);
-    --color-red: #e74c3c;
-    --color-yellow: rgb(249, 186, 49);
-    --color-blue: rgb(0, 168, 255);
-    --color-purple: rgb(224, 86, 253);
-    --color-pink: rgb(226 50 141);
-    --color-white: rgb(255,255,255);
-
-    /* Links */
-    --linkcolour: #2980b9;
-    --hovercolour: var(--gasnotes-blue);
-    --visitedcolour: var(--gasnotes-darkblue);
-
-    /* Text */
-    --serif: "Segoe UI Emoji", "Georgia", serif;
-    --sans-serif: "Segoe UI Emoji", "Helvetica", sans-serif;
-    --monospace: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-    --font-weight: normal;
-
-    /*Responsive breakpoints*/
-    --bp-wrapperwidth: 800px;
-
-    /* Buttons */
-    --button-height: 2.7rem;
-    --button-shadow-offset: 2px;
-    --button-color: var(--gasnotes-blue);
-
-    --border-radius: 0.7rem;
-
-}
-
-    main {
-        display: grid;
-        grid-template-columns: 1fr;
-        width: 100%;
-        background-color: white;
-        font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
-        font-size: 1.4rem;
-    }
-
-    .wrapped {
-        width: calc(100% - 2rem);
-        max-width: 960px;
-        margin: 0 auto;
-    }
-
-    #topper {
-        --topper-height: calc(clamp(40vh, 15vh + 40vw, 75vh));
-        position: relative;
-        width: 100vw;
-        height: var(--topper-height);
-        /* width: 100%; */
-        /* height: auto; */
-        /* aspect-ratio: 1.618/1; */
-        background-image: url("/static/noise.png");
-        background-size: 110px 100px;
-        background-color: color-mix(in srgb, #60a3bc, black 10%);
-        box-shadow: inset 0 -20px 20px -20px rgb(0,0,0,0.25);
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        #banner {
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            img {
-                height: calc(var(--topper-height) * 0.17);
-            }
-            form {
-                display: flex;
-                flex-direction: row;
-                gap: 0.5rem;
-                justify-content: center;
-                align-items: center;
-                margin-top: 4rem;
-
-                span {
-                    margin: 0 1.5rem;
-                }
-            }
-
-        }
-
-        #topper-bg {
-            position: absolute;
-            top: 0;
-            height: 100%;
-            width: 100vw;
-            background: no-repeat url("/static/banner.svg") center / auto 100%;
-            filter: drop-shadow(3px 5px 5px rgba(0,0,0,0.5));
-            pointer-events: none;
-        }
-    }
-
-    section {
-        margin: 0;
-    }
-
-    /* BUTTONS */
-.button {
-    /* reset */
-    appearance: none;
-    outline: none;
-    border: none;
-    text-decoration: none !important;
-    /* box */
-    padding: 0 1rem;
-    margin: 0 var(--button-shadow-offset) var(--button-shadow-offset) 0;
-    /* text */
-    font-size: 1.2rem;
-    font-weight: bold;
-    font-family: var(--sans-serif);
-    color: white !important;
-    /* fancy shape */
-    background-color: var(--button-color);
-    border-radius: var(--border-radius);
-    position: relative;
-    top: 0;
-    left: 0;
-    box-shadow: var(--button-shadow-offset) var(--button-shadow-offset) 0 color-mix(in srgb, var(--button-color) 70%, black);
-    height: var(--button-height);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.button.small {
-    --button-height: 2.2rem;
-    font-size: 1.1rem;
-    padding: 0 0.8rem;
-}
-a:has(>.button) {
-    text-decoration: none;
-}
-.button:hover {
-    background-color: color-mix(in srgb, var(--button-color) 90%, white);
-}
-.button:active {
-    top: var(--button-shadow-offset);
-    left: var(--button-shadow-offset);
-    box-shadow: 0px 0px 0 color-mix(in srgb, var(--button-color) 90%, white);
-    background-color: var(--button-color);
-}
-.button-group {
-    display: flex;
-    flex-direction: row;
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-
-    & label {
-        /* reset */
-        text-decoration: none;
-        /* box */
-        padding: 0.75rem 1rem;
-        /* text */
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: var(--button-shadow-offset);
-        /* fancy shape */
-        background-color: var(--button-color);
-        box-shadow: var(--button-shadow-offset) var(--button-shadow-offset) 0 color-mix(in srgb, var(--button-color) 70%, black);
-        /* animation */
-        position: relative;
-        top: 0;
-        left: 0;
-
-        & input {
-            display: none;
-        }
-    }
-    & label:has(input:checked) {
-        background-color: color-mix(in srgb, var(--button-color) 70%, black);
-        top: var(--button-shadow-offset);
-        left: var(--button-shadow-offset);
-        box-shadow: 0px 0px 0 color-mix(in srgb, var(--button-color) 90%, white);
-    }
-    & label:first-child {
-        border-radius: var(--border-radius) 0 0 var(--border-radius);
-    }
-    & label:last-child {
-        border-radius: 0 var(--border-radius) var(--border-radius) 0;
-    }
-    & label:hover {
-        background-color: color-mix(in srgb, var(--button-color) 90%, white);
-    }
-    & label:active {
-        background-color: color-mix(in srgb, var(--button-color) 60%, black);
-        top: var(--button-shadow-offset);
-        left: var(--button-shadow-offset);
-        box-shadow: 0px 0px 0 color-mix(in srgb, var(--button-color) 90%, white);
-    }
-}
-
-.dark {
-    --button-color: var(--color-navy);
-}
-.light {
-    --button-color: var(--color-light-one);
-    color: var(--color-light-two) !important;
-}
-.green {
-    color: var(--color-green);
-    --button-color: var(--color-green);
-}
-.red {
-    color: var(--color-red);
-    --button-color: var(--color-red);
-}
-.yellow {
-    color: var(--color-yellow);
-    --button-color: var(--color-yellow);
-}
-.pink {
-    --button-color: var(--color-pink);
-}
-.blue {
-    color: var(--color-blue);
-    --button-color: var(--color-blue);
-}
-.purple {
-    color: var(--color-purple);
-    --button-color: var(--color-purple);
-}
-.white {
-    color: white;
-    --button-color: white;
-}
-.vantablack {
-    color: white;
-    --button-color: black;
-    border-color: white !important;
-}
+    {% include 'welcome.css' %}
 </style>
 <main>
-    <section id="topper">
-        <div id="banner" class="wrapped">
-            <!-- <h1>Periscope</h1> -->
-            <!-- <p>An open perioperative platform.</p> -->
-            <img src="/static/periscope_logo.svg" alt="Periscope: An Open Perioperative Platform">
-            <!-- <form action="/auth" method="POST">
-                <input type="text" placeholder="Enter Site Code">
-                <input type="submit" class="button pink" value="Go">
-                <span>or</span>
-                <a href="{{ url_for('clinic') }}" class="button pink">Try a Demo</a>
-            </form> -->
+    <header>
+        <nav id="navbar" class="wrapped">
+            <div id="navbar-left">
+                <h1 id="site-title">Periscope</h1>
+            </div>
+            <div id="navbar-right">
+                <span>Huh?</span>
+                <span>Oh…</span>
+                <span>Let's Go 🚀</span>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="topper">
+            <section class="wrapped">
+                <h1 id="yell">The <mark>free and open</mark> perioperative platform.</h1>
+            </section>
         </div>
-
-        <div id="topper-bg"></div>
-    </section>
-    <section id="why-periscope">
+        <section class="wrapped">
+            <div id="idea-grid">
+                <div class="idea-words">
+                    <h2><mark class="green">Huh?!</mark>  🤔</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+                <div class="idea-picture">
+                    <img src="/static/illustrations/anaesthetic_machine.svg" alt="">
+                </div>
+                <div class="idea-picture">
+                    <img src="/static/illustrations/propeller_hat.svg" alt="">
+                </div>
+                <div class="idea-words">
+                    <h2><mark class="blue">Oh…</mark>  😯</h2>
+                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+                <div class="idea-words">
+                    <h2><mark class="yellow">Woah!</mark>  🤯</h2>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+                <div class="idea-picture">
+                    <img src="/static/illustrations/lma.svg" alt="">
+                </div>
+                <div id="dot-spacer"></div>
+            </div>
+        </section>
+        <section id="call-to-action">
+            <h1><mark>Let's GO!</mark></h1>
+        </section>
+    </main>
+    <footer>
         <div class="wrapped">
-            <h2>Why Periscope?</h2>
-            <p>Perioperative assessment requires comprehensive documentation, yet digital tools are often unintuitive and repetitious while offering limited safety features. Modern perioperative care demands platforms that enhance clinical decision-making, improve efficiency, and promote evidence-based practice.</p>
-            <p><b>This is Periscope</b>: an open-source perioperative care platform with a sophisticated <strong>safety algorithm</strong> that automatically detects high-risk features and suggests <strong>evidence-based interventions</strong>, referenced to society guidelines. The interface is rich with <strong>efficiency</strong>-focused tools and automations. Periscope automatically identifies candidates for <strong>audits and clinical trials</strong>, then enables single-click enrolment via integration with REDCap.</p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </div>
-    </section>
-    <section id="get-involved">
-        <div class="wrapped">
-            <h2>Why Periscope?</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-    </section>
+    </footer>
 </main>
 {% endblock %}
