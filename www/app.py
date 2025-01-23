@@ -34,8 +34,8 @@ def tenancy_required(f):
 # ROUTES
 @app.route("/")
 def index():
-    return render_template("welcome.html")
-    # return redirect(url_for("clinic"))
+    # return render_template("welcome.html")
+    return redirect(url_for("clinic"))
 
 
 @app.route("/welcome")
