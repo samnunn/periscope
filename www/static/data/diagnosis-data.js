@@ -25,10 +25,7 @@ export let allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <label>
-                    HbA1c
-                    <input type="number" min="0" max="30" step="0.1" diagnosis-parameter="HbA1c" clinic-parameter="hba1c">
-                </label>
+                <clinic-input clinic-parameter="investigations-hba1c"></clinic-input>
             </div>
             <label>
                 Microvascular Complications
@@ -59,10 +56,7 @@ export let allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <label>
-                    HbA1c
-                    <input type="number" diagnosis-parameter="HbA1c" clinic-parameter="hba1c">
-                </label>
+                <clinic-input clinic-parameter="investigations-hba1c"></clinic-input>
             </div>
             <label>
                 Microvascular Complications
@@ -103,8 +97,8 @@ export let allDiagnoses = [
         matchable_string: "essential hypertension htn",
         name: "Hypertension",
         id: "diagnosis-hypertension",
-        addedCallback: (inputData) => { inputData['hypertensive'] = true },
-        removedCallback: (inputData) => { inputData['hypertensive'] = false },
+        addedCallback: (inputData) => { inputData['stopbang-hypertensive'] = true },
+        removedCallback: (inputData) => { inputData['stopbang-hypertensive'] = false },
         html: `
             <div class="hstack">
                 <label>
@@ -219,17 +213,7 @@ export let allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <label>
-                    Smoking
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Smoking" clinic-parameter="smoking" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="active smoker">Active smoker</option>
-                            <option value="ex-smoker">Ex-smoker</option>
-                            <option value="never smoked">Never smoked</option>
-                        </select>
-                    </div>
-                </label>
+                <clinic-input clinic-parameter="smoking-status"></clinic-input>
             </div>
             <div class="hstack">
                 <label>
@@ -453,17 +437,7 @@ export let allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <label>
-                    Antiplatets
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Antiplatelets" clinic-parameter="antiplatelets" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="single">Single</option>
-                            <option value="dual">Dual</option>
-                            <option value="none">None</option>
-                        </select>
-                    </div>
-                </label>
+                <clinic-input clinic-parameter="antiplatelet-use"></clinic-input>
             </div>
             <label>
                 Last Stress Test
@@ -488,17 +462,7 @@ export let allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <label>
-                    Antiplatets
-                    <div class="selectbox">
-                        <select diagnosis-parameter="Antiplatelets" clinic-parameter="antiplatelets" autocomplete="off">
-                            <option value="" selected></option>
-                            <option value="single">Single</option>
-                            <option value="dual">Dual</option>
-                            <option value="none">None</option>
-                        </select>
-                    </div>
-                </label>
+                <clinic-input clinic-parameter="antiplatelet-use"></clinic-input>
             </div>
         `
     },
@@ -537,7 +501,7 @@ export let allDiagnoses = [
             </div>`
     },
     {
-        matchable_string: "stroke transient ischaemic attack cerebrovascular accident",
+        matchable_string: "cva stroke transient ischaemic attack cerebrovascular accident",
         name: "Cerebrovascular accident",
         id: "diagnosis-cva",
         addedCallback: (inputData) => { inputData['rcri-cva'] = true },

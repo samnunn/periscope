@@ -18,7 +18,7 @@ export let boneData = [
             {
                 matchStrategy: "any",
                 matchRules: [
-                    (inputData) => parseFloat(inputData['age']) >= 50,
+                    (inputData) => parseFloat(inputData['patient-age']) >= 50,
                 ],
                 suggestions: [
                     {
@@ -101,7 +101,7 @@ export let boneData = [
                 matchRules: [
                     (inputData) => {
                         // preamble
-                        let age = parseInt(inputData['age'])
+                        let age = parseInt(inputData['patient-age'])
                         let risk = inputData['operation-risk']
                         let riskFactorCount = 0
                         let riskyDiagnoses = [
@@ -113,7 +113,7 @@ export let boneData = [
                         for (let dx of riskyDiagnoses) {
                             if (diagnosisExists(inputData, dx)) riskFactorCount += 1
                         }
-                        if (inputData['smoking'] == 'active smoker') riskFactorCount += 1
+                        if (/active/i.test(inputData['smoking-status'])) riskFactorCount += 1
 
                         let existingCVD = ['diagnosis-ccf', 'diagnosis-pvd', 'diagnosis-ihd'].some((dx) => diagnosisExists(inputData, dx))
                         
@@ -132,9 +132,10 @@ export let boneData = [
                             if (existingCVD == true) return true
 
                             // diabetic
-                            if (diagnosisExists(inputData, 'diagnosis-t2dm') || diagnosisExists(inputData, 'diagnosis-t2dm')) return true
+                            if (diagnosisExists(inputData, 'diagnosis-t2dm') || diagnosisExists(inputData, 'diagnosis-t1dm')) return true
                         }
 
+                        // debugger
                         // fallback
                         return false
                     },
@@ -155,7 +156,7 @@ export let boneData = [
                 matchRules: [
                     (inputData) => {
                         // preamble
-                        let age = parseInt(inputData['age'])
+                        let age = parseInt(inputData['patient-age'])
                         let risk = inputData['operation-risk']
                         let riskFactorCount = 0
                         let riskyDiagnoses = [
@@ -167,7 +168,7 @@ export let boneData = [
                         for (let dx of riskyDiagnoses) {
                             if (diagnosisExists(inputData, dx)) riskFactorCount += 1
                         }
-                        if (inputData['smoking'] == 'active smoker') riskFactorCount += 1
+                        if (/active/i.test(inputData['smoking-status'])) riskFactorCount += 1
 
                         let existingCVD = ['diagnosis-ccf', 'diagnosis-pvd', 'diagnosis-ihd'].some((dx) => diagnosisExists(inputData, dx))
                         
@@ -250,7 +251,7 @@ export let boneData = [
         matchStrategy: "any",
         matchRules: [
             (inputData) => diagnosisExists(inputData, 'diagnosis-t2dm'),
-            // (inputData) => /sulin|metf|iclaz|glipin|glargine|janu|floz|xig|jardia/i.test(inputData['rx']),
+            // (inputData) => /sulin|metf|iclaz|glipin|glargine|janu|floz|xig|jardia/i.test(inputData['medications-freetext']),
             // (inputData) => inputData['rcri-insulin'] == true,
         ],
         defaultSuggestions: [
@@ -264,7 +265,7 @@ export let boneData = [
             {
                 matchStrategy: "any",
                 matchRules: [
-                    (inputData) => parseFloat(inputData['hba1c']) > 9.0,
+                    (inputData) => parseFloat(inputData['investigations-hba1c']) > 9.0,
                     (inputData) => /no/i.test(inputData['diagnosis-t2dm']['Hypoglycaemia awareness']),
                 ],
                 suggestions: [
@@ -278,7 +279,7 @@ export let boneData = [
                 matchStrategy: "any",
                 matchRules: [
                     (inputData) => {
-                        if (inputData['hba1c'] == '' || inputData['hba1c'] == undefined) {
+                        if (inputData['investigations-hba1c'] == '' || inputData['investigations-hba1c'] == undefined) {
                             return true 
                         } else {
                             return false
@@ -316,7 +317,7 @@ export let boneData = [
             {
                 matchStrategy: "any",
                 matchRules: [
-                    (inputData) => parseFloat(inputData['hba1c']) > 9.0,
+                    (inputData) => parseFloat(inputData['investigations-hba1c']) > 9.0,
                     (inputData) => /no/i.test(inputData['diagnosis-t1dm']['Hypoglycaemia awareness']),
                 ],
                 suggestions: [
@@ -330,7 +331,7 @@ export let boneData = [
                 matchStrategy: "any",
                 matchRules: [
                     (inputData) => {
-                        if (inputData['hba1c'] == '' || inputData['hba1c'] == undefined) {
+                        if (inputData['investigations-hba1c'] == '' || inputData['investigations-hba1c'] == undefined) {
                             return true 
                         } else {
                             return false
@@ -352,7 +353,7 @@ export let boneData = [
 		id: "beagle-flozin",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /floz|xig|jard/i.test(inputData['rx']),
+            (inputData) => /floz|xig|jard/i.test(inputData['medications-freetext']),
         ],
         defaultSuggestions: [
             // "Default suggestion for patients on SGLT2i",
@@ -369,15 +370,15 @@ export let boneData = [
 		id: "beagle-difficult-airway",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => parseInt(inputData['mallampati']) >= 3,
-            (inputData) => parseInt(inputData['mouth-opening']) <= 3,
-            (inputData) => parseInt(inputData['tmd']) <= 6,
-            (inputData) => inputData['jaw-protrusion'].toLowerCase() == "c",
-            (inputData) => /diff|2|two|gued|opa|npa|naso|oro|fail/i.test(inputData['bvm']),
-            (inputData) => /diff|seal|poor|fail/i.test(inputData['lma']),
-            (inputData) => /diff|3|4|AFO|CICO|FONA|fail/i.test(inputData['ett']),
-            (inputData) => /moderate|severe|immobile/i.test(inputData['neckrom']),
-            (inputData) => /won/i.test(inputData['beard']),
+            (inputData) => parseInt(inputData['airway-mallampati']) >= 3,
+            (inputData) => parseInt(inputData['airway-mouth-opening']) <= 3,
+            (inputData) => parseInt(inputData['airway-tmd']) <= 6,
+            (inputData) => inputData['airway-jaw-protrusion'].toLowerCase() == "c",
+            (inputData) => /diff|2|two|gued|opa|npa|naso|oro|fail/i.test(inputData['previous-bvm']),
+            (inputData) => /diff|seal|poor|fail/i.test(inputData['previous-lma']),
+            (inputData) => /diff|3|4|AFO|CICO|FONA|fail/i.test(inputData['previous-ett']),
+            (inputData) => /moderate|severe|immobile/i.test(inputData['airway-neckrom']),
+            (inputData) => /won/i.test(inputData['airway-beard']),
             (inputData) => /y/i.test(inputData['diagnosis-rheumatoid-arthritis']['C-Spine involvement'])
         ],
         defaultSuggestions: [
@@ -392,7 +393,7 @@ export let boneData = [
 		id: "beagle-difficult-fona",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /diff|impalpable/i.test(inputData['cricothyroid']),
+            (inputData) => /diff|impalpable/i.test(inputData['airway-cricothyroid']),
         ],
         defaultSuggestions: [
         ],
@@ -405,7 +406,7 @@ export let boneData = [
         matchStrategy: "any",
         matchRules: [
             (inputData) => diagnosisExists(inputData, 'diagnosis-anaphylaxis'),
-            (inputData) => /anaph|(?<!pro.+)ylaxis|(?<!pro.+)ylact/i.test([inputData['pmhx'], inputData['rx'], inputData['allergies']].join(' ')),
+            (inputData) => /anaph|(?<!pro.+)ylaxis|(?<!pro.+)ylact/i.test([inputData['pmhx'], inputData['medications-freetext'], inputData['allergies-freetext']].join(' ')),
         ],
         defaultSuggestions: [
         ],
@@ -419,7 +420,7 @@ export let boneData = [
 		id: "beagle-antibiotic-allergy",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /cilli|illin|cefa|cepha|mycin|ocin/i.test(inputData['allergies']),
+            (inputData) => /cilli|illin|cefa|cepha|mycin|ocin/i.test(inputData['allergies-freetext']),
         ],
         defaultSuggestions: [
         ],
@@ -449,7 +450,7 @@ export let boneData = [
         matchRules: [
             (inputData) => diagnosisExists(inputData, 'diagnosis-gord'),
             (inputData) => /yes/i.test(inputData['gord']),
-            (inputData) => /prazol|somac|nexium|pariet|esopre|sozol/i.test(inputData['rx']),
+            (inputData) => /prazol|somac|nexium|pariet|esopre|sozol/i.test(inputData['medications-freetext']),
         ],
         defaultSuggestions: [
         ],
@@ -496,7 +497,7 @@ export let boneData = [
                 ],
                 suggestions: [
                     {
-                        name: "Advised to bring home CPAP machine",
+                        name: "Bring home CPAP machine",
                     },
                 ],
             },
@@ -525,7 +526,7 @@ export let boneData = [
 		id: "beagle-active-smoker",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /active/i.test(inputData['smoking']),
+            (inputData) => /active/i.test(inputData['smoking-status']),
         ],
         defaultSuggestions: [
             {
@@ -546,7 +547,7 @@ export let boneData = [
         matchStrategy: "any",
         matchRules: [
             (inputData) => /y/i.test(inputData['diagnosis-atrial-fibrillation']['Anticoagulated']),
-            (inputData) => /xab|atran|warf|couma|eliq|xera|pradax/i.test(inputData['rx']),
+            (inputData) => /xab|atran|warf|couma|eliq|xera|pradax/i.test(inputData['medications-freetext']),
         ],
         defaultSuggestions: [
         ],
@@ -560,7 +561,7 @@ export let boneData = [
 		id: "beagle-unfit",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /less/i.test(inputData['mets']),
+            (inputData) => /less/i.test(inputData['patient-mets']),
         ],
         defaultSuggestions: [
         ],
@@ -574,7 +575,7 @@ export let boneData = [
 		id: "beagle-noflat",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /unable/i.test(inputData['flat']),
+            (inputData) => /unable/i.test(inputData['patient-flat']),
         ],
         defaultSuggestions: [
         ],
@@ -588,7 +589,7 @@ export let boneData = [
 		id: "beagle-opioid-tolerance",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /morph|trama|tapen|lexi|bupre|adone|targin|oxyc/i.test(inputData['rx']),
+            (inputData) => /morph|trama|tapen|lexi|bupre|adone|targin|oxyc/i.test(inputData['medications-freetext']),
             (inputData) => /y/i.test(inputData['diagnosis-chronic-pain']['Opioid tolerance']),
         ],
         defaultSuggestions: [
@@ -603,7 +604,7 @@ export let boneData = [
 		id: "beagle-chronic-pain",
         matchStrategy: "any",
         matchRules: [
-            (inputData) => /morph|trama|tapen|lexi|bupre|adone|targin|oxyc/i.test(inputData['rx']),
+            (inputData) => /morph|trama|tapen|lexi|bupre|adone|targin|oxyc/i.test(inputData['medications-freetext']),
             (inputData) => diagnosisExists(inputData, 'diagnosis-chronic-pain'),
         ],
         defaultSuggestions: [

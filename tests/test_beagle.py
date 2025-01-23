@@ -17,7 +17,7 @@ def test_beagle_sort(page):
     page.get_by_label("ASA").select_option("4")
     page.get_by_label("Malignancy").select_option("No")
     page.get_by_label("Thoracics, GI").select_option("No")
-    page.locator("#sort-age").fill("80")
+    page.locator("#sort-container").get_by_label("Age").fill("80")
     expect(page.locator("#warnings")).to_contain_text("HDU")
 
 
@@ -30,7 +30,7 @@ def test_beagle_sort_hdu(page):
     page.get_by_label("ASA").select_option("4")
     page.get_by_label("Malignancy").select_option("No")
     page.get_by_label("Thoracics, GI").select_option("No")
-    page.locator("#sort-age").fill("80")  # should be 4.72
+    page.locator("#sort-container").get_by_label("Age").fill("80")  # should be 4.72
     expect(page.locator("#warnings")).to_contain_text("HDU")
 
 
@@ -43,7 +43,7 @@ def test_beagle_sort_monitored_bed(page):
     page.get_by_label("ASA").select_option("4")
     page.get_by_label("Malignancy").select_option("No")
     page.get_by_label("Thoracics, GI").select_option("No")
-    page.locator("#sort-age").fill("20")  # should be 0.45
+    page.locator("#sort-container").get_by_label("Age").fill("20")  # should be 0.45
     expect(page.locator("#warnings")).to_contain_text("monitored")
 
 

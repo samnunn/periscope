@@ -21,8 +21,8 @@ export function gradeOSA(inputData) {
     if (score >= 5) risk = 'high'
 
 
-    let stopCriteria = [inputData['snorer'], inputData['daytime-tiredness'], inputData['observed-apnoea'], inputData['hypertensive']]
-    let highRiskCriteria = [inputData['stopbang-bmi-35'], inputData['stopbang-neck'], inputData['stopbang-sex']] // BANG criteria minus age
+    let stopCriteria = [inputData['stopbang-snorer'], inputData['stopbang-tiredness'], inputData['stopbang-apnoea'], inputData['stopbang-hypertensive']]
+    let highRiskCriteria = [inputData['stopbang-bmi-35'], inputData['stopbang-neck'], inputData['stopbang-male']] // BANG criteria minus age
     stopCriteria = stopCriteria.filter((v) => v == true)
     highRiskCriteria = highRiskCriteria.filter((v) => v == true)
     if (stopCriteria.length >= 2 && highRiskCriteria.length >= 1) risk = 'high'
