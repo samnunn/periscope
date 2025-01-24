@@ -1,21 +1,21 @@
-import { getAnyInputValue, setAnyInputValue } from '/static/js/utils.js'
-import { sendToBeagle } from '/static/js/beagle-mainthread.js'
-import { getRenderedSection, renderEntireDocument } from '/static/js/templating.js'
-import "/static/js/text-editing.js"
-import "/static/js/sort-score.js"
-import "/static/js/beagle-mainthread.js"
-import "/static/js/clinic-inputs.js"
-import "/static/js/citations.js"
-import "/static/js/templating.js"
-import "/static/js/historian.js"
-import "/static/js/data-persistence.js"
-import "/static/js/scrollspy.js"
-import "/static/js/calculators.js"
+import { renderEntireDocument } from '/static/js/templating.js'
 
 // COMPONENTS
 import "/static/js/components/draggable-list.js"
 import "/static/js/components/navigable-list.js"
 import "/static/js/components/cmd-k.js"
+
+import "/static/js/clinic-inputs.js"
+import "/static/js/historian.js"
+import "/static/js/text-editing.js"
+import "/static/js/sort-score.js"
+import "/static/js/beagle-mainthread.js"
+import "/static/js/citations.js"
+import "/static/js/templating.js"
+import "/static/js/data-persistence.js"
+import "/static/js/scrollspy.js"
+import "/static/js/calculators.js"
+
 
 
 //    ____                  _       _    ____                                      
