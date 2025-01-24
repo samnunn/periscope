@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'html/base.html' %}
 {% block content %}
 <div class="wrapped" id="tab-box">
     <nav class="island" id="tab-picker" aria-expanded="true">
@@ -501,7 +501,7 @@
     <div id="blurb">
         <h2>Security 🔐</h2>
         <p>The information you add to Periscope never leaves your device. Absolutely no patient data is collected.</p>
-        <img src="{{ 'clinic_data_safety.webp' | static_base64 }}" alt="">
+        <img src="{{ 'images/clinic_data_safety.webp' | static_base64 }}" alt="">
         <p>All computations, scores, and data-processing happen right here in this browser tab. As long as you use this on a work-approved computer, your data is safe.</p>
         <h2>Keep Your Thinking Cap On ⚖️</h2>
         <p>All efforts have been made to ensure that Periscope won't steer you wrong, but <strong>you are still the doctor</strong>. You are responsible for double-checking your work and treating your own patients.</p>

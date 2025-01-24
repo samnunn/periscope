@@ -35,18 +35,18 @@ def tenancy_required(f):
 # ROUTES
 @app.route("/")
 def index():
-    # return render_template("welcome.html")
+    # return render_template("html/welcome.html")
     return redirect(url_for("clinic"))
 
 
 @app.route("/welcome")
 def welcome():
-    return render_template("welcome.html")
+    return render_template("html/welcome.html")
 
 
 @app.route("/clinic")
 def clinic():
-    return render_template("clinic.html")
+    return render_template("html/clinic.html")
 
 
 @app.route("/auth", methods=["POST"])
