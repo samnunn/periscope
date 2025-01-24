@@ -1,4 +1,4 @@
-export let allInputs = [
+let allInputs = [
     // TODO: remove the need for 'autofocus' in patient-age
     {
         'ugly_name': 'patient-age',
@@ -8,7 +8,6 @@ export let allInputs = [
         'html': `
             <input autofocus type="number" min="0" max="125" step="1">
         `,
-        'render': (el) => `${el.default_render()} years`,
     },
     {
         'ugly_name': 'patient-sex',
@@ -52,7 +51,6 @@ export let allInputs = [
         'html': `
             <input type="number" step="0.1" min="0" max="300">
         `,
-        'render': (el) => `${el.default_render()} cm`,
     },
     {
         'ugly_name': 'patient-weight',
@@ -62,7 +60,6 @@ export let allInputs = [
         'html': `
             <input type="number" step="0.1" min="0" max="400">
         `,
-        'render': (el) => `${el.default_render()} kg`,
     },
     {
         'ugly_name': 'patient-bmi',
@@ -72,7 +69,6 @@ export let allInputs = [
         'html': `
             <input type="text" readonly tabindex="-1">
         `,
-        'render': (el) => `${el.default_render()} kg/m^2`,
     },
     {
         'ugly_name': 'appointment-mode',
@@ -143,7 +139,6 @@ export let allInputs = [
                 </select>
             </div>
         `,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'patient-mets-details',
@@ -210,7 +205,6 @@ export let allInputs = [
         'pretty_name': 'Smoking Details',
         'output_name': 'Smoking details',
         'html': `<input type="text" placeholder="Details">`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'alcohol-freetext',
@@ -245,7 +239,6 @@ export let allInputs = [
         'pretty_name': 'Other',
         'output_name': 'Other',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'medications-freetext',
@@ -253,7 +246,6 @@ export let allInputs = [
         'output_name': 'Current medications',
         'search_name': 'Current Medications (Rx)',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'supplements-freetext',
@@ -261,7 +253,6 @@ export let allInputs = [
         'output_name': 'Supplements',
         'search_name': 'Supplements',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'allergies-freetext',
@@ -269,7 +260,6 @@ export let allInputs = [
         'output_name': 'Allergies',
         'search_name': 'Adverse Drug Reactions (Allergies)',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'previous-bvm',
@@ -298,7 +288,6 @@ export let allInputs = [
         'output_name': 'Previous anaesthesia',
         'search_name': 'Surgical and Anaesthetic History',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'previous-anaesthesia-complications',
@@ -321,14 +310,12 @@ export let allInputs = [
                 </select>
             </div>
         `,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'previous-anaesthesia-fhx-details',
         'pretty_name': 'Details of Family Issues with Anaesthesia',
         'output_name': 'Details of Family Issues with Anaesthesia',
         'html': `<input type="text" placeholder="Details">`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'airway-dentition',
@@ -360,7 +347,6 @@ export let allInputs = [
         'output_name': 'Mouth opening',
         'search_name': 'Mouth Opening',
         'html': `<input type="number" min="0" max="7" step="1">`,
-        'render': (el) => `${el.default_render()} cm`,
     },
     {
         'ugly_name': 'airway-tmd',
@@ -368,7 +354,6 @@ export let allInputs = [
         'output_name': 'Thyromental distance',
         'search_name': 'Thyromental Distance',
         'html': `<input type="number" min="0" max="12" step="1">`,
-        'render': (el) => `${el.default_render()} cm`,
     },
     {
         'ugly_name': 'airway-cricothyroid',
@@ -474,7 +459,6 @@ export let allInputs = [
         'output_name': 'Other examination findings',
         'search_name': 'Other Examination Findings',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'investigations-source',
@@ -510,7 +494,6 @@ export let allInputs = [
         'output_name': 'HbA1c',
         'search_name': 'Glycosylated Haemoglobin (HbA1c)',
         'html': `<input type="number" min="4" max="30" step="0.1">`,
-        'render': (el) => `${el.default_render()}%`,
     },
     {
         'ugly_name': 'investigations-haematinics',
@@ -539,7 +522,6 @@ export let allInputs = [
         'output_name': 'Other investigations',
         'search_name': 'Other Investigations',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'consent-ga',
@@ -589,7 +571,6 @@ export let allInputs = [
         'output_name': 'Special notes',
         'search_name': 'Special Notes on Consent',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'airway-beard',
@@ -795,7 +776,6 @@ export let allInputs = [
         'output_name': 'Key Issues',
         'search_name': 'Key Issues',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'plan',
@@ -803,7 +783,6 @@ export let allInputs = [
         'output_name': 'Anaesthetic Plan',
         'search_name': 'Anaesthetic Plan',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
     {
         'ugly_name': 'plan-medications',
@@ -811,6 +790,5 @@ export let allInputs = [
         'output_name': 'Medications and Fasting',
         'search_name': 'Medications and Fasting',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
-        'render': (el) => `${el.getValue()}`,
     },
 ]
