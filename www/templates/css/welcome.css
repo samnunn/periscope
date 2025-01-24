@@ -1,12 +1,5 @@
 :root {
     --header-size: 4rem;
-
-    --colour-red: rgb(240, 79, 50);
-    --colour-green: rgb(85, 195, 85);
-    --colour-blue: rgb(93, 147, 208);
-    --colour-tan: rgb(215, 111, 67);
-    --colour-yellow: rgb(243, 204, 46);
-    --colour-offwhite: rgb(250, 250, 250);
 }
 
 /* LAYOUT UTILS */
@@ -28,25 +21,7 @@ header {
 }
 
 /* TEXT */
-mark {
-    background-color: var(--colour-red);
-    display: inline-block;
-    padding: 0.1ch 0.5ch;
-    position: relative;
-    transform: skew(-9deg);
-    border-radius: 0.2rem;
-    z-index: -1;
-    color: white;
-    &.green {
-        background-color: var(--colour-green);
-    }
-    &.blue {
-        background-color: var(--colour-blue);
-    }
-    &.yellow {
-        background-color: var(--colour-yellow);
-    }
-}
+
 
 /* INDIVIDUAL BITS AND BOBS */
 header {
@@ -101,7 +76,7 @@ h1#yell {
         top: 0;
         left: 50%;
         height: 100%;
-        border-left: 4px dotted #bbb;
+        border-left: var(--border-dots);
     }
 
     div:nth-child(2n-1) {
