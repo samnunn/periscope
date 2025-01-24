@@ -1,5 +1,5 @@
 import { boneData } from "/static/data/beagle-data.js"
-import { gradeOSA, runRuleSafely, diagnosisExists } from "/static/beagle-utils.js"
+import { runRuleSafely } from "/static/beagle-utils.js"
 
 //    ____                   _                                                     
 //   | __ )  ___  __ _  __ _| | ___     ***           ****                         
@@ -165,8 +165,6 @@ class Bone {
         return conditionalSuggestions
     }
 }
-
-// import { boneData } from "/static/data/beagle-data.js"
 
 let bones = []
 for (let b of boneData) {
