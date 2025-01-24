@@ -4,8 +4,8 @@
 //   | |___| | || (_| | |_| | (_) | | | \__ \                                      
 //    \____|_|\__\__,_|\__|_|\___/|_| |_|___/                                      
         
-import { citationSnippets } from '/static/data/citation-data.js'
-import { allPublications } from '/static/data/publication-data.js'
+import { citationSnippets } from '../data/citation-data.js'
+import { allPublications } from '../data/publication-data.js'
 
 function placeBelow(anchor, follower) {
     let anchorBox = anchor.getBoundingClientRect()

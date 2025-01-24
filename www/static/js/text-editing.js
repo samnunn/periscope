@@ -1,4 +1,4 @@
-import { setAnyInputValue, getAnyInputValue } from '/static/js/utils.js'
+import { setAnyInputValue, getAnyInputValue } from './utils.js'
 
 
 //    _____         _     _____    _ _ _   _                                       

@@ -1,4 +1,4 @@
-importScripts('/static/fuzzysort.min.js')
+importScripts(location.origin + '/static/js/fuzzysort.min.js')
 
 let procedures
 

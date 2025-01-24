@@ -1,4 +1,4 @@
-import { getAnyInputValue, setAnyInputValue } from '/static/js/utils.js'
+import { getAnyInputValue, setAnyInputValue } from './utils.js'
 
 //    _   _ _     _             _                                                  
 //   | | | (_)___| |_ ___  _ __(_) __ _ _ __                                       
@@ -9,7 +9,7 @@ import { getAnyInputValue, setAnyInputValue } from '/static/js/utils.js'
 export let diagnosisList = document.querySelector('#diagnosis-list')
 let diagnosisSearchBox = document.querySelector('#diagnosis-search input')
 let diagnosisSearchResultsList = document.querySelector('#diagnosis-results ul')
-import { allDiagnoses } from '/static/data/diagnosis-data.js'
+import { allDiagnoses } from '../data/diagnosis-data.js'
 
 // UTILS
 function escapeHTML(html) {

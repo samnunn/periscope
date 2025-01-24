@@ -6,7 +6,7 @@ import { getAnyInputValue, setAnyInputValue } from '/static/js/utils.js'
 //   |___|_| |_| .__/ \__,_|\__|___/                                               
 //             |_|                                                                 
 
-import { allInputs } from '/static/data/input-data.js'
+// import { allInputs } from '../data/input-data.js'
 
 customElements.define('clinic-input', class extends HTMLElement {
     constructor() {

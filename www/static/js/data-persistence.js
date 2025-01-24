@@ -1,7 +1,6 @@
-import { getAnyInputValue, setAnyInputValue } from '/static/js/utils.js'
-import { sendToBeagle } from '/static/js/beagle-mainthread.js'
-import { allDiagnoses } from '/static/data/diagnosis-data.js'
-import { insertClinicDiagnosis, diagnosisList } from '/static/js/historian.js'
+import { getAnyInputValue, setAnyInputValue } from './utils.js'
+import { sendToBeagle } from './beagle-mainthread.js'
+import { insertClinicDiagnosis, diagnosisList } from './historian.js'
 
 //    ____        _          ____               _     _                            
 //   |  _ \  __ _| |_ __ _  |  _ \ ___ _ __ ___(_)___| |_ ___ _ __   ___ ___       
@@ -76,7 +75,11 @@ document.persistentDataProxy = persistentDataProxy // make accessible from the m
 
 
 // restore data on load
-window.addEventListener("load", () => {
+window.addEventListener("DOMContentLoaded", async () => {
+    // import { allDiagnoses } from '/static/data/diagnosis-data.js'
+    let allDiagnosesModule = await import('../data/diagnosis-data.js')
+    let allDiagnoses = allDiagnosesModule.allDiagnoses
+
     // restore top-level data
     for (let p in persistentDataProxy) {
         // Get the stored data for the current property

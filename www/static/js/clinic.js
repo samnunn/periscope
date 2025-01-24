@@ -1,11 +1,11 @@
 import { renderEntireDocument } from '/static/js/templating.js'
 
 // COMPONENTS
+// import "./clinic-inputs.js"
 import "/static/js/components/draggable-list.js"
 import "/static/js/components/navigable-list.js"
 import "/static/js/components/cmd-k.js"
 
-import "/static/js/clinic-inputs.js"
 import "/static/js/historian.js"
 import "/static/js/text-editing.js"
 import "/static/js/sort-score.js"
@@ -160,8 +160,4 @@ document.querySelector("#tab-bar-collapse-button")?.addEventListener("click", (e
     tabPicker.expanded = !tabPicker.expanded
     localStorage.setItem('sidebar-overridden', 'true')
     tabPicker.setAttribute("aria-expanded", tabPicker.expanded)
-})
-
-window.addEventListener('load', (e) => {
-    document.querySelector('[clinic-parameter="patient-age"]').focus()
 })

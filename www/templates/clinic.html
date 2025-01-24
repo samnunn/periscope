@@ -1,56 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <div class="wrapped" id="tab-box">
-    <nav class="island" id="tab-picker" aria-expanded="false">
+    <nav class="island" id="tab-picker" aria-expanded="true">
         <ul>
             <div id="site-title">
                 <p>Periscope</p>
-                <img src="/static/icons/gasper_favicon.png" alt="">
+                <img src="{{ 'icons/gasper_favicon.png' | static_base64 }}" alt="">
             </div>
             <hr>
             <li title="Patient Details" role="button" scroll-target="details">
-                <span class="icon"><img src="/static/icons/colour_bookmark.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_bookmark.svg' | static_base64 }}"></span>
                 <span class="left">Patient Details</span>
+                <!-- <span class="left">{{ 'icons/colour_bookmark.svg' | static_base64 }}</span> -->
             </li>
             <li title="Medical History" role="button" scroll-target="medicalhx">
-                <span class="icon"><img src="/static/icons/colour_heart.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_heart.svg' | static_base64 }}"></span>
                 <span class="left">Medical History</span>
             </li>
             <li title="Medications" role="button" scroll-target="rx">
-                <span class="icon"><img src="/static/icons/colour_pill.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_pill.svg' | static_base64 }}"></span>
                 <span class="left">Medications</span>
             </li>
             <li title="Anaesthesia" role="button" scroll-target="gashx">
-                <span class="icon"><img src="/static/icons/colour_gas_mask.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}"></span>
                 <span class="left">Anaesthesia</span>
             </li>
             <li title="Investigations" role="button" scroll-target="ix">
-                <span class="icon"><img src="/static/icons/colour_droplet.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_droplet.svg' | static_base64 }}"></span>
                 <span class="left">Investigations</span>
             </li>
             <li title="Consent" role="button" scroll-target="consent">
-                <span class="icon"><img src="/static/icons/colour_pen_tool.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_pen_tool.svg' | static_base64 }}"></span>
                 <span class="left">Consent</span>
             </li>
             <li title="Risk Profile" role="button" scroll-target="risk">
-                <span class="icon"><img src="/static/icons/colour_life_buoy.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_life_buoy.svg' | static_base64 }}"></span>
                 <span class="left">Risk Profile</span>
                 <!-- <span class="right"><div class="status-dot blank"></div></span> -->
             </li>
             <li title="Plan" role="button" scroll-target="plan">
-                <span class="icon"><img src="/static/icons/colour_check_circle.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_check_circle.svg' | static_base64 }}"></span>
                 <span class="left">Plan</span>
             </li>
             <h4>Tools</h4>
             <hr>
             <li title="Shortcuts" role="button" id="shortcuts-button">
-                <span class="icon"><img src="/static/icons/colour_fast_forward.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_fast_forward.svg' | static_base64 }}"></span>
                 <span class="left">Shortcuts</span>
                 <!-- <span class="right">⌘J</span> -->
             </li>
             <li title="Search (⌘K)" role="button" id="quick-find-button">
-                <span class="icon"><img src="/static/icons/colour_search.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_search.svg' | static_base64 }}"></span>
                 <span class="left">Search</span>
                 <span class="right">⌘K</span>
             </li>
@@ -58,15 +58,15 @@
             
             <hr>
             <!-- <li title="RedCap" role="button" id="redcap-button">
-                <span class="icon"><img src="/static/icons/colour_cap.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_cap.svg' | static_base64 }}"></span>
                 <span class="left">REDCap</span>
             </li> -->
             <li id="download" title="Download" role="button">
-                <span class="icon"><img src="/static/icons/colour_arrow_down_circle.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_arrow_down_circle.svg' | static_base64 }}"></span>
                 <span class="left">Download</span>
             </li>
             <li id="reset" title="Reset" role="button">
-                <span class="icon"><img src="/static/icons/x_octagon.svg"></span>
+                <span class="icon"><img src="{{ 'icons/x_octagon.svg' | static_base64 }}"></span>
                 <span class="left">Reset</span>
             </li>
             <!-- <h4>Links</h4>
@@ -76,29 +76,29 @@
             <hr>
             <!-- <a class="invisible-link" href="https://nunn.au">
                 <li title="Link to Sam Nunn's website" role="button">
-                    <span class="icon"><img src="/static/icons/propeller_hat.svg"></span>
+                    <span class="icon"><img src="{{ 'icons/propeller_hat.svg' | static_base64 }}"></span>
                     <span class="left">Made by Sam</span>
                 </li>
             </a> -->
             <a class="invisible-link" target="_blank" href="https://github.com/samnunn/periscope">
                 <li title="Link to this project's source code" role="button">
-                    <span class="icon"><img src="/static/icons/github-mark.svg"></span>
+                    <span class="icon"><img src="{{ 'icons/github-mark.svg' | static_base64 }}"></span>
                     <span class="left">Source Code</span>
                 </li>
             </a>
             <a class="invisible-link" href="mailto:hello@gasnotes.net?subject=Bug%20Report%20for%20Periscope">
                 <li title="Report a Bug" role="button">
-                    <span class="icon"><img src="/static/icons/colour_bug.svg"></span>
+                    <span class="icon"><img src="{{ 'icons/colour_bug.svg' | static_base64 }}"></span>
                     <span class="left">Report a Bug</span>
                 </li>
             </a>
             <li title="Link to this tool's MIT license" onclick="document.querySelector('#big-welcome').showModal()" role="button">
-                <span class="icon"><img src="/static/icons/colour_edit.svg"></span>
+                <span class="icon"><img src="{{ 'icons/colour_edit.svg' | static_base64 }}"></span>
                 <span class="left">Terms</span>
             </li>
             <hr>
             <li title="Toggle menu" role="button" id="tab-bar-collapse-button">
-                <span class="icon"><img src="/static/icons/chevrons_left.svg"></span>
+                <span class="icon"><img src="{{ 'icons/chevrons_left.svg' | static_base64 }}"></span>
                 <span class="left">Collapse</span>
             </li>
         </ul>
@@ -106,7 +106,7 @@
     <main id="tab-display">
         <section class="island" id="details">
             <div class="section-topper">
-                <img class="icon" src="/static/icons/colour_bookmark.svg">
+                <img class="icon" src="{{ 'icons/colour_bookmark.svg' | static_base64 }}">
                 <h2>Patient Details</h2>
                 <!-- <button tabindex="2" class="section-copy">Copy Text</button> -->
             </div>
@@ -127,7 +127,7 @@
         </section>
         <section class="island" id="medicalhx">
             <div class="section-topper">
-                <img class="icon" src="/static/icons/colour_heart.svg">
+                <img class="icon" src="{{ 'icons/colour_heart.svg' | static_base64 }}">
                 <h2>Medical History</h2>
                 <button tabindex="2" class="section-copy">Copy Text</button>
             </div>
@@ -140,7 +140,7 @@
                                 <div class="input-with-hints">
                                     <input type="text" placeholder="Search for a condition" clinic-search="Past Medical History (PMHx)">
                                     <div class="hints">
-                                        <span class="key"><img alt="Up Arrow" src="/static/icons/arrow_up.svg"></span><span class="key"><img alt="Down Arrow" src="/static/icons/arrow_down.svg"></span> to select  <span class="key"><img alt="Return Key" src="/static/icons/arrow_down_left.svg"></span> to add  <span class="key">esc</span> to reset
+                                        <span class="key"><img alt="Up Arrow" src="{{ 'icons/arrow_up.svg' | static_base64 }}"></span><span class="key"><img alt="Down Arrow" src="{{ 'icons/arrow_down.svg' | static_base64 }}"></span> to select  <span class="key"><img alt="Return Key" src="{{ 'icons/arrow_down_left.svg' | static_base64 }}"></span> to add  <span class="key">esc</span> to reset
                                     </div>
                                 </div>
                             </label>
@@ -156,7 +156,7 @@
                     </clinic-draglist>
                     <div id="diagnosis-placeholder">
                         <p>Enter conditions using the search bar.</p>
-                        <img src="/static/icons/gasper_thinking.png" alt="">
+                        <img src="{{ 'icons/gasper_thinking.png' | static_base64 }}" alt="">
                     </div>
                     <hr id="pmhx-divider">
                 </div>
@@ -190,7 +190,7 @@
         </section>
         <section class="island" id="rx">
             <div class="section-topper">
-                <img class="icon" src="/static/icons/colour_pill.svg">
+                <img class="icon" src="{{ 'icons/colour_pill.svg' | static_base64 }}">
                 <h2>Medication List</h2>
                 <button tabindex="2" class="section-copy">Copy Text</button>
             </div>
@@ -204,7 +204,7 @@
         </section>
         <section class="island" id="gashx">
             <div class="section-topper">
-                <img class="icon" src="/static/icons/colour_gas_mask.svg">
+                <img class="icon" src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}">
                 <h2>Anaesthetic History</h2>
                 <button tabindex="2" class="section-copy">Copy Text</button>
             </div>
@@ -262,7 +262,7 @@
         </section>
         <section class="island" id="ix">
             <div class="section-topper">
-                <img class="icon" src="/static/icons/colour_droplet.svg">
+                <img class="icon" src="{{ 'icons/colour_droplet.svg' | static_base64 }}">
                 <h2>Investigations</h2>
                 <button tabindex="2" class="section-copy">Copy Text</button>
             </div>
@@ -289,7 +289,7 @@
         </section>
         <section class="island" id="consent">
             <div class="section-topper">
-                <img class="icon" src="/static/icons/colour_pen_tool.svg">
+                <img class="icon" src="{{ 'icons/colour_pen_tool.svg' | static_base64 }}">
                 <h2>Consent</h2>
                 <button tabindex="2" class="section-copy">Copy Text</button>
             </div>
@@ -311,7 +311,7 @@
         </section>
         <section class="island" id="risk">
             <div class="section-topper">
-                <img class="icon" src="/static/icons/colour_life_buoy.svg">
+                <img class="icon" src="{{ 'icons/colour_life_buoy.svg' | static_base64 }}">
                 <h2>Risk Profile</h2>
                 <button tabindex="2" class="section-copy">Copy Text</button>
             </div>
@@ -390,7 +390,7 @@
                                         <div class="input-with-hints">
                                             <input type="search" name="embed" clinic-search="SORT Score Calculator" autocomplete="off">
                                             <div class="hints">
-                                                <span class="key"><img alt="Up Arrow" src="/static/icons/arrow_up.svg"></span><span class="key"><img alt="Down Arrow" src="/static/icons/arrow_down.svg"></span> to select  <span class="key"><img alt="Return Key" src="/static/icons/arrow_down_left.svg"></span> to add  <span class="key">esc</span> to reset
+                                                <span class="key"><img alt="Up Arrow" src="{{ 'icons/arrow_up.svg' | static_base64 }}"></span><span class="key"><img alt="Down Arrow" src="{{ 'icons/arrow_down.svg' | static_base64 }}"></span> to select  <span class="key"><img alt="Return Key" src="{{ 'icons/arrow_down_left.svg' | static_base64 }}"></span> to add  <span class="key">esc</span> to reset
                                             </div>
                                         </div>
                                         <!-- <button>Search</button> -->
@@ -467,7 +467,7 @@
         </section>
         <section class="island" id="plan">
             <div class="section-topper">
-                <img class="icon" src="/static/icons/colour_check_circle.svg">
+                <img class="icon" src="{{ 'icons/colour_check_circle.svg' | static_base64 }}">
                 <h2>Plan</h2>
                 <button tabindex="2" class="section-copy">Copy Text</button>
             </div>
@@ -501,7 +501,7 @@
     <div id="blurb">
         <h2>Security 🔐</h2>
         <p>The information you add to Periscope never leaves your device. Absolutely no patient data is collected.</p>
-        <img src="/static/clinic_data_safety.webp" alt="">
+        <img src="{{ 'clinic_data_safety.webp' | static_base64 }}" alt="">
         <p>All computations, scores, and data-processing happen right here in this browser tab. As long as you use this on a work-approved computer, your data is safe.</p>
         <h2>Keep Your Thinking Cap On ⚖️</h2>
         <p>All efforts have been made to ensure that Periscope won't steer you wrong, but <strong>you are still the doctor</strong>. You are responsible for double-checking your work and treating your own patients.</p>
@@ -522,7 +522,7 @@
         <ul id="quick-find-results" class="pill-list"></ul>
     </clinic-navigable-list>
     <form method="dialog" style="margin: 1rem 0 0 0; float: right;">
-        <div class="popup-info"><span class="key"><img src="/static/icons/arrow_up.svg"></span><span class="key"><img src="/static/icons/arrow_down.svg"></span> to navigate  <span class="key"><img alt="Return Key" src="/static/icons/arrow_down_left.svg"></span> to select  <span class="key">esc</span> to close</div>
+        <div class="popup-info"><span class="key"><img src="{{ 'icons/arrow_up.svg' | static_base64 }}"></span><span class="key"><img src="{{ 'icons/arrow_down.svg' | static_base64 }}"></span> to navigate  <span class="key"><img alt="Return Key" src="{{ 'icons/arrow_down_left.svg' | static_base64 }}"></span> to select  <span class="key">esc</span> to close</div>
         <button>Close</button>
     </form>
 </dialog>
@@ -546,9 +546,14 @@
 </dialog>
 
 <!-- SCRIPTS -->
-<script src="/static/fuzzysort.min.js"></script>
-<script src="/static/js/clinic.js" type="module"></script>
-<script src="/static/redcap.js" type="module"></script>
+<script>window.procedures = {{ 'data/sort-data.json' | static_include | safe }}</script>
+<script type="module">
+    {{ 'data/input-data.js' | static_include | safe }}
+    {{ 'js/clinic-inputs.js' | static_include | safe }}
+</script>
+<script>{{ 'js/fuzzysort.min.js' | static_include | safe }}</script>
+<script type="module">{{ 'js/clinic.js' | static_include | safe }}</script>
+
 
 
 {% endblock %}

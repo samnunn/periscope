@@ -5,7 +5,7 @@
 //   |____/ \___|\__,_|\__, |_|\___|  *    ***********    *                        
 //                     |___/           ****           ****                         
 
-document.beagle = new Worker("/static/js/beagle-worker.js", { type: "module" })
+document.beagle = new Worker(new URL('./beagle-worker.js', import.meta.url), { type: "module" })
 let boneList = document.querySelector('#warnings')
 let planInput = document.querySelector('[clinic-parameter="plan"]')
 let boneInput = document.querySelector('[clinic-parameter="issues"]')

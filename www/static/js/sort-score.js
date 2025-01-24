@@ -1,4 +1,4 @@
-import { getAnyInputValue } from '/static/js/utils.js'
+import { getAnyInputValue } from './utils.js'
 //    ____   ___  ____ _____   ____                                                
 //   / ___| / _ \|  _ \_   _| / ___|  ___ ___  _ __ ___                            
 //   \___ \| | | | |_) || |   \___ \ / __/ _ \| '__/ _ \                           
@@ -6,21 +6,30 @@ import { getAnyInputValue } from '/static/js/utils.js'
 //   |____/ \___/|_| \_\|_|   |____/ \___\___/|_|  \___|                           
    
 // Load SNAP2 procedure list
-window.addEventListener('load', async (e) => {
-    try {
-        const response = await fetch('/static/data/sort-data.json')
-        if (!response.ok) {
-            throw new Error(`HTTP error while downloading operation list. Status: ${response.status}`)
-        }
-        window.procedures = await response.json()
-        brightspot.postMessage({
-            'type': 'data_in',
-            'procedures': window.procedures,
-        })
-    } catch (error) {
-        console.error('Error while downloading operation list:', error);
-    }
-})
+// window.addEventListener('load', async (e) => {
+//     try {
+//         const response = await fetch('/static/data/sort-data.json')
+//         if (!response.ok) {
+//             throw new Error(`HTTP error while downloading operation list. Status: ${response.status}`)
+//         }
+//         window.procedures = await response.json()
+//         brightspot.postMessage({
+//             'type': 'data_in',
+//             'procedures': window.procedures,
+//         })
+//     } catch (error) {
+//         console.error('Error while downloading operation list:', error);
+//     }
+// })
+
+// let proceduresModule = import('../data/sort-data.json', {with: {type: 'json'}})
+// proceduresModule.then((module) => {
+//     window.procedures = module.default
+//     brightspot.postMessage({
+//         'type': 'data_in',
+//         'procedures': window.procedures,
+//     })
+// })
 
 // Rig up UI
 let sortContainer = document.querySelector('#sort-container')
@@ -162,7 +171,13 @@ sortContainer?.addEventListener('input', (e) => {
 //    ___) |  __/ (_| | | | (__| | | |                                             
 //   |____/ \___|\__,_|_|  \___|_| |_|                                             
                                                                                 
-let brightspot = new Worker('/static/brightspot.js')
+let brightspot = new Worker(new URL('./brightspot.js', import.meta.url))
+
+brightspot.postMessage({
+    'type': 'data_in',
+    'procedures': window.procedures,
+})
+
 let searchForm = document.querySelector('#smart-search')
 let searchResults = document.querySelector('#smart-results')
 searchForm.addEventListener('input', (e) => {
