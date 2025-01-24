@@ -1,5 +1,4 @@
-import { getAnyInputValue, setAnyInputValue } from '/static/js/utils.js'
-//    ___                   _                                                      
+// /    ___                   _                                                      
 //   |_ _|_ __  _ __  _   _| |_ ___                                                
 //    | || '_ \| '_ \| | | | __/ __|                                               
 //    | || | | | |_) | |_| | |_\__ \                                               
@@ -17,7 +16,6 @@ customElements.define('clinic-input', class extends HTMLElement {
         this.ugly_name = this.getAttribute("clinic-parameter")
         this.label_enabled = this.getAttribute("label") != "false" // true by default
         this.data = allInputs.find((i) => i.ugly_name == this.ugly_name)
-        this.default_render = () => `${this.data.output_name}: ${this.getValue()}`
 
         // boilerplate
         this.setAttribute("autocomplete", "off")
@@ -77,20 +75,22 @@ customElements.define('clinic-input', class extends HTMLElement {
 		return []
 	}
     
-    getValue() {
-        return getAnyInputValue(this)
-    }
-    
     setValue(newValue) {
-        return setAnyInputValue(this, newValue)
-    }
+        target = this
 
-    render() {
-        if (this.data.render) {
-            return this.data.render(this)
+        if (target.inputElement) target = target.inputElement
+    
+        if (target.tagName == 'select' && target.selectedIndex > 0) {
+            target.value = newValue
+        } else if (target.tagName == 'INPUT' && target.getAttribute('type') == 'checkbox') {
+            target.checked = newValue
+        } else if (target.tagName == 'P' || target.tagName == 'SPAN') {
+            target.innerText = newValue
         } else {
-            return this.default_render()
+            target.value = newValue
         }
+
+        return newValue
     }
 
     focus() {
