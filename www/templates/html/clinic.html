@@ -80,8 +80,8 @@
                 <span class="left">Download</span>
             </li>
             <li id="reset" title="Reset" role="button">
-                <!-- <span class="icon"><img src="{{ 'icons/x_octagon.svg' | static_base64 }}"></span> -->
-                <span class="icon">🦄</span>
+                <span class="icon"><img src="{{ 'icons/x_octagon.svg' | static_base64 }}"></span>
+                <!-- <span class="icon">🦄</span> -->
                 <span class="left">Reset</span>
             </li>
             <!-- <h4>Links</h4>
@@ -97,21 +97,21 @@
             </a> -->
             <a class="invisible-link" target="_blank" href="https://github.com/samnunn/periscope">
                 <li title="Link to this project's source code" role="button">
-                    <!-- <span class="icon"><img src="{{ 'icons/github-mark.svg' | static_base64 }}"></span> -->
-                    <span class="icon">🤖</span>
+                    <span class="icon"><img src="{{ 'icons/github-mark.svg' | static_base64 }}"></span>
+                    <!-- <span class="icon">🤖</span> -->
                     <span class="left">Source Code</span>
                 </li>
             </a>
             <a class="invisible-link" href="mailto:hello@gasnotes.net?subject=Bug%20Report%20for%20Periscope">
                 <li title="Report a Bug" role="button">
-                    <!-- <span class="icon"><img src="{{ 'icons/colour_bug.svg' | static_base64 }}"></span> -->
-                    <span class="icon">🐛</span>
+                    <span class="icon"><img src="{{ 'icons/colour_bug.svg' | static_base64 }}"></span>
+                    <!-- <span class="icon">🐛</span> -->
                     <span class="left">Report a Bug</span>
                 </li>
             </a>
             <li title="Link to this tool's MIT license" onclick="document.querySelector('#big-welcome').showModal()" role="button">
-                <!-- <span class="icon"><img src="{{ 'icons/colour_edit.svg' | static_base64 }}"></span> -->
-                <span class="icon">📜</span>
+                <span class="icon"><img src="{{ 'icons/colour_edit.svg' | static_base64 }}"></span>
+                <!-- <span class="icon">📜</span> -->
                 <span class="left">Terms</span>
             </li>
             <hr>
@@ -565,7 +565,7 @@
 
 <!-- SCRIPTS -->
 <script>window.procedures = {{ 'data/sort-data.json' | static_include | safe }}</script>
-<script type="module">
+<script>
     {{ 'data/input-data.js' | static_include | safe }}
     {{ 'js/clinic-inputs.js' | static_include | safe }}
 </script>
