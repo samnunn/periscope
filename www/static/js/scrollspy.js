@@ -9,14 +9,14 @@ document.body.addEventListener('click', (e) => {
     // any click on a tab selector should open that tab
     // adding a 'click' event listener to the li itself doesn't pick up click that landed on text or icons
     // hence the fancy selector
-    if (e.target.matches('#tab-picker li[scroll-target], #tab-picker li[scroll-target] *')) {
+    if (e.target.matches('#sidebar li[scroll-target], #sidebar li[scroll-target] *')) {
         // find target <section>
         let id = e.target.closest('li').getAttribute('scroll-target')
         let targetElement = document.querySelector(`#${id}`)
 
         // die if element doesn't exist
         if (!targetElement) {
-            console.error(`tab-picker clicked but its target doesn't exist (ID: ${id})`, e.target.closest('li'))
+            console.error(`sidebar clicked but its target doesn't exist (ID: ${id})`, e.target.closest('li'))
             return
         }
 
@@ -35,7 +35,7 @@ document.body.addEventListener('click', (e) => {
     // }
 })
 
-let allTabs = document.querySelectorAll('#tab-picker li[scroll-target]')
+let allTabs = document.querySelectorAll('#sidebar li[scroll-target]')
 let allSections = document.querySelectorAll('section')
 
 document.addEventListener('scroll', (e) => {

@@ -1,15 +1,23 @@
 {% extends 'html/base.html' %}
 {% block head %}
+<meta name="theme-color" content="#2d3436" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#2d3436" media="(prefers-color-scheme: light)">
 {% endblock %}
 
 {% block content %}
 <div class="wrapped" id="tab-box">
-    <nav class="island" id="tab-picker" aria-expanded="true">
+    <nav id="sidebar" aria-expanded="true">
         <ul>
-            <div id="site-title">
-                <p>Periscope</p>
-                <img src="{{ 'icons/gasper_favicon.png' | static_base64 }}" alt="">
-            </div>
+            <!-- <div id="site-title">
+                <p><mark>Periscope</mark></p>
+            </div> -->
+            <!-- <hr> -->
+            <li title="Patient Details">
+                <span class="icon"><img src="{{ 'icons/colour_bookmark.svg' | static_base64 }}"></span>
+                <!-- <span class="icon">🪪</span> -->
+                <span class="left">Placeholder</span>
+                <!-- <span class="left">{{ 'icons/colour_bookmark.svg' | static_base64 }}</span> -->
+            </li>
             <hr>
             <li title="Patient Details" role="button" scroll-target="details">
                 <span class="icon"><img src="{{ 'icons/colour_bookmark.svg' | static_base64 }}"></span>
@@ -53,7 +61,7 @@
                 <!-- <span class="icon">✅</span> -->
                 <span class="left">Plan</span>
             </li>
-            <h4>Tools</h4>
+            <!-- <h4>Tools</h4> -->
             <hr>
             <li title="Shortcuts" role="button" id="shortcuts-button">
                 <span class="icon"><img src="{{ 'icons/colour_fast_forward.svg' | static_base64 }}"></span>
@@ -67,7 +75,7 @@
                 <span class="left">Search</span>
                 <span class="right">⌘K</span>
             </li>
-            <h4>Export</h4>
+            <!-- <h4>Export</h4> -->
             
             <hr>
             <!-- <li title="RedCap" role="button" id="redcap-button">
@@ -87,7 +95,7 @@
             <!-- <h4>Links</h4>
             <hr>
             <div id="deeplinks"></div> -->
-            <h4>About</h4>
+            <!-- <h4>About</h4> -->
             <hr>
             <!-- <a class="invisible-link" href="https://nunn.au">
                 <li title="Link to Sam Nunn's website" role="button">
@@ -125,8 +133,8 @@
         <section class="island" id="details">
             <div class="section-topper">
                 <img class="icon" src="{{ 'icons/colour_bookmark.svg' | static_base64 }}">
-                <h2>Patient Details</h2>
-                <!-- <button tabindex="2" class="section-copy">Copy Text</button> -->
+                <h2><mark class="grey">Patient Details</mark></h2>
+                <!-- <button tabindex="2" class="section-copy">Copy Section</button> -->
             </div>
             <div class="vstack">
                 <div class="hstack">
@@ -146,8 +154,8 @@
         <section class="island" id="medicalhx">
             <div class="section-topper">
                 <img class="icon" src="{{ 'icons/colour_heart.svg' | static_base64 }}">
-                <h2>Medical History</h2>
-                <button tabindex="2" class="section-copy">Copy Text</button>
+                <h2><mark class="grey">Medical History</mark></h2>
+                <button tabindex="2" class="section-copy">Copy Section</button>
             </div>
             <div class="hstack">
                 <div id="diagnosis-box" class="vstack">
@@ -173,8 +181,8 @@
                         </div>
                     </clinic-draglist>
                     <div id="diagnosis-placeholder">
-                        <p>Enter conditions using the search bar.</p>
-                        <img src="{{ 'icons/gasper_thinking.png' | static_base64 }}" alt="">
+                        <!-- <p>Enter conditions using the search bar.</p> -->
+                        <img width="200" src="{{ 'illustrations/anaesthetic_machine.svg' | static_base64 }}" alt="">
                     </div>
                     <hr id="pmhx-divider">
                 </div>
@@ -209,8 +217,8 @@
         <section class="island" id="rx">
             <div class="section-topper">
                 <img class="icon" src="{{ 'icons/colour_pill.svg' | static_base64 }}">
-                <h2>Medication List</h2>
-                <button tabindex="2" class="section-copy">Copy Text</button>
+                <h2><mark class="grey">Medications</mark></h2>
+                <button tabindex="2" class="section-copy">Copy Section</button>
             </div>
             <div class="hstack">
                 <clinic-input clinic-parameter="medications-freetext" class="bigbox autotall"></clinic-input>
@@ -223,8 +231,8 @@
         <section class="island" id="gashx">
             <div class="section-topper">
                 <img class="icon" src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}">
-                <h2>Anaesthetic History</h2>
-                <button tabindex="2" class="section-copy">Copy Text</button>
+                <h2><mark class="grey">Anaesthesia</mark></h2>
+                <button tabindex="2" class="section-copy">Copy Section</button>
             </div>
             <div class="hstack">
                 <div class="vstack">
@@ -281,8 +289,8 @@
         <section class="island" id="ix">
             <div class="section-topper">
                 <img class="icon" src="{{ 'icons/colour_droplet.svg' | static_base64 }}">
-                <h2>Investigations</h2>
-                <button tabindex="2" class="section-copy">Copy Text</button>
+                <h2><mark class="grey">Investigations</mark></h2>
+                <button tabindex="2" class="section-copy">Copy Section</button>
             </div>
             <div class="hstack">
                 <div class="vstack">
@@ -308,8 +316,8 @@
         <section class="island" id="consent">
             <div class="section-topper">
                 <img class="icon" src="{{ 'icons/colour_pen_tool.svg' | static_base64 }}">
-                <h2>Consent</h2>
-                <button tabindex="2" class="section-copy">Copy Text</button>
+                <h2><mark class="grey">Consent</mark></h2>
+                <button tabindex="2" class="section-copy">Copy Section</button>
             </div>
             <div class="hstack">
                 <div class="vstack label-ish">
@@ -330,8 +338,8 @@
         <section class="island" id="risk">
             <div class="section-topper">
                 <img class="icon" src="{{ 'icons/colour_life_buoy.svg' | static_base64 }}">
-                <h2>Risk Profile</h2>
-                <button tabindex="2" class="section-copy">Copy Text</button>
+                <h2><mark class="grey">Risk Profile</mark></h2>
+                <button tabindex="2" class="section-copy">Copy Section</button>
             </div>
             <div class="vstack">
                 <div class="hstack">
@@ -486,8 +494,8 @@
         <section class="island" id="plan">
             <div class="section-topper">
                 <img class="icon" src="{{ 'icons/colour_check_circle.svg' | static_base64 }}">
-                <h2>Plan</h2>
-                <button tabindex="2" class="section-copy">Copy Text</button>
+                <h2><mark class="grey">Plan</mark></h2>
+                <button tabindex="2" class="section-copy">Copy Section</button>
             </div>
             <div class="vstack">
                 <div class="hstack">

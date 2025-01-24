@@ -134,7 +134,7 @@ document.addEventListener('click', (e) => {
 
 
 // WINDOW RESIZING
-let tabPicker = document.querySelector("#tab-picker")
+let tabPicker = document.querySelector("#sidebar")
 localStorage.setItem('sidebar-overridden', 'false')
 
 function autoCollapseTabPicker() {
