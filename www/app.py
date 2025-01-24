@@ -1,3 +1,4 @@
+import base64
 import os
 from functools import wraps
 
@@ -84,3 +85,36 @@ def get_deeplinks():
 def get_redcap():
     redcap_path = os.path.join("tenants", session["tenant"], "redcap.js")
     return send_file(redcap_path)
+
+
+# FILTERS
+@app.template_filter("static_base64")
+def static_base64(str):
+    map = {
+        "svg": "image/svg+xml",
+        "png": "image/png",
+        "jpg": "image/jpeg",
+        "jpeg": "image/jpeg",
+        "gif": "image/gif",
+        "ico": "image/x-icon",
+        "webp": "image/webp",
+        "js": "application/javascript",
+        "css": "text/css",
+        "json": "application/json",
+        "html": "text/html",
+        "txt": "text/plain",
+    }
+    ext = os.path.splitext(str)[1][1:]
+    if ext in map:
+        with open(os.path.join(app.static_folder, str), "rb") as f:
+            b64 = base64.b64encode(f.read())
+        return f"data:{map[ext]};base64," + b64.decode("utf-8")
+
+    return ""
+
+
+@app.template_filter("static_include")
+def static_include(str):
+    with open(os.path.join(app.static_folder, str), "r") as f:
+        data = f.read()
+    return data
