@@ -203,14 +203,17 @@
     <div class="hstack">
         <div class="vstack">
             <clinic-input clinic-parameter="consent-source"></clinic-input>
-            <div class="vstack">
-                <clinic-input clinic-parameter="consent-ga"></clinic-input>
-                <clinic-input clinic-parameter="consent-sedation"></clinic-input>
-                <clinic-input clinic-parameter="consent-regional"></clinic-input>
-                <clinic-input clinic-parameter="consent-neuraxial"></clinic-input>
-                <clinic-input clinic-parameter="consent-artline"></clinic-input>
-                <clinic-input clinic-parameter="consent-cvc"></clinic-input>
-                <clinic-input clinic-parameter="consent-blood"></clinic-input>
+            <div class="label-ish">
+                <span>Pro Forma</span>
+                <div>
+                    <clinic-input clinic-parameter="consent-ga"></clinic-input>
+                    <clinic-input clinic-parameter="consent-sedation"></clinic-input>
+                    <clinic-input clinic-parameter="consent-regional"></clinic-input>
+                    <clinic-input clinic-parameter="consent-neuraxial"></clinic-input>
+                    <clinic-input clinic-parameter="consent-artline"></clinic-input>
+                    <clinic-input clinic-parameter="consent-cvc"></clinic-input>
+                    <clinic-input clinic-parameter="consent-blood"></clinic-input>
+                </div>
             </div>
         </div>
         <clinic-input clinic-parameter="consent-notes" class="bigbox autotall"></clinic-input>
@@ -228,14 +231,14 @@
                 <div class="label-ish" clinic-calculator clinic-calculator-interpreter="stopbang" clinic-calculator-parameter="stopbang-score">
                     <span>STOP-BANG (<span clinic-parameter="stopbang-score"></span>/8)</span> 
                     <div clinic-search="STOP-BANG Calculator">
-                        <label><clinic-input label="false" clinic-parameter="stopbang-snorer"></clinic-input>Snorer</label>
-                        <label><clinic-input label="false" clinic-parameter="stopbang-tiredness"></clinic-input>Tiredness</label>
-                        <label><clinic-input label="false" clinic-parameter="stopbang-apnoea"></clinic-input>Observed apnoea</label>
-                        <label><clinic-input label="false" clinic-parameter="stopbang-hypertensive"></clinic-input>Hypertensive</label>
-                        <label><clinic-input label="false" clinic-parameter="stopbang-bmi-35"></clinic-input>BMI > 35</label>
-                        <label><clinic-input label="false" clinic-parameter="stopbang-age"></clinic-input>Age > 50</label>
-                        <label><clinic-input label="false" clinic-parameter="stopbang-neck"></clinic-input>Neck ≥ 40cm</label>
-                        <label><clinic-input label="false" clinic-parameter="stopbang-male"></clinic-input>Male</label>
+                        <clinic-input clinic-parameter="stopbang-snorer"></clinic-input>
+                        <clinic-input clinic-parameter="stopbang-tiredness"></clinic-input>
+                        <clinic-input clinic-parameter="stopbang-apnoea"></clinic-input>
+                        <clinic-input clinic-parameter="stopbang-hypertensive"></clinic-input>
+                        <clinic-input clinic-parameter="stopbang-bmi-35"></clinic-
+                        <clinic-input clinic-parameter="stopbang-age"></clinic-input>
+                        <clinic-input clinic-parameter="stopbang-neck"></clinic-input>
+                        <clinic-input clinic-parameter="stopbang-male"></clinic-input>
                         <span>
                             <span clinic-calculator-interpretation clinic-parameter="stopbang-interpretation"></span>
                             <clinic-modal-popup>
@@ -250,12 +253,12 @@
                 <div class="label-ish" clinic-calculator clinic-calculator-interpreter="rcri" clinic-calculator-parameter="rcri-score">
                     <span>RCRI (<span clinic-parameter="rcri-score"></span>/6)</span>
                     <div clinic-search="RCRI Calculator">
-                        <label><clinic-input label="false" clinic-parameter="rcri-risky"></clinic-input>Elevated Risk*</label>
-                        <label><clinic-input label="false" clinic-parameter="rcri-ihd"></clinic-input>IHD</label>
-                        <label><clinic-input label="false" clinic-parameter="rcri-ccf"></clinic-input>CCF</label>
-                        <label><clinic-input label="false" clinic-parameter="rcri-cva"></clinic-input>CVA</label>
-                        <label><clinic-input label="false" clinic-parameter="rcri-insulin"></clinic-input>On insulin</label>
-                        <label><clinic-input label="false" clinic-parameter="rcri-creatinine"></clinic-input>Cr > 176.8 μmol/L</label>
+                        <clinic-input clinic-parameter="rcri-risky"></clinic-input>
+                        <clinic-input clinic-parameter="rcri-ihd"></clinic-input>
+                        <clinic-input clinic-parameter="rcri-ccf"></clinic-input>
+                        <clinic-input clinic-parameter="rcri-cva"></clinic-input>
+                        <clinic-input clinic-parameter="rcri-insulin"></clinic-input>
+                        <clinic-input clinic-parameter="rcri-creatinine"></clinic-input>
                         <span>
                             <span clinic-calculator-interpretation clinic-parameter="rcri-interpretation"></span>
                             <clinic-modal-popup>
@@ -271,10 +274,10 @@
                 <div class="label-ish" clinic-calculator clinic-calculator-interpreter="apfel" clinic-calculator-parameter="apfel-score">
                     <span>Apfel (<span clinic-parameter="apfel-score"></span></clinic-input>/4)</span>
                     <div clinic-search="Apfel Calculator">
-                        <label><clinic-input label="false" clinic-parameter="apfel-sex"></clinic-input>Female</label>
-                        <label><clinic-input label="false" clinic-parameter="apfel-smoking"></clinic-input>Non-smoker</label>
-                        <label><clinic-input label="false" clinic-parameter="apfel-ponv"></clinic-input>Prior PONV</label>
-                        <label><clinic-input label="false" clinic-parameter="apfel-opioids"></clinic-input>Postop opioids</label>
+                        <clinic-input clinic-parameter="apfel-sex"></clinic-input>
+                        <clinic-input clinic-parameter="apfel-smoking"></clinic-input>
+                        <clinic-input clinic-parameter="apfel-ponv"></clinic-input>
+                        <clinic-input clinic-parameter="apfel-opioids"></clinic-input>
                         <span>
                             <span clinic-calculator-interpretation clinic-parameter="apfel-interpretation"></span>
                             <clinic-modal-popup>
