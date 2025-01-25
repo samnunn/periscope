@@ -111,6 +111,19 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
             output = output + `\n      - ${key}: ${value}`
         }
 
+        // add in <clinic-input> elements
+        // TODO: eliminate the need for this hack
+        for (let input of this.querySelectorAll('clinic-input')) {
+            try {
+                let pre = input?.data?.pretty_name
+                let post = document.persistentDataProxy[input.data.ugly_name]
+                output = output + `\n      - ${pre}: ${post}`
+            } catch (e) {
+                console.error(`Failed to render text for <clinic-input> embedded in <clinic-diagnosis>`, e)
+            }
+
+        }
+
         // add in other details
         if (data['other-details']) {
             let otherDetails = data['other-details']
