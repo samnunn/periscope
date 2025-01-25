@@ -8,7 +8,6 @@ import "/static/js/components/cmd-k.js"
 
 import "/static/js/historian.js"
 import "/static/js/text-editing.js"
-import "/static/js/sort-score.js"
 import "/static/js/beagle-mainthread.js"
 import "/static/js/citations.js"
 import "/static/js/templating.js"
