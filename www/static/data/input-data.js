@@ -45,7 +45,7 @@ let allInputs = [
     },
     {
         'ugly_name': 'patient-height',
-        'pretty_name': 'Height (cm)',
+        'pretty_name': 'Height (cm)',
         'output_name': 'Height',
         'search_name': 'Height',
         'html': `
@@ -54,7 +54,7 @@ let allInputs = [
     },
     {
         'ugly_name': 'patient-weight',
-        'pretty_name': 'Weight (kg)',
+        'pretty_name': 'Weight (kg)',
         'output_name': 'Weight',
         'search_name': 'Weight',
         'html': `
