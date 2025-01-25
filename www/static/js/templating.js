@@ -111,8 +111,11 @@ let outputTemplates = {
 'consent': `# Informed Consent
 {{consent-output}}
 
+Consent taken from: {{consent-source}}
+
 ## Special Notes
 {{consent-notes}}`,
+
 
 'risk': `# Risk Assessment
 - ASA: {{asa}}

@@ -791,4 +791,96 @@ let allInputs = [
         'search_name': 'Medications and Fasting',
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
     },
+    {
+        'ugly_name': 'cataract-first-second',
+        'pretty_name': 'Eye',
+        'output_name': 'Eye',
+        'search_name': 'Eye',
+        'html': `
+            <div class="selectbox">
+                <select autocomplete="off">
+                    <option value="" selected></option>
+                    <option value="first">First eye</option>
+                    <option value="second">Second eye</option>
+                </select>
+            </div>
+        `,
+    },
+    {
+        'ugly_name': 'patient-cald',
+        'pretty_name': 'Understands English',
+        'output_name': 'Understands English',
+        'search_name': 'Understands English',
+        'html': `
+            <div class="selectbox">
+                <select autocomplete="off">
+                    <option value="" selected></option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+        `,
+    },
+    {
+        'ugly_name': 'patient-hearing',
+        'pretty_name': 'Hearing Intact',
+        'output_name': 'hearing Intact',
+        'search_name': 'Hearing Intact',
+        'html': `
+            <div class="selectbox">
+                <select autocomplete="off">
+                    <option value="" selected></option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+        `,
+    },
+    {
+        'ugly_name': 'patient-hearing',
+        'pretty_name': 'Can Follow Instructions',
+        'output_name': 'Can Follow Instructions',
+        'search_name': 'Can Follow Instructions',
+        'html': `
+            <div class="selectbox">
+                <select autocomplete="off">
+                    <option value="" selected></option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+        `,
+    },
+    {
+        'ugly_name': 'patient-communicates-concerns',
+        'pretty_name': 'Can Voice Concerns',
+        'output_name': 'Can voice concerns',
+        'search_name': 'Can Voice Concerns',
+        'html': `
+            <div class="selectbox">
+                <select autocomplete="off">
+                    <option value="" selected></option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+        `,
+    },
+    {
+        'ugly_name': 'consent-source',
+        'pretty_name': 'Consent Source',
+        'output_name': 'Consent Source',
+        'search_name': 'Consent Source',
+        'html': `
+            <div class="selectbox">
+                <select autocomplete="off">
+                    <option value="" selected></option>
+                    <option value="patient">Patient</option>
+                    <option value="next of kin">Next of Kin</option>
+                    <option value="enduring guardian">Enduring Guardian</option>
+                    <option value="state-appointed (public) guardian">State-Appointed Guardian</option>
+                </select>
+            </div>
+        `,
+    },
 ]
