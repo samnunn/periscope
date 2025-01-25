@@ -12,6 +12,7 @@ from flask import (
     session,
     url_for,
 )
+from flask_minify import Minify
 from werkzeug.utils import secure_filename
 
 # BOOTSTRAPPING
@@ -19,6 +20,9 @@ app = Flask(__name__)
 
 # SECRETS
 app.secret_key = os.environ.get("FLASK_SECRETKEY")
+
+# MINIFICATION
+Minify(app=app, html=True, js=True, cssless=True)
 
 
 # UTILITY FUNCTIONS
