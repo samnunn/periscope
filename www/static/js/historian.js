@@ -9,7 +9,6 @@ import { getAnyInputValue, setAnyInputValue } from './utils.js'
 export let diagnosisList = document.querySelector('#diagnosis-list')
 let diagnosisSearchBox = document.querySelector('#diagnosis-search input')
 let diagnosisSearchResultsList = document.querySelector('#diagnosis-results ul')
-import { allDiagnoses } from '../data/diagnosis-data.js'
 
 // UTILS
 function escapeHTML(html) {
@@ -290,7 +289,7 @@ function insertSearchResult(target, data) {
 diagnosisSearchBox.addEventListener('input', (e) => {
     // Find matches with fuzzysort
     let searchString = e.target.value.trim()
-    let results = fuzzysort.go(searchString, allDiagnoses, {
+    let results = fuzzysort.go(searchString, window.allDiagnoses, {
         threshold: 0,
         limit: 4,
         all: false,

@@ -76,10 +76,6 @@ document.persistentDataProxy = persistentDataProxy // make accessible from the m
 
 // restore data on load
 window.addEventListener("DOMContentLoaded", async () => {
-    // import { allDiagnoses } from '/static/data/diagnosis-data.js'
-    let allDiagnosesModule = await import('../data/diagnosis-data.js')
-    let allDiagnoses = allDiagnosesModule.allDiagnoses
-
     // restore top-level data
     for (let p in persistentDataProxy) {
         // Get the stored data for the current property
@@ -102,7 +98,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             console.error(`Attempted to re-populate diagnosis with id "${id}" but underlying data was not found in persistentDataProxy`)
             continue
         }
-        let genericDiagnosisData = allDiagnoses.find((d) => d['id'] == storedData['id'])
+        let genericDiagnosisData = window.allDiagnoses.find((d) => d['id'] == storedData['id'])
     
         storedData['html'] = genericDiagnosisData?.html || ''
         insertClinicDiagnosis(storedData, diagnosisList, "afterbegin", false)

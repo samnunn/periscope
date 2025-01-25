@@ -1,4 +1,4 @@
-export let allDiagnoses = [
+window.allDiagnoses = [
     {
         matchable_string: "T2DM type two 2 II insulin dependent diabetes mellitus IDDM",
         name: "T2DM",
@@ -929,7 +929,7 @@ export let allDiagnoses = [
         html: `
             <div class="hstack">
                 <label>
-                    Size (cm)
+                    Size (cm)
                     <input type="number" min="0" max="30" step="0.1" diagnosis-parameter="Size">
                 </label>
                 <label>
