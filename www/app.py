@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRETKEY")
 
 # MINIFICATION
-Minify(app=app, html=True, js=True, cssless=True)
+# Minify(app=app, html=True, js=True, cssless=True)
 
 
 # UTILITY FUNCTIONS
@@ -50,7 +50,12 @@ def welcome():
 
 @app.route("/clinic")
 def clinic():
-    return render_template("html/clinic.html")
+    return render_template("html/clinic/layouts/default.html")
+
+
+@app.route("/clinic/cataracts")
+def cataracts():
+    return render_template("html/clinic/layouts/cataracts.html")
 
 
 @app.route("/auth", methods=["POST"])

@@ -1,0 +1,154 @@
+{% extends 'html/clinic.html' %}
+{% block navigation %}
+<li title="Patient Details">
+    <span class="icon"><img src="{{ 'icons/gasper_favicon.png' | static_base64 }}"></span>
+    <span class="left">Periscope</span>
+</li>
+<hr>
+<li title="Patient Details" role="button" scroll-target="details">
+    <span class="icon"><img src="{{ 'icons/colour_bookmark.svg' | static_base64 }}"></span>
+    <span class="left">Patient Details</span>
+</li>
+<li title="Triage" role="button" scroll-target="triage">
+    <span class="icon"><img src="{{ 'icons/colour_life_buoy.svg' | static_base64 }}"></span>
+    <span class="left">Triage</span>
+</li>
+<li title="Medical History" role="button" scroll-target="medicalhx">
+    <span class="icon"><img src="{{ 'icons/colour_heart.svg' | static_base64 }}"></span>
+    <span class="left">Medical History</span>
+</li>
+<li title="Medications" role="button" scroll-target="rx">
+    <span class="icon"><img src="{{ 'icons/colour_pill.svg' | static_base64 }}"></span>
+    <span class="left">Medications</span>
+</li>
+<li title="Anaesthesia" role="button" scroll-target="gashx">
+    <span class="icon"><img src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}"></span>
+    <span class="left">Anaesthesia</span>
+</li>
+<li title="Plan" role="button" scroll-target="plan">
+    <span class="icon"><img src="{{ 'icons/colour_check_circle.svg' | static_base64 }}"></span>
+    <span class="left">Plan</span>
+</li>
+{% endblock %}
+
+{% block inputs %}
+<section id="details">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_bookmark.svg' | static_base64 }}">
+        <h2><mark class="grey">Patient Details</mark></h2>
+    </div>
+    <div class="hstack">
+        <clinic-input clinic-parameter="patient-age"></clinic-input>
+        <clinic-input clinic-parameter="patient-sex"></clinic-input>
+        <clinic-input clinic-parameter="patient-height"></clinic-input>
+        <clinic-input clinic-parameter="patient-weight"></clinic-input>
+        <clinic-input clinic-parameter="patient-bmi"></clinic-input>
+        <clinic-input clinic-parameter="cataract-first-second"></clinic-input>
+    </div>
+</section>
+<section id="triage">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_life_buoy.svg' | static_base64 }}">
+        <h2><mark class="grey">Triage</mark></h2>
+    </div>
+    <div class="hstack">
+        <div class="vstack">
+            <clinic-input clinic-parameter="patient-asa"></clinic-input>
+            <div class="hstack">
+                <clinic-input clinic-parameter="patient-mets"></clinic-input>
+                <clinic-input clinic-parameter="patient-flat"></clinic-input>
+            </div>
+            <clinic-input clinic-parameter="patient-mets-details"></clinic-input>
+            <clinic-input clinic-parameter="consent-source"></clinic-input>
+        </div>
+        <div>info screen? live readout of contraindications?</div>
+    </div>
+</section>
+<section id="medicalhx">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_heart.svg' | static_base64 }}">
+        <h2><mark class="grey">Medical History</mark></h2>
+        <button tabindex="2" class="section-copy">Copy Section</button>
+    </div>
+    <div class="hstack">
+        {% include "html/clinic/components/medical-history.html" %}
+        <div class="vstack">
+            <label>
+                <span>Smoking</span>
+                <div class="hstack">
+                    <clinic-input clinic-parameter="smoking-status" label="false"></clinic-input>
+                    <clinic-input clinic-parameter="smoking-details" label="false"></clinic-input>
+                </div>
+            </label>
+            <div class="hstack">
+                <clinic-input clinic-parameter="alcohol-freetext"></clinic-input>
+                <clinic-input clinic-parameter="drugs-freetext"></clinic-input>
+            </div>
+            <clinic-input clinic-parameter="other-shx" class="bigbox medium autotall"></clinic-input>
+        </div>
+        
+    </div>
+</section>
+<section id="rx">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_pill.svg' | static_base64 }}">
+        <h2><mark class="grey">Medications</mark></h2>
+        <button tabindex="2" class="section-copy">Copy Section</button>
+    </div>
+    <div class="hstack">
+        <clinic-input clinic-parameter="medications-freetext" class="bigbox medium"></clinic-input>
+        <div class="vstack">
+            <clinic-input clinic-parameter="allergies-freetext" class="bigbox autotall"></clinic-input>
+        </div>
+    </div>
+</section>
+<section id="gashx">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}">
+        <h2><mark class="grey">Anaesthesia</mark></h2>
+        <button tabindex="2" class="section-copy">Copy Section</button>
+    </div>
+    <div class="hstack">
+        <div class="vstack">
+            <clinic-input clinic-parameter="previous-anaesthesia-freetext" class="bigbox medium"></clinic-input>
+        </div>
+        <div class="vstack">
+            <clinic-input clinic-parameter="previous-anaesthesia-complications"></clinic-input>
+            <label>
+                Family Issues with Anaesthesia
+                <div class="hstack">
+                    <clinic-input clinic-parameter="previous-anaesthesia-fhx" label="false"></clinic-input>
+                    <clinic-input clinic-parameter="previous-anaesthesia-fhx-details" label="false"></clinic-input>
+                </div>
+            </label>
+        </div>
+        
+    </div>
+</section>
+
+<section id="plan">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_check_circle.svg' | static_base64 }}">
+        <h2><mark class="grey">Plan</mark></h2>
+        <button tabindex="2" class="section-copy">Copy Section</button>
+    </div>
+    <div class="vstack">
+        <div class="hstack">
+            <div class="vstack">
+                <clinic-input clinic-parameter="issues" class="bigbox short autotall"></clinic-input>
+                <clinic-input clinic-parameter="plan" class="bigbox short autotall"></clinic-input>
+            </div>
+            <div class="vstack" id="warnings-container">
+                <div class="label-ish">
+                    Smart Suggestions ✨
+                    <div id="warnings">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hstack">
+            <clinic-input clinic-parameter="plan-medications" class="bigbox short"></clinic-input>
+        </div>
+    </div>
+</section>
+{% endblock %}
