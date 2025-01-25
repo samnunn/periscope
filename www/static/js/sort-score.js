@@ -4,32 +4,6 @@ import { getAnyInputValue } from './utils.js'
 //   \___ \| | | | |_) || |   \___ \ / __/ _ \| '__/ _ \                           
 //    ___) | |_| |  _ < | |    ___) | (_| (_) | | |  __/                           
 //   |____/ \___/|_| \_\|_|   |____/ \___\___/|_|  \___|                           
-   
-// Load SNAP2 procedure list
-// window.addEventListener('load', async (e) => {
-//     try {
-//         const response = await fetch('/static/data/sort-data.json')
-//         if (!response.ok) {
-//             throw new Error(`HTTP error while downloading operation list. Status: ${response.status}`)
-//         }
-//         window.procedures = await response.json()
-//         brightspot.postMessage({
-//             'type': 'data_in',
-//             'procedures': window.procedures,
-//         })
-//     } catch (error) {
-//         console.error('Error while downloading operation list:', error);
-//     }
-// })
-
-// let proceduresModule = import('../data/sort-data.json', {with: {type: 'json'}})
-// proceduresModule.then((module) => {
-//     window.procedures = module.default
-//     brightspot.postMessage({
-//         'type': 'data_in',
-//         'procedures': window.procedures,
-//     })
-// })
 
 // Rig up UI
 let sortContainer = document.querySelector('#sort-container')

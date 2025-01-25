@@ -127,17 +127,9 @@ mark {
     display: table;
 }
 
-.island {
-    /* background-color: white; */
-    /* background: var(--greydient); */
-    padding: var(--island-padding);
-    border-radius: 0.75rem;
-    /* box-shadow: 0px 0px 5px rgba(0,0,0,0.2); */
-    border: 1px solid transparent;
-}
-
 /* LAYOUT */
 section {
+    padding: var(--island-padding);
     margin: 0;
     margin-bottom: 2rem;
     width: 100%;
@@ -316,6 +308,9 @@ textarea {
 
 .tall {
     min-height: 30rem;
+}
+.medium {
+    min-height: 20rem;
 }
 .short {
     min-height: 10rem;
