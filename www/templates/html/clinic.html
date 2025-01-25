@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block content %}
+<!-- EMBED STATIC DATA -->
+<script>window.procedures = {{ 'data/sort-data.json' | static_include | safe }}</script>
+<script>{{ 'data/input-data.js' | static_include | safe }}</script>
+<script>{{ 'data/diagnosis-data.js' | static_include | safe }}</script>
+
+<!-- PAGE MARKUP -->
 <div id="tab-box">
     <nav id="sidebar" aria-expanded="true">
         <ul>
@@ -51,7 +57,7 @@
             <hr>
             <li title="Toggle menu" role="button" id="tab-bar-collapse-button">
                 <span class="icon"><img src="{{ 'icons/chevrons_right.svg' | static_base64 }}"></span>
-                <span class="left">Pin Sidebar</span>
+                <span class="left">Lock Sidebar</span>
             </li>
         </ul>
     </nav>
@@ -112,16 +118,10 @@
         <button>Close</button>
     </form>
 </dialog>
-<!-- SCRIPTS -->
-<script>window.procedures = {{ 'data/sort-data.json' | static_include | safe }}</script>
-<script>{{ 'data/diagnosis-data.js' | static_include | safe }}</script>
-<script>
-    {{ 'data/input-data.js' | static_include | safe }}
-    {{ 'js/clinic-inputs.js' | static_include | safe }}
-</script>
+
+<!-- OTHER SCRIPTS -->
+<script type="module">{{ 'js/data-persistence.js' | static_include | safe }}</script>
+<script>{{ 'js/clinic-inputs.js' | static_include | safe }}</script>
 <script>{{ 'js/fuzzysort.min.js' | static_include | safe }}</script>
 <script type="module">{{ 'js/clinic.js' | static_include | safe }}</script>
-
-
-
 {% endblock %}

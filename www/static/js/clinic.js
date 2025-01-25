@@ -11,7 +11,7 @@ import "/static/js/text-editing.js"
 import "/static/js/beagle-mainthread.js"
 import "/static/js/citations.js"
 import "/static/js/templating.js"
-import "/static/js/data-persistence.js"
+// import "/static/js/data-persistence.js"
 import "/static/js/scrollspy.js"
 import "/static/js/calculators.js"
 

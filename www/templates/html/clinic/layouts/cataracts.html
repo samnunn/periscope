@@ -17,10 +17,6 @@
     <span class="icon"><img src="{{ 'icons/colour_heart.svg' | static_base64 }}"></span>
     <span class="left">Medical History</span>
 </li>
-<li title="Medications" role="button" scroll-target="rx">
-    <span class="icon"><img src="{{ 'icons/colour_pill.svg' | static_base64 }}"></span>
-    <span class="left">Medications</span>
-</li>
 <li title="Anaesthesia" role="button" scroll-target="gashx">
     <span class="icon"><img src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}"></span>
     <span class="left">Anaesthesia</span>
@@ -43,7 +39,7 @@
         <clinic-input clinic-parameter="patient-height"></clinic-input>
         <clinic-input clinic-parameter="patient-weight"></clinic-input>
         <clinic-input clinic-parameter="patient-bmi"></clinic-input>
-        <clinic-input clinic-parameter="cataract-first-second"></clinic-input>
+        <clinic-input clinic-parameter="patient-asa"></clinic-input>
     </div>
 </section>
 <section id="triage">
@@ -53,17 +49,124 @@
     </div>
     <div class="hstack">
         <div class="vstack">
-            <clinic-input clinic-parameter="patient-asa"></clinic-input>
+            <h4>Yellow Flags</h4>
             <div class="hstack">
-                <clinic-input clinic-parameter="patient-mets"></clinic-input>
-                <clinic-input clinic-parameter="patient-flat"></clinic-input>
+                <div class="vstack">
+                    <clinic-input clinic-parameter="patient-cataract-lay-flat"></clinic-input>
+                    <clinic-input clinic-parameter="patient-language-barrier"></clinic-input>
+                    <clinic-input clinic-parameter="patient-deaf"></clinic-input>
+                    <clinic-input clinic-parameter="patient-cognitive-impairment"></clinic-input>
+                    <clinic-input clinic-parameter="patient-unable-to-communicate"></clinic-input>
+                </div>
+                <div class="vstack">
+                    <clinic-input clinic-parameter="patient-ppmicd"></clinic-input>
+                    <clinic-input clinic-parameter="patient-known-difficult-airway"></clinic-input>
+                    <clinic-input clinic-parameter="patient-known-mh"></clinic-input>
+                    <clinic-input clinic-parameter="patient-recent-respiratory-illness"></clinic-input>
+                    <clinic-input clinic-parameter="patient-public-guardian"></clinic-input>
+                </div>
+
             </div>
-            <clinic-input clinic-parameter="patient-mets-details"></clinic-input>
-            <clinic-input clinic-parameter="consent-source"></clinic-input>
+            <h4>Red Flags</h4>
+            <div class="hstack">
+                <div class="vstack">
+                    <clinic-input clinic-parameter="patient-recent-cardiac-event"></clinic-input>
+                    <clinic-input clinic-parameter="patient-recent-pe"></clinic-input>
+                    <clinic-input clinic-parameter="patient-recent-stroke"></clinic-input>
+                </div>
+            </div>
         </div>
-        <div>info screen? live readout of contraindications?</div>
+        <div class="vstack">
+            <style>
+                #dial-divot {
+                    flex-grow: 1;
+
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 1rem;
+                }
+                #dial {
+                    user-select: none;
+                    pointer-events: none;
+
+                    margin-top: 3rem;
+                    width: 50%;
+                    max-width: 350px;
+                    position: relative;
+                    #needle {
+                        --needle-width: 10%;
+                        width: var(--needle-width);
+                        position: absolute;
+                        bottom: calc(0px - 0.5 * var(--needle-width));
+                        left: calc(50% - 0.5 * var(--needle-width));
+                        transform-origin: center 84%;
+                        rotate: 40deg;
+                    }
+                }
+            </style>
+            <div id="dial-divot" class="">
+                <div id="dial">
+                    <img src="{{ 'icons/warning_dial.svg' | static_base64 }}" alt="">
+                    <img src="{{ 'icons/warning_dial_needle.svg' | static_base64 }}" alt="" id="needle">
+                </div>
+                <p id="dial-advice"></p>
+            </div>
+            <script type="module">
+                let needle = document.querySelector('#needle')
+                let advice = document.querySelector('#dial-advice')
+                function moveDial() {
+                    let risk = evaluateScreeningRisk()
+                    if (risk == "red") {
+                        needle.style.rotate = "-22deg"
+                        advice.innerText = "Refer for pre-operative assessment."
+                    } else if (risk == "yellow") {
+                        needle.style.rotate = "22deg"
+                        advice.innerText = "Discuss with anaesthetist."
+                    } else {
+                        needle.style.rotate = "67deg"
+                        advice.innerText = "Continue assessment."
+                    }
+                }
+                function evaluateScreeningRisk() {
+                    if (checkRedFlags()) return "red"
+                    if (checkYellowFlags()) return "yellow"
+                    return "green"
+                }
+                function checkRedFlags() {
+                    if (parseInt(document.persistentDataProxy["patient-asa"]) > 4) return true
+                    if (/less/i.test(document.persistentDataProxy["patient-mets"])) return true
+                    let redFlags = [
+                        "patient-recent-cardiac-event",
+                        "patient-recent-pe",
+                        "patient-recent-stroke",
+                    ]
+                    if (redFlags.some(key => document.persistentDataProxy[key])) return true
+                }
+                function checkYellowFlags() {
+                    if (parseInt(document.persistentDataProxy["patient-asa"]) == 4) return true
+                    let yellowFlags = [
+                        "patient-cataract-lay-flat",
+                        "patient-language-barrier",
+                        "patient-deaf",
+                        "patient-cognitive-impairment",
+                        "patient-unable-to-communicate",
+                        "patient-ppmicd",
+                        "patient-known-difficult-airway",
+                        "patient-known-mh",
+                        "patient-recent-respiratory-illness",
+                        "patient-public-guardian",
+                    ]
+                    if (yellowFlags.some(key => document.persistentDataProxy[key])) return true
+                }
+                window.addEventListener('load', moveDial)
+                document.addEventListener('clinic:value-changed', moveDial)
+            </script>
+        </div>
     </div>
 </section>
+
 <section id="medicalhx">
     <div class="section-topper">
         <img class="icon" src="{{ 'icons/colour_heart.svg' | static_base64 }}">
@@ -73,6 +176,9 @@
     <div class="hstack">
         {% include "html/clinic/components/medical-history.html" %}
         <div class="vstack">
+            <clinic-input clinic-parameter="medications-freetext" class="bigbox medium"></clinic-input>
+            <clinic-input clinic-parameter="allergies-freetext" class="bigbox short autotall"></clinic-input>
+            <hr>
             <label>
                 <span>Smoking</span>
                 <div class="hstack">
@@ -84,22 +190,8 @@
                 <clinic-input clinic-parameter="alcohol-freetext"></clinic-input>
                 <clinic-input clinic-parameter="drugs-freetext"></clinic-input>
             </div>
-            <clinic-input clinic-parameter="other-shx" class="bigbox medium autotall"></clinic-input>
         </div>
         
-    </div>
-</section>
-<section id="rx">
-    <div class="section-topper">
-        <img class="icon" src="{{ 'icons/colour_pill.svg' | static_base64 }}">
-        <h2><mark class="grey">Medications</mark></h2>
-        <button tabindex="2" class="section-copy">Copy Section</button>
-    </div>
-    <div class="hstack">
-        <clinic-input clinic-parameter="medications-freetext" class="bigbox medium"></clinic-input>
-        <div class="vstack">
-            <clinic-input clinic-parameter="allergies-freetext" class="bigbox autotall"></clinic-input>
-        </div>
     </div>
 </section>
 <section id="gashx">

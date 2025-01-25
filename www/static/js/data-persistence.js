@@ -1,6 +1,6 @@
-import { getAnyInputValue, setAnyInputValue } from './utils.js'
-import { sendToBeagle } from './beagle-mainthread.js'
-import { insertClinicDiagnosis, diagnosisList } from './historian.js'
+import { getAnyInputValue, setAnyInputValue } from '/static/js/utils.js'
+import { sendToBeagle } from '/static/js/beagle-mainthread.js'
+import { insertClinicDiagnosis, diagnosisList } from '/static/js/historian.js'
 
 //    ____        _          ____               _     _                            
 //   |  _ \  __ _| |_ __ _  |  _ \ ___ _ __ ___(_)___| |_ ___ _ __   ___ ___       

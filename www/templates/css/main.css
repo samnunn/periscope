@@ -158,6 +158,19 @@ section {
     }
 }
 
+section h4 {
+    width: 100%;
+    border-bottom: 2px solid #bbb;
+    margin: 0.25rem 0;
+    padding: 0 0 0.5rem 0;
+}
+
+.divot {
+    flex-grow: 1;
+    background-color: var(--colour-lightgrey);
+    border-radius: 1rem;
+}
+
 /* GRID */
 .hstack {
     display: grid;
@@ -274,7 +287,7 @@ input[type="text"]:focus, input[type="search"]:focus, input[type="number"]:focus
 
 /* Calculators */
 label:has(input[type="checkbox"]) {
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     color: black;
     /* prevent labels from taking up random whitespace over to the right */

@@ -203,17 +203,14 @@
     <div class="hstack">
         <div class="vstack">
             <clinic-input clinic-parameter="consent-source"></clinic-input>
-            <div class="label-ish">
-                <span>Pro Forma</span>
-                <div>
-                    <label><clinic-input clinic-parameter="consent-ga" label="false"></clinic-input>General Anaesthesia</label>
-                    <label><clinic-input clinic-parameter="consent-sedation" label="false"></clinic-input>Sedation</label>
-                    <label><clinic-input clinic-parameter="consent-regional" label="false"></clinic-input>Regional</label>
-                    <label><clinic-input clinic-parameter="consent-neuraxial" label="false"></clinic-input>Neuraxial</label>
-                    <label><clinic-input clinic-parameter="consent-artline" label="false"></clinic-input>Arterial Line</label>
-                    <label><clinic-input clinic-parameter="consent-cvc" label="false"></clinic-input>Central Venous Access</label>
-                    <label><clinic-input clinic-parameter="consent-blood" label="false"></clinic-input>Blood Products</label>
-                </div>
+            <div class="vstack">
+                <clinic-input clinic-parameter="consent-ga"></clinic-input>
+                <clinic-input clinic-parameter="consent-sedation"></clinic-input>
+                <clinic-input clinic-parameter="consent-regional"></clinic-input>
+                <clinic-input clinic-parameter="consent-neuraxial"></clinic-input>
+                <clinic-input clinic-parameter="consent-artline"></clinic-input>
+                <clinic-input clinic-parameter="consent-cvc"></clinic-input>
+                <clinic-input clinic-parameter="consent-blood"></clinic-input>
             </div>
         </div>
         <clinic-input clinic-parameter="consent-notes" class="bigbox autotall"></clinic-input>

@@ -531,38 +531,38 @@ let allInputs = [
     },
     {
         'ugly_name': 'consent-sedation',
-        'pretty_name': 'General Anaesthesia',
-        'output_name': 'General anaesthesia',
+        'pretty_name': 'Sedation',
+        'output_name': 'Sedation',
         'html': `<input type="checkbox" tabindex=0>`,
     },
     {
         'ugly_name': 'consent-regional',
-        'pretty_name': 'General Anaesthesia',
-        'output_name': 'General anaesthesia',
+        'pretty_name': 'Regional',
+        'output_name': 'Regional',
         'html': `<input type="checkbox" tabindex=0>`,
     },
     {
         'ugly_name': 'consent-neuraxial',
-        'pretty_name': 'General Anaesthesia',
-        'output_name': 'General anaesthesia',
+        'pretty_name': 'Neuraxial',
+        'output_name': 'Neuraxial',
         'html': `<input type="checkbox" tabindex=0>`,
     },
     {
         'ugly_name': 'consent-artline',
-        'pretty_name': 'General Anaesthesia',
-        'output_name': 'General anaesthesia',
+        'pretty_name': 'Arterial Line',
+        'output_name': 'Arterial Line',
         'html': `<input type="checkbox" tabindex=0>`,
     },
     {
         'ugly_name': 'consent-cvc',
-        'pretty_name': 'General Anaesthesia',
-        'output_name': 'General anaesthesia',
+        'pretty_name': 'Central Venous Access',
+        'output_name': 'Central Venous Access',
         'html': `<input type="checkbox" tabindex=0>`,
     },
     {
         'ugly_name': 'consent-blood',
-        'pretty_name': 'General Anaesthesia',
-        'output_name': 'General anaesthesia',
+        'pretty_name': 'Blood Products',
+        'output_name': 'Blood Products',
         'html': `<input type="checkbox" tabindex=0>`,
     },
     {
@@ -795,7 +795,6 @@ let allInputs = [
         'ugly_name': 'cataract-first-second',
         'pretty_name': 'Eye',
         'output_name': 'Eye',
-        'search_name': 'Eye',
         'html': `
             <div class="selectbox">
                 <select autocomplete="off">
@@ -807,64 +806,82 @@ let allInputs = [
         `,
     },
     {
-        'ugly_name': 'patient-cald',
-        'pretty_name': 'Understands English',
-        'output_name': 'Understands English',
-        'search_name': 'Understands English',
-        'html': `
-            <div class="selectbox">
-                <select autocomplete="off">
-                    <option value="" selected></option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-        `,
+        'ugly_name': 'patient-language-barrier',
+        'pretty_name': 'Language Barrier',
+        'output_name': 'Language Barrier',
+        'html': `<input type="checkbox" tabindex=0>`,
     },
     {
-        'ugly_name': 'patient-hearing',
-        'pretty_name': 'Hearing Intact',
-        'output_name': 'hearing Intact',
-        'search_name': 'Hearing Intact',
-        'html': `
-            <div class="selectbox">
-                <select autocomplete="off">
-                    <option value="" selected></option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-        `,
+        'ugly_name': 'patient-deaf',
+        'pretty_name': 'Hard of Hearing',
+        'output_name': 'Hard of Hearing',
+        'html': `<input type="checkbox" tabindex=0>`,
     },
     {
-        'ugly_name': 'patient-hearing',
-        'pretty_name': 'Can Follow Instructions',
-        'output_name': 'Can Follow Instructions',
-        'search_name': 'Can Follow Instructions',
-        'html': `
-            <div class="selectbox">
-                <select autocomplete="off">
-                    <option value="" selected></option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-        `,
+        'ugly_name': 'patient-ppmicd',
+        'pretty_name': 'Has a Pacemaker or ICD',
+        'output_name': 'Has a Pacemaker or ICD',
+        'html': `<input type="checkbox" tabindex=0>`,
     },
     {
-        'ugly_name': 'patient-communicates-concerns',
-        'pretty_name': 'Can Voice Concerns',
-        'output_name': 'Can voice concerns',
-        'search_name': 'Can Voice Concerns',
-        'html': `
-            <div class="selectbox">
-                <select autocomplete="off">
-                    <option value="" selected></option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-        `,
+        'ugly_name': 'patient-unable-to-communicate',
+        'pretty_name': 'Unable to Communicate',
+        'output_name': 'Unable to Communicate',
+        'html': `<input type="checkbox" tabindex=0>`,
+    },
+    {
+        'ugly_name': 'patient-cognitive-impairment',
+        'pretty_name': 'Cognitive Impairment',
+        'output_name': 'Cognitive Impairment',
+        'html': `<input type="checkbox" tabindex=0>`,
+    },
+    {
+        'ugly_name': 'patient-known-difficult-airway',
+        'pretty_name': 'Known Difficult Airway',
+        'output_name': 'Known Difficult Airway',
+        'html': `<input type="checkbox" tabindex=0>`,
+    },
+    {
+        'ugly_name': 'patient-known-mh',
+        'pretty_name': 'FHx Malignant Hyperthermia',
+        'output_name': 'FHx Malignant Hyperthermia',
+        'html': `<input type="checkbox" tabindex=0>`,
+    },
+    {
+        'ugly_name': 'patient-recent-respiratory-illness',
+        'pretty_name': 'Recent Respiratory Illness',
+        'output_name': 'Recent Respiratory Illness',
+        'html': `<input type="checkbox" tabindex=0>`,
+    },
+    {
+        'ugly_name': 'patient-recent-cardiac-event',
+        'pretty_name': 'Recent Cardiac Event',
+        'output_name': 'Recent Cardiac Event',
+        'html': `<input type="checkbox" tabindex=0>`,
+    },
+    {
+        'ugly_name': 'patient-recent-pe',
+        'pretty_name': 'Recent PE',
+        'output_name': 'Recent PE',
+        'html': `<input type="checkbox" tabindex=0>`,
+    },
+    {
+        'ugly_name': 'patient-recent-stroke',
+        'pretty_name': 'Recent Stroke',
+        'output_name': 'Recent Stroke',
+        'html': `<input type="checkbox" tabindex=0>`,
+    },
+    {
+        'ugly_name': 'patient-public-guardian',
+        'pretty_name': 'Public Guardian',
+        'output_name': 'Public Guardian',
+        'html': `<input type="checkbox" tabindex=0>`,
+    },
+    {
+        'ugly_name': 'patient-cataract-lay-flat',
+        'pretty_name': 'Unable to Lay Flat',
+        'output_name': 'Unable to Lay Flat',
+        'html': `<input type="checkbox" tabindex=0>`,
     },
     {
         'ugly_name': 'consent-source',
