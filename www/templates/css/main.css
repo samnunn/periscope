@@ -618,10 +618,6 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
         opacity: 0.3;
     }
 
-    #tab-bar-collapse-button {
-        margin-block-start: auto;
-    }
-
     ul {
         transition: width 100ms ease;
 
@@ -697,9 +693,16 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     &::-webkit-scrollbar {
         display: none;
     }
+
+    #sidebar-lock {
+        margin-top: auto;
+    }
+    #icon-locked {
+        display: none;
+    }
 }
 
-#sidebar[aria-expanded="true"], #sidebar:hover {
+#sidebar[aria-expanded="true"], #sidebar:hover, #sidebar.locked_open {
     li {
         width: var(--sidebar-open-width);
     }
@@ -707,11 +710,14 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
         transition-delay: 0ms !important;
         margin-right: calc(var(--sidebar-icon-margin) + 0.5 * var(--sidebar-padding)) !important;
     }
-
-    #tab-bar-collapse-button  img {
-        rotate: 180deg;
+}
+#sidebar.locked_open {
+    #icon-locked {
+        display: flex;
     }
-    
+    #icon-unlocked {
+        display: none;
+    }
 }
 
 

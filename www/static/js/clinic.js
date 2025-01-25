@@ -133,30 +133,40 @@ document.addEventListener('click', (e) => {
 
 
 // WINDOW RESIZING
-let tabPicker = document.querySelector("#sidebar")
-localStorage.setItem('sidebar-overridden', 'false')
+let sidebar = document.querySelector("#sidebar")
+let sidebarLock = document.querySelector("#sidebar-lock")
+let sidebarLockText = sidebarLock.querySelector('span.left')
 
-function autoCollapseTabPicker() {
-    if (localStorage.getItem('sidebar-overridden') == 'true') {
-        return
-    }
+function updateSideBarLock(toggle=false) {
+    // get stored state
+    let storedState = localStorage.getItem('clinic-sidebar-locked') || 'true'
+    storedState = storedState == 'true' ? true : false
 
-    if (window.innerWidth < 800) {
-        tabPicker.expanded = false
+    // flip it
+    let desiredState
+    if (toggle) {
+        desiredState = !storedState
+        localStorage.setItem('clinic-sidebar-locked', desiredState)
     } else {
-        tabPicker.expanded = true
+        desiredState = storedState
     }
 
-    tabPicker.setAttribute("aria-expanded", tabPicker.expanded)
+    // render
+    if (desiredState) {
+        sidebar.classList.add("locked_open")
+        sidebarLockText.innerText = "Unlock Sidebar"
+    } else {
+        sidebar.classList.remove("locked_open")
+        sidebarLockText.innerText = "Lock Sidebar"
+    }
+
+    // remove initial state
+    sidebar.removeAttribute('aria-expanded')
 }
-window.addEventListener("resize", (e) => {
-    autoCollapseTabPicker()
+
+sidebarLock.addEventListener('click', (e) => {
+    updateSideBarLock(true)
 })
-document.addEventListener("DOMContentLoaded", (e) => {
-    autoCollapseTabPicker()
-})
-document.querySelector("#tab-bar-collapse-button")?.addEventListener("click", (e) => {
-    tabPicker.expanded = !tabPicker.expanded
-    localStorage.setItem('sidebar-overridden', 'true')
-    tabPicker.setAttribute("aria-expanded", tabPicker.expanded)
+window.addEventListener('load', (e) => {
+    updateSideBarLock(false)
 })
