@@ -1,11 +1,7 @@
 import { renderEntireDocument } from '/static/js/templating.js'
 
-// COMPONENTS
-// import "./clinic-inputs.js"
-import "/static/js/components/draggable-list.js"
-import "/static/js/components/navigable-list.js"
-import "/static/js/components/cmd-k.js"
-
+import "/static/js/draggable-list.js"
+import "/static/js/navigable-list.js"
 import "/static/js/historian.js"
 import "/static/js/text-editing.js"
 import "/static/js/beagle-mainthread.js"
