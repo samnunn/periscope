@@ -12,6 +12,7 @@ playwright = "*"
 pytest-playwright = "*"
 flask-minify = "*"
 pytest-xdist = "*"
+livereload = "*"
 
 [dev-packages]
 

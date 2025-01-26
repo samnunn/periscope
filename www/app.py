@@ -12,14 +12,18 @@ from flask import (
     session,
     url_for,
 )
-from flask_minify import Minify
+from livereload import Server
+
+# from flask_minify import Minify
 from werkzeug.utils import secure_filename
 
 # BOOTSTRAPPING
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # SECRETS
 app.secret_key = os.environ.get("FLASK_SECRETKEY")
+
 
 # MINIFICATION
 # Minify(app=app, html=True, js=True, cssless=True)
@@ -127,3 +131,11 @@ def static_include(str):
     with open(os.path.join(app.static_folder, str), "r") as f:
         data = f.read()
     return data
+
+
+if __name__ == "__main__":
+    server = Server(app.wsgi_app)
+    server.watch("static/*")
+    server.watch("templates/*")
+    server.watch("app.py")
+    server.serve(port=8070, host="0.0.0.0")
