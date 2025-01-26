@@ -153,6 +153,6 @@ function updateSideBarLock(toggle=false) {
 sidebarLock.addEventListener('click', (e) => {
     updateSideBarLock(true)
 })
-window.addEventListener('load', (e) => {
+window.addEventListener("DOMContentLoaded", (e) => {
     updateSideBarLock(false)
 })

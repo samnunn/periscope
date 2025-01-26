@@ -160,7 +160,7 @@
                     ]
                     if (yellowFlags.some(key => document.persistentDataProxy[key])) return true
                 }
-                window.addEventListener('load', moveDial)
+                window.addEventListener("DOMContentLoaded", moveDial)
                 document.addEventListener('clinic:value-changed', moveDial)
             </script>
         </div>

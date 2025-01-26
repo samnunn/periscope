@@ -22,7 +22,7 @@
 </dialog>
 <script>                                                                              
 let welcomeDialog = document.querySelector('#big-welcome')
-window.addEventListener('load', (e) => {
+window.addEventListener("DOMContentLoaded", (e) => {
     let todayDate = new Date().toISOString().slice(0,10)
     let storedDate = localStorage.getItem('clinic-last-welcome-date') || ''
     if (todayDate != storedDate) {

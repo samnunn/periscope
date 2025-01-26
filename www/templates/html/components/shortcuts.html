@@ -96,7 +96,7 @@ document.body.addEventListener('input', (e) => {
 shortcutsButton.addEventListener('click', (e) => {
     shortcutsMenu.showModal()
 })
-window.addEventListener('load', (e) => {
+window.addEventListener("DOMContentLoaded", (e) => {
     for (let s of shortcutsList) {
         shortcutsTable.insertAdjacentHTML('beforeend', `<tr><td>${s['shortcut']}</td><td>${s['expansion'].charAt(0).toUpperCase() + s['expansion'].slice(1).replaceAll("\n", "<br>")}</td></tr>`)
     }

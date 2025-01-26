@@ -34,7 +34,7 @@ let scoreInterpretationFunctions = {
 }
 
 let allCalculators = document.querySelectorAll('[clinic-calculator]')
-window.addEventListener('load', (e) => {
+window.addEventListener("DOMContentLoaded", (e) => {
     for (let c of allCalculators) {
         // set up element handles
         c.checkboxes = c.querySelectorAll('input[type="checkbox"]')
