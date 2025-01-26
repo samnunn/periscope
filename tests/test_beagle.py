@@ -108,9 +108,9 @@ def test_beagle_mace_4(page):
 def test_ponv(page):
     page.goto("http://127.0.0.1:8070/clinic")
     page.get_by_role("button", name="Accept").click()
-    page.locator("#risk").get_by_text("Female", exact=True).click()
-    page.locator("#risk").get_by_text("Prior PONV").click()
-    page.locator("#risk").get_by_text("Postop opioids").click()
+    page.locator("#risk").get_by_label("Female", exact=True).check()
+    page.locator("#risk").get_by_label("Prior PONV").click()
+    page.locator("#risk").get_by_label("Postop opioids").click()
     expect(page.get_by_text("High PONV risk")).to_be_visible()
 
 
