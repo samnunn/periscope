@@ -10,7 +10,7 @@ echo "Starting containers..."
 # sleep 10
 
 echo "Running tests..."
-pipenv run pytest --browser webkit --browser chromium tests/ -v
+pipenv run pytest --numprocesses 4 --browser webkit --browser chromium tests/ -v
 
 echo "Cleaning up..."
 # docker compose -f compose.test.yaml down
