@@ -7,11 +7,8 @@ import "/static/js/text-editing.js"
 import "/static/js/beagle-mainthread.js"
 import "/static/js/citations.js"
 import "/static/js/templating.js"
-// import "/static/js/data-persistence.js"
 import "/static/js/scrollspy.js"
 import "/static/js/calculators.js"
-
-
 
 //    ____                  _       _    ____                                      
 //   / ___| _ __   ___  ___(_) __ _| |  / ___|__ _ ___  ___  ___                   
@@ -94,11 +91,6 @@ document.querySelector('#reset')?.addEventListener('click', (e) => {
     }
 })
 
-
-
-
-
-
 // close when backdrop clicked
 document.addEventListener('click', (e) => {
     if (!document.querySelector('dialog[open]')) return
@@ -112,7 +104,6 @@ document.addEventListener('click', (e) => {
         e.clientX > rect.left + rect.width
     ) { e.target.close() }
 })
-
 
 // WINDOW RESIZING
 let sidebar = document.querySelector("#sidebar")
