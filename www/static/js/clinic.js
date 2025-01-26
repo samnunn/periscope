@@ -98,21 +98,7 @@ document.querySelector('#reset')?.addEventListener('click', (e) => {
     }
 })
 
-//   __        __   _                            _____         _                   
-//   \ \      / /__| | ___ ___  _ __ ___   ___  |_   _|____  _| |_                 
-//    \ \ /\ / / _ \ |/ __/ _ \| '_ ` _ \ / _ \   | |/ _ \ \/ / __|                
-//     \ V  V /  __/ | (_| (_) | | | | | |  __/   | |  __/>  <| |_                 
-//      \_/\_/ \___|_|\___\___/|_| |_| |_|\___|   |_|\___/_/\_\\__|                
-                                                                                
-let welcomeDialog = document.querySelector('#big-welcome')
-window.addEventListener('load', (e) => {
-    let todayDate = new Date().toISOString().slice(0,10)
-    let storedDate = localStorage.getItem('clinic-last-welcome-date') || ''
-    if (todayDate != storedDate) {
-        welcomeDialog.showModal()
-    }
-    localStorage.setItem('clinic-last-welcome-date', todayDate)
-})
+
 
 
 

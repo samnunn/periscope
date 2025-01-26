@@ -68,57 +68,9 @@
     </main>
 </div>
 <!-- DIALOGUES -->
-<dialog id="big-welcome">
-    <div id="top">
-        <h1>Welcome to Periscope <span id="wave">👋</span></h1>
-        <h3>A little app to help perioperative doctors get through their clinic days.</h3>
-    </div>
-    <div id="blurb">
-        <h2>Security 🔐</h2>
-        <p>The information you add to Periscope never leaves your device. Absolutely no patient data is collected.</p>
-        <img src="{{ 'illustrations/clinic_data_safety.webp' | static_base64 }}" alt="">
-        <p>All computations, scores, and data-processing happen right here in this browser tab. As long as you use this on a work-approved computer, your data is safe.</p>
-        <h2>Keep Your Thinking Cap On ⚖️</h2>
-        <p>All efforts have been made to ensure that Periscope won't steer you wrong, but <strong>you are still the doctor</strong>. You are responsible for double-checking your work and treating your own patients.</p>
-        <p>This software is proudly provided free of charge under the <a target="_blank" href="https://github.com/samnunn/periscope/blob/main/LICENSE.txt">MIT License</a>, which you must accept before using it.</p>
-    </div>
-    <h3>Do you accept these terms?</h3>
-    <div id="buttons">
-        <a href="http://gasnotes.net" onclick="localStorage.setItem('clinic-last-welcome-date', '')"><button>Decline</button></a>
-        <form method="dialog">
-            <button autofocus>Accept</button>
-        </form>
-    </div>
-</dialog>
-
-<dialog id="quick-find">
-    <clinic-navigable-list>
-        <input type="text" id="quick-find-input" autocomplete="off" autocapitalize="off" tabindex="2" placeholder="Search ✨" autofocus>
-        <ul id="quick-find-results" class="pill-list"></ul>
-    </clinic-navigable-list>
-    <form method="dialog" style="margin: 1rem 0 0 0; float: right;">
-        <div class="popup-info"><span class="key"><img src="{{ 'icons/arrow_up.svg' | static_base64 }}"></span><span class="key"><img src="{{ 'icons/arrow_down.svg' | static_base64 }}"></span> to navigate  <span class="key"><img alt="Return Key" src="{{ 'icons/arrow_down_left.svg' | static_base64 }}"></span> to select  <span class="key">esc</span> to close</div>
-        <button>Close</button>
-    </form>
-</dialog>
-<dialog id="shortcuts-menu">
-    <table id="shortcuts-table">
-        <thead>
-            <tr>
-                <th>Shortcut</th>
-                <th>Snippet</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
-    </table>
-    
-    <form method="dialog" style="margin: 1rem 0 0 0; float: right;">
-        <span style="color: white; font-weight: bold;">Snippets will auto-expand when you type their shortcut.</span>
-        <button>Close</button>
-    </form>
-</dialog>
+{% include 'html/components/welcome-banner.html' %}
+{% include 'html/components/quick-find.html' %}
+{% include 'html/components/shortcuts.html' %}
 
 <!-- SCRIPTS -->
 <script type="module">{{ 'js/data-persistence.js' | static_include | safe }}</script>

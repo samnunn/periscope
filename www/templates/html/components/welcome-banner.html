@@ -1,0 +1,73 @@
+<dialog id="big-welcome">
+    <div id="top">
+        <h1>Welcome to Periscope <span id="wave">👋</span></h1>
+        <h3>A little app to help perioperative doctors get through their clinic days.</h3>
+    </div>
+    <div id="blurb">
+        <h2>Security 🔐</h2>
+        <p>The information you add to Periscope never leaves your device. Absolutely no patient data is collected.</p>
+        <img src="{{ 'illustrations/clinic_data_safety.webp' | static_base64 }}" alt="">
+        <p>All computations, scores, and data-processing happen right here in this browser tab. As long as you use this on a work-approved computer, your data is safe.</p>
+        <h2>Keep Your Thinking Cap On ⚖️</h2>
+        <p>All efforts have been made to ensure that Periscope won't steer you wrong, but <strong>you are still the doctor</strong>. You are responsible for double-checking your work and treating your own patients.</p>
+        <p>This software is proudly provided free of charge under the <a target="_blank" href="https://github.com/samnunn/periscope/blob/main/LICENSE.txt">MIT License</a>, which you must accept before using it.</p>
+    </div>
+    <h3>Do you accept these terms?</h3>
+    <div id="buttons">
+        <a href="http://gasnotes.net" onclick="localStorage.setItem('clinic-last-welcome-date', '')"><button>Decline</button></a>
+        <form method="dialog">
+            <button autofocus>Accept</button>
+        </form>
+    </div>
+</dialog>
+<script>                                                                              
+let welcomeDialog = document.querySelector('#big-welcome')
+window.addEventListener('load', (e) => {
+    let todayDate = new Date().toISOString().slice(0,10)
+    let storedDate = localStorage.getItem('clinic-last-welcome-date') || ''
+    if (todayDate != storedDate) {
+        welcomeDialog.showModal()
+    }
+    localStorage.setItem('clinic-last-welcome-date', todayDate)
+})
+</script>
+<style>
+    #big-welcome {
+
+    h3 {
+        text-align: center;
+        font-size: 1rem;
+        margin: 1rem 0;
+    }
+
+    img {
+        width: 70%;
+        margin: 2rem auto;
+        display: block;
+    }
+
+    > div#top {
+        text-align: center;
+        h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            margin: 0 1rem 0;
+        }
+    }
+
+    > div#blurb {
+        margin: 3rem 0;
+    }
+
+    > div#buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 2rem;
+        padding: 1rem 0 0 0;
+
+        form {
+            width: unset;
+        }
+    }
+}
+</style>
