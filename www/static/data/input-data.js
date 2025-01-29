@@ -638,7 +638,7 @@ let allInputs = [
     },
     {
         'ugly_name': 'rcri-risky',
-        'pretty_name': 'Elevated Risk',
+        'pretty_name': 'Elevated Risk*',
         'output_name': 'Elevated Risk',
         'search_name': 'Elevated Risk',
         'html': `<input type="checkbox" tabindex=0>`,
