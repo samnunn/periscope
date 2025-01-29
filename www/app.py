@@ -14,16 +14,24 @@ from flask import (
     session,
     url_for,
 )
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from flask_minify import Minify
 from livereload import Server
 
 # BOOTSTRAPPING
 app = Flask(__name__)
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-# app.config["DEBUG"] = True
 
 # SECRETS
 app.secret_key = os.environ.get("FLASK_SECRETKEY")
+
+# RATE LIMITER
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=[],
+    storage_uri="memory://",
+)
 
 
 # MINIFICATION
@@ -57,6 +65,9 @@ def cataracts():
 
 # TENANTS
 @app.post("/tenant/authorise")
+@limiter.limit("1/second")
+@limiter.limit("50/minute")
+@limiter.limit("100/day")
 def tenant_authorise():
     if request.method == "POST":
         success = tenants.auth_start(

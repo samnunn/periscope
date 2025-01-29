@@ -13,6 +13,7 @@ pytest-playwright = "*"
 flask-minify = "*"
 pytest-xdist = "*"
 livereload = "*"
+flask-limiter = "*"
 
 [dev-packages]
 
