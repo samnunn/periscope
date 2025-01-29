@@ -991,6 +991,10 @@ dialog {
     background-color: rgba(0,0,0,0.75);
 }
 
+body:has(dialog[open]) {
+    overflow: hidden;
+}
+
 dialog.clinic-modal-popup-dialog {
     transition: all 220ms ease allow-discrete;
     opacity: 0;
@@ -1040,6 +1044,10 @@ dialog.clinic-modal-popup-dialog {
 
 dialog.clinic-modal-popup-dialog::backdrop {
     opacity: 0;
+}
+
+body:has(dialog.clinic-modal-popup-dialog[open]) {
+    overflow: unset;
 }
 
 
