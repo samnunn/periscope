@@ -19,7 +19,8 @@ def test_sidebar_hides(page: Page):
 
     # wait until sidebar has finished animating
     # there was a race condition here where .offsetWidth() was called too early
-    page.locator("#sidebar").scroll_into_view_if_needed()
+    # page.locator("#sidebar").scroll_into_view_if_needed()
+    page.wait_for_timeout(1000)
 
     calculated_width = page.evaluate("document.querySelector('#sidebar').offsetWidth")
     calculated_width = int(calculated_width)
@@ -57,7 +58,8 @@ def test_sidebar_remembers_unlock(page: Page):
 
     # wait until sidebar has finished animating
     # there was a race condition here where .offsetWidth() was called too early
-    page.locator("#sidebar").scroll_into_view_if_needed()
+    # page.locator("#sidebar").scroll_into_view_if_needed()
+    page.wait_for_timeout(1000)
 
     calculated_width = page.evaluate("document.querySelector('#sidebar').offsetWidth")
     calculated_width = int(calculated_width)
@@ -82,7 +84,8 @@ def test_sidebar_remembers_lock(page: Page):
 
     # wait until sidebar has finished animating
     # there was a race condition here where .offsetWidth() was called too early
-    page.locator("#sidebar").scroll_into_view_if_needed()
+    # page.locator("#sidebar").scroll_into_view_if_needed()
+    page.wait_for_timeout(1000)
 
     calculated_width = page.evaluate("document.querySelector('#sidebar').offsetWidth")
     calculated_width = int(calculated_width)
