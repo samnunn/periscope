@@ -20,14 +20,13 @@
 
             <li title="Connect your hospital" role="button" dialog="authorisation">
                 <span class="icon"><img src="{{ 'icons/colour_globe.svg' | static_base64 }}"></span>
+                {% if tenant %}
+                <span class="left">Connected</span>
+                <span class="right">🟢</span>
+                {% else %}
                 <span class="left">Connect</span>
-                <span class="right">
-                    {% if tenant %}
-                    🟢
-                    {% else %}
-                    🔴
-                    {% endif %}
-                </span>
+                <span class="right">🔴</span>
+                {% endif %}
             </li>
             {% if tenant.redcap %}
             <li title="Export to REDCap" role="button" dialog="redcap">
