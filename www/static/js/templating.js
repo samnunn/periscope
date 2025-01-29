@@ -40,8 +40,8 @@ let outputTemplates = {
 - Appointment type: {{appointment-mode}}
 - Height: {{patient-height}}
 - Weight: {{patient-weight}}
-- BMI: {{bmi}}
-- Operation: {{freetext-operation}}`,
+- BMI: {{patient-bmi}}
+- Operation: {{operation-freetext}}`,
 
 'medicalhx': `# PMHx
 {{pmhx}}
