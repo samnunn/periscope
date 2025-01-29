@@ -705,8 +705,7 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
             text-wrap: balance;
         }
         img {
-            width: 180px;
-            image-rendering: pixelated;
+            height: 10rem;
             filter: grayscale(1);
             pointer-events: none;
             user-select: none;
