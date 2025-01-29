@@ -22,3 +22,13 @@ def test_cmd_k(page):
     page.get_by_role("button", name="Accept").click()
     page.keyboard.press("Meta+k")
     expect(page.locator("#quick-find-input")).to_be_focused()
+
+
+def test_reset(page: Page):
+    page.on("dialog", lambda dialog: dialog.accept())
+    page.goto("http://127.0.0.1:8070/clinic")
+    page.get_by_role("button", name="Accept").click()
+    page.locator("#details").get_by_label("Age").click()
+    page.locator("#details").get_by_label("Age").fill("25")
+    page.get_by_role("button", name="Reset").click()
+    expect(page.locator("#details").get_by_label("Age")).to_be_empty()
