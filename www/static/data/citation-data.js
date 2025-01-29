@@ -136,7 +136,8 @@ export let citationSnippets = [
     },
     {
         id: 'sort-calculator-explanation',
-        body: `<p>The Surgical Outcome Risk Tool (SORT) is designed to estimate 30-day mortality after surgery.</p>
+        body: `<p>The Surgical Outcome Risk Tool (SORT) is designed to estimate 30-day mortality after <strong>inpatient</strong> surgery.</p>
+        <p>Avoid using the SORT score for outpatient surgery (i.e. day cases and simple overnight admissions).</p>
         <p>It was created using 16,788 cases from the <a href="https://www.ncepod.org.uk/">NCEPOD</a> database and later validated by <a href="https://doi.org/10.1371/journal.pmed.1003253">Wong et al.</a> against 22,631 cases from Australia, New Zealand, and the United Kinddom.</p>`,
         publication: 'sort-original-paper'
     },
