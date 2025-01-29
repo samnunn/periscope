@@ -4,3 +4,4 @@ _private
 www/tenants/*
 www/*.env
 Pipfile.lock
+tests/secret*
