@@ -26,8 +26,6 @@ app.secret_key = os.environ.get("FLASK_SECRETKEY")
 
 
 # MINIFICATION
-# Minify(app=app, html=True, js=True, cssless=True)
-
 
 # UTILITY FUNCTIONS
 def tenancy_required(f):
@@ -38,6 +36,8 @@ def tenancy_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
+if os.environ.get("ENV") != "development":
+    Minify(app=app, html=True, js=True, cssless=True)
 
 
 # ROUTES
