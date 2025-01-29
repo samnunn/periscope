@@ -19,3 +19,18 @@ def test_consent(page):
     assert "Consented to blood products" in output
     assert "Consented to arterial line placement" in output
     assert "Consented to central line placement" in output
+
+
+def test_download(page: Page):
+    page.goto("http://127.0.0.1:8070/clinic")
+    page.get_by_role("button", name="Accept").click()
+    page.locator("#details").get_by_label("Age").fill("26")
+    page.get_by_role("textbox", name="Operation").fill("Left ectomy")
+    page.get_by_label("Non-smoker").check()
+    with page.expect_download() as download_info:
+        page.get_by_role("button", name="Download").click()
+    download = download_info.value
+    with open(download.path(), "r") as f:
+        output = f.read()
+        assert "26" in output
+        assert "Left ectomy" in output
