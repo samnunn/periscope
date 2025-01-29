@@ -17,17 +17,17 @@ onmessage = (m) => {
     // update bones
     let newBoneIDs = new Set(Object.keys(newBones))
     let staleBoneIDs = new Set(Object.keys(staleBones))
-    let bonesToAdd = newBoneIDs.difference(staleBoneIDs)
-    let bonesToDelete = staleBoneIDs.difference(newBoneIDs)
-    let bonesToUpdate = [...staleBoneIDs.intersection(newBoneIDs)]
-        bonesToUpdate = bonesToUpdate.filter((b) => staleBones[b].name != newBones[b].name )
+    let boneIDsToAdd = newBoneIDs.difference(staleBoneIDs)
+    let boneIDsToDelete = staleBoneIDs.difference(newBoneIDs)
+    let boneIDsToUpdate = [...staleBoneIDs.intersection(newBoneIDs)]
+        boneIDsToUpdate = boneIDsToUpdate.filter((b) => staleBones[b].name != newBones[b].name )
 
     // console.info('bonesToAdd', bonesToAdd)
     // console.info('bonesToDelete', bonesToDelete)
     // console.info('bonesToUpdate', bonesToUpdate)
 
-    // ADD
-    for (let b of bonesToAdd) {
+    // ADD BONES
+    for (let b of boneIDsToAdd) {
         postMessage({
             type: 'beagle-bone-add',
             name: newBones[b].name,
@@ -36,16 +36,16 @@ onmessage = (m) => {
             auto_hide: newBones[b].auto_hide,
         })
     }
-    // DELETE
-    for (let b of bonesToDelete) {
+    // DELETE BONES
+    for (let b of boneIDsToDelete) {
         postMessage({
             type: 'beagle-bone-delete',
             id: staleBones[b].id,
             name: staleBones[b].name,
         })
     }
-    // UPDATE
-    for (let b of bonesToUpdate) {
+    // UPDATE BONES
+    for (let b of boneIDsToUpdate) {
         postMessage({
             type: 'beagle-bone-update',
             id: newBones[b].id,
@@ -54,15 +54,24 @@ onmessage = (m) => {
     }
 
 
-    // suggestions
-    for (let nb_key in newBones) {
-        let nb = newBones[nb_key]
+    // ADD/DELETE SUGGESTIONS
+    for (let bone_id in newBones) {
+        let nb = newBones[bone_id]
 
-        let staleSuggestions = staleBones[nb_key]?.suggestions || new Set()
-
+        let staleSuggestions = staleBones[bone_id]?.suggestions || new Set()
+        let freshSuggestions = nb?.suggestions || new Set()
         let suggestionsToDelete = staleSuggestions.difference(nb?.suggestions)
-        let suggestionsToAdd = nb?.suggestions?.difference(staleSuggestions)
+        let suggestionsToAdd = freshSuggestions.difference(staleSuggestions)
 
+        // if (bone_id == "beagle-t2dm") {
+        //     console.log("stale", staleSuggestions)
+        //     console.log("fresh", freshSuggestions)
+        //     console.log("add", suggestionsToAdd)
+        //     console.log("delete", suggestionsToDelete)
+        //     // debugger
+        // }
+
+        // ADD SUGGESTIONS
         for (let s of suggestionsToAdd) {
             postMessage({
                 type: 'beagle-suggestion-add',
@@ -72,6 +81,7 @@ onmessage = (m) => {
             })
         }
 
+        // DELETE SUGGESTIONS
         for (let s of suggestionsToDelete) {
             postMessage({
                 type: 'beagle-suggestion-delete',
