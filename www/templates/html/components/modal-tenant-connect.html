@@ -1,0 +1,63 @@
+<style>
+    #authorisation {
+        h2 {
+            border-bottom: 2px solid rgba(0,0,0,0.2);
+            width: 100%;
+            margin: 0.5rem 0;
+            padding-bottom: 0.5rem;
+        }
+        p {
+            text-align: center;
+            text-wrap: pretty;
+            font-size: 1.2rem;
+        }
+        .tenant-cell {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background-color: var(--colour-darkgrey);
+            color: white;
+            font-size: 1rem;
+
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--colour-lightgrey);
+            * {
+                margin: 0;
+            }
+        }
+        img {
+            height: 10rem;
+            margin: 2rem auto;
+            display: block;
+        }
+    }
+</style>
+<dialog id="authorisation">
+    <span aria-roledescription="button" class="dialog-close"></span>
+    <h1><mark class="green">{% if tenant %}You Are Connected{% else %}Get Connected{% endif %}</mark></h1>
+    <img src="{{ 'illustrations/anaesthetic_machine_hospital.svg' | static_base64 }}" alt="">
+    {% if not tenant %}
+    <p>Unlock special Periscope features with your hospital's code.</p>
+    {% else %}
+    <p>All special Periscope features are unlocked.</p>
+    {% endif %}
+
+    {% if tenant %}
+    <div class="tenant-cell">
+        <p>🟢  {{ tenant.pretty_name }}</p>
+        <button form="deauthorise" type="submit">Disconnect</button>
+    </div>
+    <form id="deauthorise" action="{{ url_for("tenant_deauthorise") }}" method="post"></form>
+    {% else %}        
+    <div class="tenant-cell">
+        <input form="authorise" type="text" name="tenant_secret" placeholder="Hospital ID" required>
+        <button form="authorise" type="submit">Connect</button>
+    </div>
+    <form id="authorise" action="{{ url_for("tenant_authorise") }}" method="post"></form>
+    {% endif %}
+</dialog>
+<script>                                                                              
+</script>

@@ -444,6 +444,16 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     }
 }
 
+#redcap-prompts {
+    margin-bottom: 0.25rem;
+    li {
+        background-color: color-mix(in srgb, var(--colour-red), white 90%);
+        border-color: color-mix(in srgb, var(--colour-red), white 0%);
+    }
+}
+#redcap-prompts:not(:has(li)) {
+    display: none;
+}
 
 /* SMART SEARCH */
 
@@ -561,7 +571,9 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
                 margin-left: auto;
                 margin-right: calc(1.2 * var(--sidebar-icon-margin));
                 font-size: 0.9rem;
-                opacity: 0.6;
+                opacity: 0;
+                color: lightgray;
+                transition-duration: 20ms;
             }
 
 
@@ -603,6 +615,10 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     img {
         transition-delay: 0ms !important;
         margin-right: calc(var(--sidebar-icon-margin) + 0.5 * var(--sidebar-padding)) !important;
+    }
+    span.right {
+        transition-delay: 110ms;
+        opacity: 1;
     }
 }
 #sidebar.locked_open {
@@ -908,14 +924,52 @@ button.infobutton {
 }
 
 dialog {
-    font-family: "Segoe UI Emoji", "Helvetica", sans-serif;
-    background-color: white;
-    border: none;
+    position: relative; /* to facilitate absolute-positioned children */
+
+    .dialog-close {
+        content: "";
+        background-image: url("{{ 'icons/x_circle.svg' | static_base64 }}");
+        width: 1.5rem;
+        height: 1.5rem;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        cursor: pointer;
+        opacity: 0.5;
+
+        &:hover {
+            transform: scale(1.1);
+            opacity: 0.6;
+        }
+        &:hover:active {
+            opacity: 0.7;
+        }
+    }
+
+    background-color: var(--colour-lightgrey);
+    width: calc(100% - 2rem);
+    max-width: 600px;
+
+    color: black;
+
+    border: 1px solid var(--colour-middlegrey);
     border-radius: 1rem;
-    width: 900px;
-    max-width: calc(100vw - 2rem);
+
     padding: clamp(1.5rem, 5vw, 2rem);
     box-shadow: 0px 5px 30px rgba(0,0,0,0.4);
+
+    h1:first-of-type {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        margin: 0;
+    }
+
+    h1, h3 {
+        text-align: center;
+    }
 
     form {
         margin-top: 0;

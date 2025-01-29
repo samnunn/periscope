@@ -91,20 +91,6 @@ document.querySelector('#reset')?.addEventListener('click', (e) => {
     }
 })
 
-// close when backdrop clicked
-document.addEventListener('click', (e) => {
-    if (!document.querySelector('dialog[open]')) return
-    if (!e.target.matches('dialog')) return
-    
-    let rect = e.target.getBoundingClientRect()
-    if (
-        e.clientY < rect.top ||
-        e.clientY > rect.top + rect.height ||
-        e.clientX < rect.left ||
-        e.clientX > rect.left + rect.width
-    ) { e.target.close() }
-})
-
 // WINDOW RESIZING
 let sidebar = document.querySelector("#sidebar")
 let sidebarLock = document.querySelector("#sidebar-lock")
@@ -142,4 +128,35 @@ sidebarLock.addEventListener('click', (e) => {
 })
 window.addEventListener("DOMContentLoaded", (e) => {
     updateSideBarLock(false)
+})
+
+// DIALOGS
+
+document.addEventListener("click", (e) => {
+    let clickTarget = e.target.closest("[dialog]")
+    if (clickTarget) {
+        let dialog = document.querySelector(`#${clickTarget.getAttribute("dialog")}`)
+        if (dialog) dialog.showModal()
+    }
+
+})
+
+// close when backdrop clicked
+document.addEventListener('click', (e) => {
+    if (!document.querySelector('dialog[open]')) return
+    if (!e.target.matches('dialog')) return
+    
+    let rect = e.target.getBoundingClientRect()
+    if (
+        e.clientY < rect.top ||
+        e.clientY > rect.top + rect.height ||
+        e.clientX < rect.left ||
+        e.clientX > rect.left + rect.width
+    ) { e.target.close() }
+})
+
+// dialog close buttons
+document.addEventListener("click", (e) => {
+    if (!e.target.matches(".dialog-close")) return
+    e.target.closest("dialog").close()
 })
