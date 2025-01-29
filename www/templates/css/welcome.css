@@ -63,6 +63,7 @@ h1#yell {
     gap: 4rem;
     position: relative;
     margin-top: 1rem;
+    text-wrap: balance;
 
     #dot-spacer {
         height: 100px;
