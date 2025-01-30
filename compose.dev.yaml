@@ -2,7 +2,7 @@ services:
   clinic:
     environment:
       - CMD=pipenv run python app.py
-      # - CMD=pipenv run flask --app app:app --debug run --host=0.0.0.0 --port=8070 --extra-files www/static/
+      # - CMD=pipenv run flask --app app:app --debug run --host=0.0.0.0 --port=8070
       - ENV=development
     develop:
       watch:
