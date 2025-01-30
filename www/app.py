@@ -34,8 +34,12 @@ limiter = Limiter(
 )
 
 
-# MINIFICATION
-if os.environ.get("ENV") != "development":
+# ENV-SPECIFIC FEATURES
+if os.environ.get("ENV") == "development":
+    app.debug = True
+    limiter.enabled = False
+else:
+    # MINIFICATION
     Minify(app=app, html=True, js=True, cssless=True)
 
 
