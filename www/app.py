@@ -64,7 +64,9 @@ def clinic():
 
 @app.route("/clinic/cataracts")
 def cataracts():
-    return render_template("html/clinic/layouts/cataracts.html")
+    return render_template(
+        "html/clinic/layouts/cataracts.html", tenant=session.get("tenant_data")
+    )
 
 
 # TENANTS
