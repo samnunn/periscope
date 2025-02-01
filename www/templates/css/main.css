@@ -923,8 +923,6 @@ button.infobutton {
 }
 
 dialog {
-    position: relative; /* to facilitate absolute-positioned children */
-
     .dialog-close {
         content: "";
         background-image: url("{{ 'icons/x_circle.svg' | static_base64 }}");
