@@ -1,4 +1,4 @@
-# [Periscope](https://periscope.net.au)
+# [Periscope](https://periscope.net.au) 🔭
 
 <img width="200" src="www/static/illustrations/anaesthetic_machine.svg" alt="" align="right" />
 
