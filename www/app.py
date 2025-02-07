@@ -3,6 +3,7 @@ import os
 
 import lib.redcap as redcap
 import lib.tenants as tenants
+import sentry_sdk
 from flask import (
     Flask,
     abort,
@@ -33,7 +34,6 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 
-
 # ENV-SPECIFIC FEATURES
 if os.environ.get("ENV") == "development":
     app.debug = True
@@ -41,6 +41,15 @@ if os.environ.get("ENV") == "development":
 else:
     # MINIFICATION
     Minify(app=app, html=True, js=True, cssless=True)
+    # SENTRY
+    sentry_sdk.init(
+        dsn=os.environ.get("SENTRY_DSN"),
+        send_default_pii=True,
+        traces_sample_rate=1.0,
+        _experiments={
+            "continuous_profiling_auto_start": True,
+        },
+    )
 
 
 # ROUTES
