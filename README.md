@@ -39,7 +39,7 @@ The first version of Periscope was a single static page hosted on Cloudflare Pag
 
 ## Open Source
 
-Periscope is proudly released under the [MIT License](LICENSE.txt). This software was made with the help of these open source projects:
+Periscope is proudly released under the [AGPLv3 License](LICENSE.txt). This software was made with the help of these open source projects:
 
 - [SORTWebCalc_dev](https://github.com/dannyjnwong/SORTWebCalc_dev) (MIT License)
 - [fuzzysort](https://github.com/farzher/fuzzysort?tab=readme-ov-file) (MIT License)
