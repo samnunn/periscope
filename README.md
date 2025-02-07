@@ -1,6 +1,6 @@
 # [Periscope](https://periscope.net.au)
 
-<img width="200" src="" alt="www/static/illustrations/anaesthetic_machine.svg" align="right" />
+<img width="200" src="www/static/illustrations/anaesthetic_machine.svg" alt="" align="right" />
 
 Periscope is a little web app designed to help perioperative doctors do their job quickly and safely. It exists because:
 
