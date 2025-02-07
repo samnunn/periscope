@@ -1,14 +1,16 @@
 # [Periscope](https://periscope.net.au)
 
+<img width="200" src="" alt="www/static/illustrations/anaesthetic_machine.svg" align="right" />
+
 Periscope is a little web app designed to help perioperative doctors do their job quickly and safely. It exists because:
 
 - We need to produce accurate, comprehensive assessments under time pressure
 - Most digital tools are clunky and have few (if any) safety features
 - When you get distracted with busywork:
-	- It's easy to forget critical questions
-	- It's easy to waste time looking thing up
-	- It's easy to miss critical risks
-	- Your job gets very frustrating
+  - It's easy to forget critical questions
+  - It's easy to waste time looking thing up
+  - It's easy to miss critical risks
+  - Your job gets very frustrating
 
 Periscope is here to help. The key features are:
 
@@ -19,6 +21,7 @@ Periscope is here to help. The key features are:
 - **Evidence-based management suggestions** with built-in references that keep you up to date with the latest evidence-based practices
 
 The UI is rich with smarty-pants features that save you time:
+
 - Identical fields that appear multiple times in your note are synchronised (so you don’t need to enter HbA1c more than one)
 - A custom CMD-K bar helps you search and switch between fields quickly
 - Keyboard shortcuts are baked in when the browser-defaults won’t cut it
@@ -27,12 +30,15 @@ The UI is rich with smarty-pants features that save you time:
 - A locally-implemented version of the [SORT Tool] (http://sortsurgery.com) is included to speed up calculation and save you to hassle of mode-switching
 
 ## Research
+
 Periscope is in the early stages of implementing a new feature: automatic enrolment of eligible patients into clinical trial and audit databases. This is an area of active development, so comments and pull requests are welcome.
 
 ## Architecture
+
 The first version of Periscope was a single static page hosted on Cloudflare Pages. Periscope needs to learn some secrets about the institutions that use it (e.g. their REDCap survey URLs, their inclusion criteria, etc) to facilitate the above-mentioned research, so it is being rearchitected as a Flask app. Watch this space.
 
 ## Open Source
+
 Periscope is proudly released under the [MIT License](LICENSE.txt). This software was made with the help of these open source projects:
 
 - [SORTWebCalc_dev](https://github.com/dannyjnwong/SORTWebCalc_dev) (MIT License)
