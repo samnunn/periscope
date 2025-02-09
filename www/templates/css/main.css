@@ -22,7 +22,8 @@
     --colour-green: rgb(85, 195, 85);
     --colour-blue: rgb(93, 147, 208);
     --colour-tan: rgb(215, 111, 67);
-    --colour-yellow: rgb(243, 204, 46);
+    --colour-orange: rgb(240, 119, 75);
+    --colour-yellow: rgb(237, 201, 57);
     --colour-offwhite: rgb(252, 252, 252);
     --colour-navy: #60a3bc;
     --colour-darkgrey: #1e272e;
@@ -101,6 +102,9 @@ mark {
     }
     &.grey {
         background-color: var(--colour-darkgrey);
+    }
+    &.orange {
+        background-color: var(--colour-orange);
     }
 }
 

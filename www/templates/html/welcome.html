@@ -10,47 +10,66 @@
                 <h1 id="site-title">Periscope</h1>
             </div>
             <div id="navbar-right">
-                <span>Huh?</span>
-                <span>Oh…</span>
-                <span>Let's Go 🚀</span>
+                <span>About</span>
+                <span>Features</span>
+                <span><a href="https://github.com/samnunn/periscope">Source</a></span>
+                <span>Get Started</span>
             </div>
         </nav>
     </header>
     <main>
         <div id="topper">
             <section class="wrapped">
-                <h1 id="yell">The <mark>free and open</mark> perioperative platform.</h1>
+                <h1 class="yell"><span>The </span><mark>free and open</mark><br><span>perioperative platform.</span></h1>
             </section>
         </div>
         <section class="wrapped">
-            <div id="idea-grid">
+            <div class="split-screen">
+                <div class="dot-spacer"></div>
                 <div class="idea-words">
                     <h2><mark class="green">The Problem</mark></h2>
-                    <p>Modern perioperative doctors need modern tools.</p>
+                    <p>Perioperative care needs <strong>better tools</strong>.</p>
+                    <p>Doctors and patients spend too much time repeating themselves and too little time getting people safely through their surgery.</p>
+                    <p>Periscope is <strong>a better way</strong>.</p>
                     <p></p>
                 </div>
                 <div class="idea-picture">
-                    <img src="/static/illustrations/anaesthetic_machine.svg" alt="">
+                    <img src="{{ 'illustrations/operation_cancelled.svg' | static_base64 }}" alt="">
                 </div>
                 <div class="idea-picture">
-                    <img src="/static/illustrations/propeller_hat.svg" alt="">
+                    <img src="{{ 'illustrations/anaesthetic_machine.svg' | static_base64 }}" alt="">
                 </div>
                 <div class="idea-words">
                     <h2><mark class="blue">Meet Periscope</mark></h2>
-                    <p>Modern perioperative care needs tools that enhance decision-making, improve efficiency, and promote evidence-based practice.</p>
+                    <p>Periscope has <strong>intelligent</strong> tools that take away the busiwork of perioperative care.</p>
+                    <p>The interface is <a href="#features">packed with features</a> that make it easy to provide safe, efficient, and evidence-based care.</p>
                 </div>
                 <div class="idea-words">
-                    <h2><mark class="yellow">Woah!</mark></h2>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <h2><mark class="yellow">Free and Open</mark></h2>
+                    <p>Periscope is <strong>free and open-source</strong>.</p>
+                    <p>We think the best way to serve our mission is to make great tools available to everyone.</p>
+                    <p>Please join us <a href="https://github.com/samnunn/periscope">on GitHub</a> and help us make Periscope the best it can be.</p>
                 </div>
                 <div class="idea-picture">
-                    <img src="/static/illustrations/lma.svg" alt="">
+                    <img src="{{ 'illustrations/propeller_hat.svg' | static_base64 }}" alt="" style="margin-top: 4rem;">
                 </div>
-                <div id="dot-spacer"></div>
+                <div class="dot-spacer"></div>
             </div>
         </section>
-        <section id="call-to-action">
-            <h1><mark>Let's GO!</mark></h1>
+        <section id="features">
+            <div class="wrapped">
+                <h1 class="yell"><mark>Features</mark></h1>
+                <div class="split-screen">
+                    <div>hola</div>
+                    <div>hola</div>
+                    <div>hola</div>
+                    <div>hola</div>
+                    <div>hola</div>
+                    <div>hola</div>
+                    <div>hola</div>
+                    <div>hola</div>
+                </div>
+            </div>
         </section>
     </main>
     <footer>
@@ -59,5 +78,22 @@
         </div>
     </footer>
 </main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Adds .scrolled when scroll position is > 0
+    function handleScroll() {
+        if (window.scrollY > 0) {
+            document.body.classList.add('scrolled')
+        } else {
+            document.body.classList.remove('scrolled')
+        }
+    }
 
+    // Initial check on page load
+    handleScroll()
+
+    // Add event listener for scrolling
+    window.addEventListener('scroll', handleScroll)
+})
+</script>
 {% endblock %}

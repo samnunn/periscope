@@ -1,5 +1,6 @@
 :root {
     --header-size: 4rem;
+    --colour-palered: color-mix(in srgb, var(--colour-darkgrey), white 10%);
 }
 
 /* LAYOUT UTILS */
@@ -17,17 +18,13 @@ body {
 
 header {
     height: var(--header-size);
-    background-color: gainsboro;
-}
-
-/* TEXT */
-
-
-/* INDIVIDUAL BITS AND BOBS */
-header {
-    background-color: var(--colour-red);
+    background-color: var(--colour-darkgrey);
     color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
+
 #navbar {
     display: flex;
     justify-content: space-between;
@@ -41,32 +38,72 @@ header {
     #navbar-right {
         display: flex;
         gap: 1rem;
+        * {
+            color: white !important;
+            text-decoration: none;
+        }
+        *:hover {
+            text-decoration: underline;
+        }
     }
 }
 
 #topper {
-    position: relative;
-    background-color: color-mix(in srgb, var(--colour-red), white 90%);
+    height: calc(max(8rem, 20vw + 20vh));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     clip-path: ellipse(160% 100% at center top);
     text-align: center;
     padding-bottom: 4vh;
+    background-color: var(--colour-palered);
+    position: relative;
+
+    &::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.2;
+        z-index: -1;
+        background-image: url({{ 'illustrations/molecules.svg' | static_base64 }});
+        /* mix-blend-mode: multiply; */
+        filter: invert(1);
+    }
+
+    h1 {
+        span {
+            background-color: var(--colour-palered);
+            box-shadow: 0 0 0.5ch 0.25ch var(--colour-palered);
+            border-radius: 1rem;
+            color: white;
+            z-index: 1;
+        }
+        mark {
+            z-index: 2;
+        }
+    }
 }
 
-h1#yell {
-    font-size: 4rem;
-    margin: 10rem 0;
+.yell {
+    font-size: clamp(2rem, 5vw, 5rem);
+    margin: 0;
 }
 
-#idea-grid {
+.split-screen {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    column-gap: 4rem;
+    row-gap: 4rem;
     position: relative;
-    margin-top: 1rem;
-    text-wrap: balance;
+    margin: 4rem 0;
+    text-wrap: pretty;
 
-    #dot-spacer {
-        height: 100px;
+    .dot-spacer {
+        height: 0rem;
+        grid-column: auto / span 2;
     }
 
     &::before {
@@ -80,34 +117,44 @@ h1#yell {
         border-left: var(--border-dots);
     }
 
-    div:nth-child(2n-1) {
-        text-align: right;
-    }
-
     .idea-words {
-        font-size: 1.6rem;
+        text-align: center;
+        h2 {
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
+        }
+        p {
+            font-size: 1.3rem;
+        }
     }
 
     .idea-picture {
         display: flex;
         justify-content: center;
-        align-self: flex-end;
+        align-self: center;
         padding-bottom: 1rem;
         img {
             height: 12rem;
-            transform-origin: center;
-            transform: rotate(0deg);
-            &:hover {
-                transform: rotate(-3deg) scale(1.1);
-            }
         }
     }
+}
 
-    .idea-picture:nth-child(2) img {
-        transform: rotate(0deg);
-        &:hover {
-            transform: rotate(1deg) scale(1.1);
-        }
+#features {
+    padding: calc(2vw + 2vh) 0;
+    position: relative;
+    &::before {
+        content: "";
+        display: block;
+        width: 200%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: -50%;
+        background-color: var(--colour-palered);
+        transform: rotate(-1deg);
+        z-index: -1;
+    }
+    h1 {
+        text-align: center;
     }
 }
 
@@ -123,10 +170,12 @@ footer {
 }
 
 @media (max-width: 680px) {
-    #idea-grid {
+    .split-screen {
         grid-template-columns: 1fr;
         gap: 2rem;
-
+        .dot-spacer {
+            display: none;
+        }
         .idea-words {
             text-align: center !important;
         }
