@@ -792,18 +792,10 @@ let allInputs = [
         'html': `<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></textarea>`,
     },
     {
-        'ugly_name': 'cataract-first-second',
-        'pretty_name': 'Eye',
-        'output_name': 'Eye',
-        'html': `
-            <div class="selectbox">
-                <select autocomplete="off">
-                    <option value="" selected></option>
-                    <option value="first">First eye</option>
-                    <option value="second">Second eye</option>
-                </select>
-            </div>
-        `,
+        'ugly_name': 'cataract-already-done',
+        'pretty_name': 'Previous Cataract',
+        'output_name': 'Previous cataract',
+        'html': `<input type="checkbox" tabindex=0>`,
     },
     {
         'ugly_name': 'patient-language-barrier',
