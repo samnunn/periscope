@@ -51,6 +51,9 @@ else:
         },
     )
 
+# FEATURE FLAGS
+app.config["flags"] = {}
+
 
 # ROUTES
 @app.route("/")
