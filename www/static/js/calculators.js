@@ -33,6 +33,22 @@ let scoreInterpretationFunctions = {
     },
 }
 
+function updateCalculator(c) {
+    // get score
+    let score = 0
+    for (let b of c.checkboxes) {
+        score += b.checked ? 1 : 0
+    }
+
+    // save score
+    document.persistentDataProxy[c.output_parameter] = score
+
+    // get interpretation
+    if (c.interpreter && c.interpretation) {
+        setAnyInputValue(c.interpretation, c.interpreter(score))
+    }
+}
+
 let allCalculators = document.querySelectorAll('[clinic-calculator]')
 window.addEventListener("DOMContentLoaded", (e) => {
     for (let c of allCalculators) {
@@ -46,22 +62,23 @@ window.addEventListener("DOMContentLoaded", (e) => {
         if (interpreter && Object.keys(scoreInterpretationFunctions).includes(interpreter)) {
             c.interpreter = scoreInterpretationFunctions[interpreter]
         }
+
+        // HACK: update checkboxes when clinic:value-changed is fired
+        // TODO: fix this awful hack
+        let parametersOfInterest = []
+        for (let b of c.checkboxes) {
+            let input = b.closest('[clinic-parameter]')
+            let parameter = input.getAttribute('clinic-parameter')
+            parametersOfInterest.push(parameter)
+        }
     
         // update score and interpretation on input
-        c.addEventListener('clinic:user-input', (e) => {
-            // get score
-            let score = 0
-            for (let b of c.checkboxes) {
-                score += b.checked ? 1 : 0
-            }
-    
-            // save score
-            document.persistentDataProxy[c.output_parameter] = score
-    
-            // get interpretation
-            if (c.interpreter && c.interpretation) {
-                setAnyInputValue(c.interpretation, c.interpreter(score))
-            }
+        
+        updateCalculator(c) // inital
+
+        document.addEventListener('clinic:value-changed', (e) => {
+            if (!parametersOfInterest.includes(e.detail.key)) return
+            updateCalculator(c)
         })
 
         // trigger initial update
