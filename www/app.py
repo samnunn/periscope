@@ -52,7 +52,9 @@ else:
     )
 
 # FEATURE FLAGS
-app.config["flags"] = {}
+app.config["flags"] = {
+    "toasts": True,
+}
 
 
 # ROUTES
