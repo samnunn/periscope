@@ -48,7 +48,7 @@ window.addEventListener("DOMContentLoaded", (e) => {
         }
     
         // update score and interpretation on input
-        c.addEventListener('clinic:value-changed', (e) => {
+        c.addEventListener('clinic:user-input', (e) => {
             // get score
             let score = 0
             for (let b of c.checkboxes) {
