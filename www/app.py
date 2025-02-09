@@ -54,6 +54,7 @@ else:
 
 # FEATURE FLAGS
 app.config["flags"] = {
+    "toasts": True,
 }
 
 
@@ -93,7 +94,9 @@ def tenant_authorise():
         success = tenants.auth_start(
             session=session, secret=request.form["tenant_secret"]
         )
-        if not success:
+        if success:
+            flash(f"""Connected to {session["tenant_data"]["pretty_name"]}""")
+        else:
             flash("No such tenant exists. Try again.")
     return redirect(url_for("clinic"))
 

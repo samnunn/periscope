@@ -1,0 +1,111 @@
+{% with messages = get_flashed_messages() %}
+<ul id="toasts">
+{% for message in messages %}
+<li class="info" style="view-transition-name: tx-{{ range(0, 1000000000) | random }};">{{message}}</li>
+{% endfor %}
+</ul>
+{% endwith %}
+<style>
+    @keyframes swipe-in {
+        0% {
+            transform: translateX(110%);
+        }
+        7.5% {
+            transform: translateX(0%);
+        }
+        92.5% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(110%);
+        }
+    }
+    #toasts {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 0.5rem;
+        z-index: 999;
+        width: 80%;
+        max-width: 24rem;
+        margin: 0;
+        list-style: none;
+        pointer-events: none;
+
+        li {
+            background-color: var(--colour-darkgrey);
+            color: white;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.25rem;
+            box-shadow: 0.1rem 0.25rem 0.4rem rgba(0, 0, 0, 0.6);
+            position: relative;
+
+            animation: swipe-in 4650ms ease forwards;
+
+
+            &::before {
+                display: block;
+                font-family: var(--font-display);
+                margin-bottom: 0.5rem;
+            }
+            &.warning::before {
+                content: "🟡  Warning";
+            }
+            &.info::before {
+                content: "⚪️  Info";
+            }
+            &.error::before {
+                content: "🔴  Error";
+            }
+            &.success::before {
+                content: "🟢  Success";
+            }
+
+            /* &::after {
+                content: "";
+                background-image: url("{{ 'icons/x_circle.svg' | static_base64 }}");
+                filter: invert(1);
+                width: 1rem;
+                height: 1rem;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                position: absolute;
+                top: 0.75rem;
+                right: 0.75rem;
+                cursor: pointer;
+                opacity: 0.5;
+
+                transition: all 100ms ease;
+            }
+
+
+            &:hover::after {
+                    transform: scale(1.1);
+                    opacity: 0.7;
+            }
+            &:hover:active::after {
+                opacity: 0.6;
+            } */
+        }
+    }
+</style>
+<script>
+    let toasts = document.querySelector("#toasts")
+    function addToast(message, type) {
+        let toast = document.createElement("li")
+        toast.classList.add(type)
+        toast.innerHTML = message
+        toast.style = `view-transition-name: tx-${Math.floor(Math.random() * 1000000000)};`
+        toasts.appendChild(toast)
+    }
+    document.displayToast = function (message, type="info") {
+        if (!document.startViewTransition) {
+            addToast(message, type)
+            return
+        } else {
+            document.startViewTransition(() => { addToast(message, type) })
+        }
+    }
+</script>

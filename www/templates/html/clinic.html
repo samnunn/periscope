@@ -85,6 +85,11 @@
         {% endblock %}
     </main>
 </div>
+<!-- TOASTS -->
+{% if config.flags.toasts %}
+{% include 'html/components/toasts.html' %}
+{% endif %}
+
 <!-- DIALOGUES -->
 {% include 'html/components/modal-welcome.html' %}
 {% include 'html/components/quick-find.html' %}
