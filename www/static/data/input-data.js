@@ -1,12 +1,11 @@
 let allInputs = [
-    // TODO: remove the need for 'autofocus' in patient-age
     {
         'ugly_name': 'patient-age',
         'pretty_name': 'Age',
         'output_name': 'Age',
         'search_name': 'Age',
         'html': `
-            <input autofocus type="number" min="0" max="125" step="1">
+            <input type="number" min="0" max="125" step="1">
         `,
     },
     {
