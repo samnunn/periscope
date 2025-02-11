@@ -51,6 +51,16 @@ document.addEventListener("clinic:value-changed", (e) => {
     if (e.detail.key == "smoking-status") {
         document.persistentDataProxy['apfel-smoking'] = !/active/i.test(e.detail.newValue)
     }
+
+    // SORT-TGV -> RCRI
+    if (e.detail.key == "sort-tgv") {
+        document.persistentDataProxy['rcri-risky'] = /y/i.test(e.detail.newValue)
+    }
+
+    // RCRI-TGV -> SORT
+    if (e.detail.key == "rcri-risky") {
+        document.persistentDataProxy['sort-tgv'] = e.detail.newValue ? "Yes" : "No"
+    }
 })
 
 //    ____                      _                 _                                
