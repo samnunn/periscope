@@ -75,18 +75,7 @@ window.allDiagnoses = [
         removedCallback: (inputData) => { inputData['rcri-ccf'] = false },
         html: `
             <div class="hstack">
-                <label>
-                    NYHA
-                    <div class="selectbox">
-                        <select diagnosis-parameter="NYHA">
-                            <option value="" selected></option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </div>
-                </label>
+                <clinic-input clinic-parameter="hf-nyha"></clinic-input>
                 <label>
                     Aetiology
                     <input type="text" diagnosis-parameter="Aetiology">
