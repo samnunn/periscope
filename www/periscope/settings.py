@@ -26,16 +26,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-%5kfxp#l-y)cg+19-4=1zh4b!3#)o5(v3t@#q81!7yiw396(am"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get("ENV") == "development":
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = [
+    "localhost",
     "periscope.net.au",
     "dev.periscope.net.au",
+    "clinic.gasnotes.net",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://periscope.net.au",
     "https://dev.periscope.net.au",
+    "https://clinic.gasnotes.net",
 ]
 
 # Application definition
