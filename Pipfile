@@ -15,6 +15,7 @@ pytest-xdist = "*"
 livereload = "*"
 flask-limiter = "*"
 sentry-sdk = {extras = ["flask"], version = "*"}
+django = "*"
 
 [dev-packages]
 
