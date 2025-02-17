@@ -18,7 +18,7 @@
             {% endblock %}
             <hr>
 
-            <!-- <li title="Connect your hospital" role="button" dialog="authorisation">
+            <li title="Connect your hospital" role="button" dialog="authorisation">
                 <span class="icon"><img src="{{ 'icons/colour_globe.svg' | static_base64 }}"></span>
                 {% if tenant %}
                 <span class="left">Connected</span>
@@ -28,13 +28,13 @@
                 <span class="right">🔴</span>
                 {% endif %}
             </li>
-            {% if tenant.redcap %}
+            {% if config.flags.redcap and tenant.redcap %}
             <li title="Export to REDCap" role="button" dialog="redcap">
                 <span class="icon"><img src="{{ 'icons/colour_cap.svg' | static_base64 }}"></span>
                 <span class="left">REDCap</span>
                 </span>
             </li>
-            {% endif %} -->
+            {% endif %}
             <li title="Shortcuts" role="button" id="shortcuts-button">
                 <span class="icon"><img src="{{ 'icons/colour_fast_forward.svg' | static_base64 }}"></span>
                 <span class="left">Shortcuts</span>
@@ -95,7 +95,7 @@
 {% include 'html/components/quick-find.html' %}
 {% include 'html/components/shortcuts.html' %}
 {% include 'html/components/modal-tenant-connect.html' %}
-{% if tenant.redcap %}
+{% if config.flags.redcap and tenant.redcap %}
     {% include 'html/components/modal-redcap.html' %}
 {% endif %}
 
