@@ -1,2 +1,3 @@
 Pipfile.lock
 .DS_Store
+*.sqlite3

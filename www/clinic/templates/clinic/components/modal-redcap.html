@@ -1,0 +1,159 @@
+{% load clinic_tags %}
+<style>
+    #redcap {
+        > p {
+            text-align: center;
+            text-wrap: balance;
+            font-size: 1.2rem;
+        }
+
+        img {
+            height: 10rem;
+            margin: 2rem auto;
+            display: block;
+        }
+    }
+    #redcap-surveys {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--colour-darkgrey);
+        border-radius: 0.5rem;
+        color: white;
+
+        .redcap-survey {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--colour-lightgrey);
+
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 0.2rem;
+                span.redcap-name {
+                    font-size: 1rem;
+                }
+                span.redcap-name::before {
+                    content: "🔴 ";
+                }
+                span.redcap-active {
+                    opacity: 0.8;
+                    font-size: 0.9rem;
+                }
+                span.redcap-active::before {
+                        content: " ↳ Not currently meeting inclusion criteria";
+                }
+            }
+
+            &:last-of-type {
+                border-bottom: none;
+            }
+        }
+
+        .redcap-survey.active {
+            span.redcap-name::before {
+                content: "🟢 ";
+            }
+            span.redcap-active::before {
+                    content: " ↳ This patient meets inclusion criteria";
+            }
+        }
+    }
+</style>
+<dialog id="redcap">
+    <span aria-roledescription="button" class="dialog-close"></span>
+    <h1><mark>REDCap Surveys</mark></h1>
+    <img src="{{ 'illustrations/anaesthetic_machine_cap.svg' | static_base64 }}" alt="">
+    <p>Periscope will automatically identify when your patient fits the inclusion criteria for these surveys.</p>
+    <div id="redcap-surveys"></div>
+</dialog>
+<script type="module">
+    import { surveys } from "{% url 'tenant_redcap' %}"
+
+    let surveyList = document.querySelector("#redcap-surveys")
+    let promptList = document.querySelector("#redcap-prompts ul")
+
+    function checkInclusionRule(surveyElement, surveyInfo) {
+        // run rule
+        let inclusionRule = eval(surveyInfo.inclusion_rule)
+        let included = inclusionRule(document.persistentDataProxy)
+
+        // show in redcap menu
+        if (included) {
+            surveyElement.classList.add("active")
+            surveyInfo.prompt_visible = true
+        } else {
+            surveyElement.classList.remove("active")
+            surveyInfo.prompt_visible = false
+        }
+
+        // show in suggestions area
+        if (surveyInfo.prompt_visible == true) {
+            if (promptList.querySelector(`li[clinic-redcap-survey="${surveyInfo.ugly_name}"]`)) return
+            
+            promptList.insertAdjacentHTML("afterbegin",`
+                <li clinic-redcap-survey="${surveyInfo.ugly_name}">
+                    Add to "${surveyInfo.name}"
+                    <button>Register</button>
+                </li>
+            `)
+        } else {
+            promptList.querySelector(`li[clinic-redcap-survey="${surveyInfo.ugly_name}"]`)?.remove()
+        }
+    }
+
+    // survey setup
+    for (let s of surveys) {
+        // ui element
+        let surveyListing = document.createElement("div")
+        surveyListing.classList.add("redcap-survey")
+        surveyListing.innerHTML = `
+            <div>
+                <span class="redcap-name">${s.name}</span>
+                <span class="redcap-active"></span>
+            </div>
+            <button clinic-redcap-survey="${s.ugly_name}">Register</button>
+        `
+
+        // inclusion rule
+        document.addEventListener("DOMContentLoaded", (e) => {
+            checkInclusionRule(surveyListing, s)
+        })
+        document.addEventListener("clinic:value-changed", (e) => {
+            checkInclusionRule(surveyListing, s)
+        })
+
+        // append to UI
+        surveyList.appendChild(surveyListing)
+    }
+
+    // click handler for <a> tags with a redcap attribute
+    document.addEventListener("click", (e) => {
+        let target = e.target.closest("[clinic-redcap-survey]")
+        if (!target) return
+
+        e.preventDefault()
+        
+        // get survey info
+        let ugly_name = target.getAttribute("clinic-redcap-survey")
+        let surveyInfo = surveys.find((s) => s.ugly_name == ugly_name)
+        if (!surveyInfo) return
+
+        // construct url
+        let url = surveyInfo.url
+        for (let key in surveyInfo.output_rules) {
+            try {
+                let fn = eval(surveyInfo.output_rules[key])
+                let value = fn(document.persistentDataProxy)
+                if (!value) continue
+                url += `&${key}=${value}`
+            } catch (e) {
+                console.error(`Failed to generate redcap value for key "${key}"`, e)
+            }
+        }
+        
+        // open url
+        window.open(url, '_blank').focus()
+    })
+</script>

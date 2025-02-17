@@ -1,0 +1,47 @@
+{% load clinic_tags %}
+<style>
+#big-welcome {
+    text-align: center;
+    font-size: 1.1rem;
+
+    > div#buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 2rem;
+
+        form {
+            width: unset;
+        }
+    }
+    img {
+        height: 10rem;
+        margin: 2rem auto;
+        display: block;
+    }
+}
+</style>
+<dialog id="big-welcome">
+    <h1><mark>Welcome to Periscope</mark></h1>
+        <p>Every effort has been made to ensure that Periscope won't steer you wrong, but you are still the responsible doctor.</p>
+        <img src="{{ 'illustrations/anaesthetic_machine.svg' | static_base64 }}" alt="">
+        <p>This software is provided free under the terms of the <a target="_blank" href="https://github.com/samnunn/periscope/blob/main/LICENSE.txt">AGPLv3 License</a>.</p>
+        <p><strong>By using this software, you agree to these terms.</strong></p>
+    <div id="buttons">
+        <a href="http://gasnotes.net" onclick="localStorage.setItem('clinic-last-welcome-date', '')"><button>Decline</button></a>
+        <form method="dialog">
+            <button autofocus>Accept</button>
+        </form>
+    </div>
+</dialog>
+<script>                                                                              
+let welcomeDialog = document.querySelector('#big-welcome')
+window.addEventListener("DOMContentLoaded", (e) => {
+    let todayDate = new Date().toISOString().slice(0,10)
+    let storedDate = localStorage.getItem('clinic-last-welcome-date') || ''
+    if (todayDate != storedDate) {
+        welcomeDialog.showModal()
+    }
+    localStorage.setItem('clinic-last-welcome-date', todayDate)
+})
+</script>

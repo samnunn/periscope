@@ -16,6 +16,7 @@ livereload = "*"
 flask-limiter = "*"
 sentry-sdk = {extras = ["flask"], version = "*"}
 django = "*"
+jinja2 = "*"
 
 [dev-packages]
 

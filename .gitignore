@@ -1,7 +1,8 @@
 
 .DS_Store
 _private
-www/tenants/*
+www/tenant_data/*
 www/*.env
 Pipfile.lock
 tests/secret*
+*.sqlite3

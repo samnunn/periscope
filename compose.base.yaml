@@ -5,7 +5,7 @@ services:
     ports:
       - "8070:8070"
     environment:
-      - CMD=pipenv run gunicorn -b 0.0.0.0:8070 --worker-class eventlet -w 1 app:app
+      - CMD=pipenv run gunicorn -b 0.0.0.0:8070 periscope.wsgi
     env_file:
       - www/.env
   tunnel:
