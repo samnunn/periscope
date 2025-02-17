@@ -17,6 +17,7 @@ flask-limiter = "*"
 django = "*"
 jinja2 = "*"
 sentry-sdk = {extras = ["django"], version = "*"}
+whitenoise = "*"
 
 [dev-packages]
 
