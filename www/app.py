@@ -54,6 +54,7 @@ else:
 # FEATURE FLAGS
 app.config["flags"] = {
     "toasts": True,
+    "redcap": False,
 }
 
 
