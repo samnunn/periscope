@@ -18,5 +18,9 @@ COPY www /app
 # Expose the port and set the command
 EXPOSE 8070
 
+RUN pipenv run python manage.py migrate
+
+RUN pipenv run python manage.py collectstatic --noinput
+
 # The actual command to run
 CMD ["sh", "-c", "$CMD"]
