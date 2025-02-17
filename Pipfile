@@ -14,9 +14,9 @@ flask-minify = "*"
 pytest-xdist = "*"
 livereload = "*"
 flask-limiter = "*"
-sentry-sdk = {extras = ["flask"], version = "*"}
 django = "*"
 jinja2 = "*"
+sentry-sdk = {extras = ["django"], version = "*"}
 
 [dev-packages]
 
