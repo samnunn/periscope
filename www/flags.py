@@ -1,8 +1,8 @@
 def flags(request):
     return {
         "flags": {
-            "redcap": False,
-            "tenant": False,
+            "redcap": True,
+            "tenant": True,
             "toasts": True,
         }
     }
