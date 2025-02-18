@@ -33,6 +33,7 @@ else:
 
 ALLOWED_HOSTS = [
     "localhost",
+    "127.0.0.1",
     "periscope.net.au",
     "dev.periscope.net.au",
     "clinic.gasnotes.net",
