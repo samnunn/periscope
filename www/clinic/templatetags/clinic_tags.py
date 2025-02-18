@@ -4,6 +4,9 @@ import random
 
 from django import template
 from django.contrib.staticfiles import finders
+from django.utils.html import format_html
+
+from clinic.models import PeriscopeDataType
 
 register = template.Library()
 
@@ -65,3 +68,21 @@ def random_placeholder_illustration():
 @register.simple_tag
 def random_number():
     return str(random.randint(0, 1000000000))
+
+
+@register.simple_tag
+def input(name, label=True, audience="medical", classes=""):
+    try:
+        obj = PeriscopeDataType.objects.get(ugly_name=name)
+    except PeriscopeDataType.DoesNotExist:
+        return ""
+
+    if label:
+        innerHTML = f"<label>{obj.clinician_facing_label or obj.pretty_name or obj.ugly_name}{obj.html}</label>"
+    else:
+        innerHTML = obj.html
+
+    return format_html(
+        '<clinic-input class="%s" clinic-parameter="%s">%s</clinic-input>'
+        % (classes, name, innerHTML)
+    )
