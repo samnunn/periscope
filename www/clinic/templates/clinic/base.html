@@ -9,7 +9,7 @@
 <!-- STATIC DATA -->
 <script>window.procedures = {{ 'data/sort-data.json' | static_include | safe }}</script>
 <script>{{ 'data/input-data.js' | static_include | safe }}</script>
-<script>{{ 'data/diagnosis-data.js' | static_include | safe }}</script>
+<script>{% include "clinic/data/diagnosis-data.js" %}</script>
 
 <!-- PAGE MARKUP -->
 <div id="tab-box">

@@ -1,3 +1,4 @@
+{% load clinic_tags %}
 window.allDiagnoses = [
     {
         matchable_string: "T2DM type two 2 II insulin dependent diabetes mellitus IDDM",
@@ -25,7 +26,7 @@ window.allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <clinic-input clinic-parameter="investigations-hba1c"></clinic-input>
+                {% input "investigations-hba1c" %}
             </div>
             <label>
                 Microvascular Complications
@@ -56,7 +57,7 @@ window.allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <clinic-input clinic-parameter="investigations-hba1c"></clinic-input>
+                {% input "investigations-hba1c" %}
             </div>
             <label>
                 Microvascular Complications
@@ -80,8 +81,8 @@ window.allDiagnoses = [
                     <input type="text" diagnosis-parameter="Aetiology">
                 </label>
                 <div class="hstack">
-                    <clinic-input clinic-parameter="hf-nyha"></clinic-input>
-                    <clinic-input clinic-parameter="hf-lvef"></clinic-input>
+                    {% input "hf-nyha" %}
+                    {% input "hf-lvef" %}
                 </div>
             </div>
         `
@@ -206,7 +207,7 @@ window.allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <clinic-input clinic-parameter="smoking-status"></clinic-input>
+                {% input "smoking-status" %}
             </div>
             <div class="hstack">
                 <label>
@@ -430,7 +431,7 @@ window.allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <clinic-input clinic-parameter="antiplatelet-use"></clinic-input>
+                {% input "antiplatelet-use" %}
             </div>
             <label>
                 Last Stress Test
@@ -455,7 +456,7 @@ window.allDiagnoses = [
                         </select>
                     </div>
                 </label>
-                <clinic-input clinic-parameter="antiplatelet-use"></clinic-input>
+                {% input "antiplatelet-use" %}
             </div>
         `
     },
