@@ -908,4 +908,13 @@ let allInputs = [
             </div>
         `,
     },
+    {
+        'ugly_name': 'hf-lvef',
+        'pretty_name': 'LVEF',
+        'output_name': 'LVEF',
+        'search_name': 'LVEF',
+        'html': `
+            <input type="number" min="0" max="100" step="1">
+        `,
+    },
 ]

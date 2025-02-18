@@ -74,13 +74,17 @@ window.allDiagnoses = [
         addedCallback: (inputData) => { inputData['rcri-ccf'] = true },
         removedCallback: (inputData) => { inputData['rcri-ccf'] = false },
         html: `
-            <div class="hstack">
-                <clinic-input clinic-parameter="hf-nyha"></clinic-input>
+            <div class="vstack">
                 <label>
                     Aetiology
                     <input type="text" diagnosis-parameter="Aetiology">
                 </label>
-            </div>`
+                <div class="hstack">
+                    <clinic-input clinic-parameter="hf-nyha"></clinic-input>
+                    <clinic-input clinic-parameter="hf-lvef"></clinic-input>
+                </div>
+            </div>
+        `
     },
     {
         matchable_string: "essential hypertension htn",
