@@ -47,16 +47,16 @@
     </div>
     <div class="vstack">
         <div class="hstack">
-            <clinic-input clinic-parameter="patient-age"></clinic-input>
-            <clinic-input clinic-parameter="patient-sex"></clinic-input>
-            <clinic-input clinic-parameter="patient-height"></clinic-input>
-            <clinic-input clinic-parameter="patient-weight"></clinic-input>
-            <clinic-input clinic-parameter="patient-bmi"></clinic-input>
-            <clinic-input clinic-parameter="appointment-mode"></clinic-input>
+            {% input "patient-age" %}
+            {% input "patient-sex" %}
+            {% input "patient-height" %}
+            {% input "patient-weight" %}
+            {% input "patient-bmi" %}
+            {% input "appointment-mode" %}
         </div>
         <div class="hstack">
-            <clinic-input clinic-parameter="operation-freetext" class="quintuple"></clinic-input>
-            <clinic-input clinic-parameter="operation-risk"></clinic-input>
+            {% input "operation-freetext" classes="quintuple" %}
+            {% input "operation-risk" %}
         </div>
     </div>
 </section>
@@ -70,28 +70,28 @@
         {% include "clinic/components/medical-history.html" %}
         <div class="vstack">
             <div class="hstack">
-                <clinic-input clinic-parameter="patient-mets"></clinic-input>
-                <clinic-input clinic-parameter="patient-flat"></clinic-input>
+                {% input "patient-mets" %}
+                {% input "patient-flat" %}
             </div>
-            <clinic-input clinic-parameter="patient-mets-details"></clinic-input>
-            <clinic-input clinic-parameter="rockwood-cfs"></clinic-input>
+            {% input "patient-mets-details" %}
+            {% input "rockwood-cfs" %}
             <hr>
             <label>
                 <span>Smoking</span>
                 <div class="hstack">
-                    <clinic-input clinic-parameter="smoking-status" label="false"></clinic-input>
-                    <clinic-input clinic-parameter="smoking-details" label="false"></clinic-input>
+                    {% input "smoking-status" label=False %}
+                    {% input "smoking-details" label=False %}
                 </div>
             </label>
             <div class="hstack">
-                <clinic-input clinic-parameter="alcohol-freetext"></clinic-input>
-                <clinic-input clinic-parameter="drugs-freetext"></clinic-input>
+                {% input "alcohol-freetext" %}
+                {% input "drugs-freetext" %}
             </div>
             <div class="hstack">
-                <clinic-input clinic-parameter="occupation-freetext"></clinic-input>
-                <clinic-input clinic-parameter="functioning-freetext"></clinic-input>
+                {% input "occupation-freetext" %}
+                {% input "functioning-freetext" %}
             </div>
-            <clinic-input clinic-parameter="other-shx" class="bigbox short autotall"></clinic-input>
+            {% input "other-shx" classes="bigbox short autotall" %}
         </div>
         
     </div>
@@ -103,10 +103,10 @@
         <button tabindex="2" class="section-copy">Copy Section</button>
     </div>
     <div class="hstack">
-        <clinic-input clinic-parameter="medications-freetext" class="bigbox autotall"></clinic-input>
+        {% input "medications-freetext" classes="bigbox autotall" %}
         <div class="vstack">
-            <clinic-input clinic-parameter="supplements-freetext" class="bigbox short"></clinic-input>
-            <clinic-input clinic-parameter="allergies-freetext" class="bigbox short"></clinic-input>
+            {% input "supplements-freetext" classes="bigbox short" %}
+            {% input "allergies-freetext" classes="bigbox short" %}
         </div>
     </div>
 </section>
@@ -118,39 +118,39 @@
     </div>
     <div class="hstack">
         <div class="vstack">
-            <clinic-input clinic-parameter="previous-anaesthesia-freetext" class="bigbox autotall"></clinic-input>
+            {% input "previous-anaesthesia-freetext" classes="bigbox autotall" %}
             <div class="vstack">
-                <clinic-input clinic-parameter="previous-bvm"></clinic-input>
-                <clinic-input clinic-parameter="previous-lma"></clinic-input>
-                <clinic-input clinic-parameter="previous-ett"></clinic-input>
-                <clinic-input clinic-parameter="previous-anaesthesia-complications"></clinic-input>
+                {% input "previous-bvm" %}
+                {% input "previous-lma" %}
+                {% input "previous-ett" %}
+                {% input "previous-anaesthesia-complications" %}
             </div>
             <label>
                 Family Issues with Anaesthesia
                 <div class="hstack">
-                    <clinic-input clinic-parameter="previous-anaesthesia-fhx" label="false"></clinic-input>
-                    <clinic-input clinic-parameter="previous-anaesthesia-fhx-details" label="false"></clinic-input>
+                    {% input "previous-anaesthesia-fhx" label=False %}
+                    {% input "previous-anaesthesia-fhx-details" label=False %}
                 </div>
             </label>
         </div>
         <div class="vstack">
             <div class="vstack">
-                <clinic-input clinic-parameter="airway-dentition"></clinic-input>
+                {% input "airway-dentition" %}
                 <div class="hstack">
-                    <clinic-input clinic-parameter="airway-mallampati"></clinic-input>
-                    <clinic-input clinic-parameter="airway-mouth-opening"></clinic-input>
+                    {% input "airway-mallampati" %}
+                    {% input "airway-mouth-opening" %}
                 </div>
                 <div class="hstack">
-                    <clinic-input clinic-parameter="airway-tmd"></clinic-input>
-                    <clinic-input clinic-parameter="airway-cricothyroid"></clinic-input>
+                    {% input "airway-tmd" %}
+                    {% input "airway-cricothyroid" %}
                 </div>
                 <div class="hstack">
-                    <clinic-input clinic-parameter="airway-jaw-protrusion"></clinic-input>
-                    <clinic-input clinic-parameter="airway-neckrom"></clinic-input>
+                    {% input "airway-jaw-protrusion" %}
+                    {% input "airway-neckrom" %}
                 </div>
                 <div class="hstack">
-                    <clinic-input clinic-parameter="airway-beard"></clinic-input>
-                    <clinic-input clinic-parameter="vein-quality"></clinic-input>
+                    {% input "airway-beard" %}
+                    {% input "vein-quality" %}
                 </div>
             </div>
             <hr>
@@ -158,12 +158,11 @@
                 
                 <!-- <h4>General Examination</h4> -->
                 <div class="hstack">
-                    <clinic-input clinic-parameter="examination-heart"></clinic-input>
-                    <clinic-input clinic-parameter="examination-lungs"></clinic-input>
+                    {% input "examination-heart" %}
+                    {% input "examination-lungs" %}
                 </div>
-                <clinic-input clinic-parameter="examination-freetext" class="bigbox short"></clinic-input>
+                {% input "examination-freetext" classes="bigbox short" %}
             </div>
-            <input type="text" clinic-parameter="mode" class="visually-hidden">
         </div>
         
     </div>
@@ -176,22 +175,22 @@
     </div>
     <div class="hstack">
         <div class="vstack">
-            <clinic-input clinic-parameter="investigations-source"></clinic-input>
+            {% input "investigations-source" %}
             <div class="hstack">
-                <clinic-input clinic-parameter="investigations-fbc"></clinic-input>
-                <clinic-input clinic-parameter="investigations-uec"></clinic-input>
+                {% input "investigations-fbc" %}
+                {% input "investigations-uec" %}
             </div>
             <div class="hstack">
-                <clinic-input clinic-parameter="investigations-lft"></clinic-input>
-                <clinic-input clinic-parameter="investigations-hba1c"></clinic-input>
+                {% input "investigations-lft" %}
+                {% input "investigations-hba1c" %}
             </div>
             <div class="hstack">
-                <clinic-input clinic-parameter="investigations-haematinics"></clinic-input>
-                <clinic-input clinic-parameter="investigations-coags"></clinic-input>
+                {% input "investigations-haematinics" %}
+                {% input "investigations-coags" %}
             </div>
-            <clinic-input clinic-parameter="investigations-ecg"></clinic-input>
+            {% input "investigations-ecg" %}
         </div>
-        <clinic-input clinic-parameter="investigations-other" class="bigbox autotall"></clinic-input>
+        {% input "investigations-other" classes="bigbox autotall" %}
         
     </div>
 </section>
@@ -207,17 +206,17 @@
             <div class="label-ish">
                 <span>Pro Forma</span>
                 <div>
-                    <clinic-input clinic-parameter="consent-ga"></clinic-input>
-                    <clinic-input clinic-parameter="consent-sedation"></clinic-input>
-                    <clinic-input clinic-parameter="consent-regional"></clinic-input>
-                    <clinic-input clinic-parameter="consent-neuraxial"></clinic-input>
-                    <clinic-input clinic-parameter="consent-artline"></clinic-input>
-                    <clinic-input clinic-parameter="consent-cvc"></clinic-input>
-                    <clinic-input clinic-parameter="consent-blood"></clinic-input>
+                    {% input "consent-ga" %}
+                    {% input "consent-sedation" %}
+                    {% input "consent-regional" %}
+                    {% input "consent-neuraxial" %}
+                    {% input "consent-artline" %}
+                    {% input "consent-cvc" %}
+                    {% input "consent-blood" %}
                 </div>
             </div>
         </div>
-        <clinic-input clinic-parameter="consent-notes" class="bigbox autotall"></clinic-input>
+        {% input "consent-notes" classes="bigbox autotall" %}
     </div>
 </section>
 <section id="risk">
@@ -232,14 +231,14 @@
                 <div class="label-ish" clinic-calculator clinic-calculator-interpreter="stopbang" clinic-calculator-parameter="stopbang-score">
                     <span>STOP-BANG (<span clinic-parameter="stopbang-score"></span>/8)</span> 
                     <div clinic-search="STOP-BANG Calculator">
-                        <clinic-input clinic-parameter="stopbang-snorer"></clinic-input>
-                        <clinic-input clinic-parameter="stopbang-tiredness"></clinic-input>
-                        <clinic-input clinic-parameter="stopbang-apnoea"></clinic-input>
-                        <clinic-input clinic-parameter="stopbang-hypertensive"></clinic-input>
-                        <clinic-input clinic-parameter="stopbang-bmi-35"></clinic-input>
-                        <clinic-input clinic-parameter="stopbang-age"></clinic-input>
-                        <clinic-input clinic-parameter="stopbang-neck"></clinic-input>
-                        <clinic-input clinic-parameter="stopbang-male"></clinic-input>
+                        {% input "stopbang-snorer" %}
+                        {% input "stopbang-tiredness" %}
+                        {% input "stopbang-apnoea" %}
+                        {% input "stopbang-hypertensive" %}
+                        {% input "stopbang-bmi-35" %}
+                        {% input "stopbang-age" %}
+                        {% input "stopbang-neck" %}
+                        {% input "stopbang-male" %}
                         <span>
                             <span clinic-calculator-interpretation clinic-parameter="stopbang-interpretation"></span>
                             <clinic-modal-popup>
@@ -254,12 +253,12 @@
                 <div class="label-ish" clinic-calculator clinic-calculator-interpreter="rcri" clinic-calculator-parameter="rcri-score">
                     <span>RCRI (<span clinic-parameter="rcri-score"></span>/6)</span>
                     <div clinic-search="RCRI Calculator">
-                        <clinic-input clinic-parameter="rcri-risky"></clinic-input>
-                        <clinic-input clinic-parameter="rcri-ihd"></clinic-input>
-                        <clinic-input clinic-parameter="rcri-ccf"></clinic-input>
-                        <clinic-input clinic-parameter="rcri-cva"></clinic-input>
-                        <clinic-input clinic-parameter="rcri-insulin"></clinic-input>
-                        <clinic-input clinic-parameter="rcri-creatinine"></clinic-input>
+                        {% input "rcri-risky" %}
+                        {% input "rcri-ihd" %}
+                        {% input "rcri-ccf" %}
+                        {% input "rcri-cva" %}
+                        {% input "rcri-insulin" %}
+                        {% input "rcri-creatinine" %}
                         <span>
                             <span clinic-calculator-interpretation clinic-parameter="rcri-interpretation"></span>
                             <clinic-modal-popup>
@@ -275,10 +274,10 @@
                 <div class="label-ish" clinic-calculator clinic-calculator-interpreter="apfel" clinic-calculator-parameter="apfel-score">
                     <span>Apfel (<span clinic-parameter="apfel-score"></span></clinic-input>/4)</span>
                     <div clinic-search="Apfel Calculator">
-                        <clinic-input clinic-parameter="apfel-sex"></clinic-input>
-                        <clinic-input clinic-parameter="apfel-smoking"></clinic-input>
-                        <clinic-input clinic-parameter="apfel-ponv"></clinic-input>
-                        <clinic-input clinic-parameter="apfel-opioids"></clinic-input>
+                        {% input "apfel-sex" %}
+                        {% input "apfel-smoking" %}
+                        {% input "apfel-ponv" %}
+                        {% input "apfel-opioids" %}
                         <span>
                             <span clinic-calculator-interpretation clinic-parameter="apfel-interpretation"></span>
                             <clinic-modal-popup>
@@ -305,8 +304,8 @@
     <div class="vstack">
         <div class="hstack">
             <div class="vstack">
-                <clinic-input clinic-parameter="issues" class="bigbox short autotall"></clinic-input>
-                <clinic-input clinic-parameter="plan" class="bigbox short autotall"></clinic-input>
+                {% input "issues" classes="bigbox short autotall" %}
+                {% input "plan" classes="bigbox short autotall" %}
             </div>
             <div class="vstack" id="warnings-container">
                 <div class="label-ish">
@@ -321,7 +320,7 @@
             </div>
         </div>
         <div class="hstack">
-            <clinic-input clinic-parameter="plan-medications" class="bigbox short"></clinic-input>
+            {% input "plan-medications" classes="bigbox short" %}
         </div>
     </div>
 </section>

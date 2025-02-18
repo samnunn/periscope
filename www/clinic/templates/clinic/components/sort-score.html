@@ -59,14 +59,14 @@
         </div>
     </label>
     <div class="hstack">
-        <clinic-input clinic-parameter="patient-age"></clinic-input>
-        <clinic-input clinic-parameter="patient-asa"></clinic-input>
+        {% input "patient-age" %}
+        {% input "patient-asa" %}
     </div>
     <div class="hstack">
-        <clinic-input clinic-parameter="sort-urgency"></clinic-input>
-        <clinic-input clinic-parameter="sort-malignancy"></clinic-input>
+        {% input "sort-urgency" %}
+        {% input "sort-malignancy" %}
     </div>
-    <clinic-input clinic-parameter="sort-tgv"></clinic-input>
+    {% input "sort-tgv" %}
     
     <span clinic-calculator-interpretation>
         <span><span clinic-parameter="sort-score"></span> % 30-day mortality</span>
