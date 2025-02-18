@@ -144,6 +144,10 @@ Consent taken from: {{consent-source}}
 // RENDER
 export function getRenderedSection(id) {
     let template = outputTemplates[id]
+    if (!template) {
+        console.error(`No template for ${id}`)
+        return ''
+    }
 
     // special case: consent
     if (id == 'consent') {
