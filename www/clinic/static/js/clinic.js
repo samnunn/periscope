@@ -2,7 +2,6 @@ import { renderEntireDocument } from '/static/js/templating.js'
 
 import "/static/js/draggable-list.js"
 import "/static/js/navigable-list.js"
-import "/static/js/historian.js"
 import "/static/js/text-editing.js"
 import "/static/js/beagle-mainthread.js"
 import "/static/js/citations.js"

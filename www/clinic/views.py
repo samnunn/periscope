@@ -10,6 +10,10 @@ def clinic_default(request):
     return render(request, "clinic/layouts/default.html")
 
 
+def clinic_cataracts(request):
+    return render(request, "clinic/layouts/cataracts.html")
+
+
 def tenant_authorise(request):
     if request.method == "POST":
         success = tenants.auth_start(

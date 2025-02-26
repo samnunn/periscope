@@ -83,6 +83,6 @@ def input(name, label=True, audience="medical", classes=""):
         innerHTML = obj.html
 
     return format_html(
-        '<clinic-input class="%s" clinic-parameter="%s">%s</clinic-input>'
-        % (classes, name, innerHTML)
+        '<clinic-input class="%s" clinic-parameter="%s" clinic-search="%s">%s</clinic-input>'
+        % (classes, name, obj.search_name or "", innerHTML)
     )

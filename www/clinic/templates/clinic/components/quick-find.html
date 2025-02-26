@@ -29,12 +29,11 @@
 </style>
 <script>
     window.addEventListener("DOMContentLoaded", (e) => {
-        let allInputs = document.querySelectorAll('clinic-input')
-        document.allInputs = []
+        let allInputs = document.querySelectorAll('clinic-search')
+        document.searchableInputs = []
         for (let i of allInputs) {
-            if (!i.data.search_name) continue
-            document.allInputs.push({
-                'name': i.data.search_name,
+            document.searchableInputs.push({
+                'name': i.getAttribute('clinic-search'),
                 'element': i,
             })
         }
@@ -51,7 +50,7 @@
         }
     })
     quickFindSearch.addEventListener('input', (e) => {
-        let results = fuzzysort.go(e.target.value, document.allInputs, {key: 'name', limit: 5})
+        let results = fuzzysort.go(e.target.value, document.searchableInputs, {key: 'name', limit: 5})
         quickFindResults.innerHTML = ''
         for (let r of results) {
             let li = document.createElement('li')

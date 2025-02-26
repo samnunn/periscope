@@ -1,4 +1,5 @@
-{% extends 'clinic/html/clinic.html' %}
+{% extends 'clinic/layouts/default.html' %}
+{% load clinic_tags %}
 {% block navigation %}
 <li title="Patient Details">
     <span class="icon"><img src="{{ 'icons/gasper_favicon.png' | static_base64 }}"></span>
@@ -17,9 +18,9 @@
     <span class="icon"><img src="{{ 'icons/colour_heart.svg' | static_base64 }}"></span>
     <span class="left">Medical History</span>
 </li>
-<li title="Anaesthesia" role="button" scroll-target="gashx">
-    <span class="icon"><img src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}"></span>
-    <span class="left">Anaesthesia</span>
+<li title="Medications" role="button" scroll-target="rx">
+    <span class="icon"><img src="{{ 'icons/colour_pill.svg' | static_base64 }}"></span>
+    <span class="left">Medications</span>
 </li>
 <li title="Plan" role="button" scroll-target="plan">
     <span class="icon"><img src="{{ 'icons/colour_check_circle.svg' | static_base64 }}"></span>
@@ -34,12 +35,12 @@
         <h2><mark class="grey">Patient Details</mark></h2>
     </div>
     <div class="hstack">
-        <clinic-input clinic-parameter="patient-age"></clinic-input>
-        <clinic-input clinic-parameter="patient-sex"></clinic-input>
-        <clinic-input clinic-parameter="patient-height"></clinic-input>
-        <clinic-input clinic-parameter="patient-weight"></clinic-input>
-        <clinic-input clinic-parameter="patient-bmi"></clinic-input>
-        <clinic-input clinic-parameter="patient-asa"></clinic-input>
+        {% input "patient-age" %}
+        {% input "patient-sex" %}
+        {% input "patient-height" %}
+        {% input "patient-weight" %}
+        {% input "patient-bmi" %}
+        {% input "patient-asa" %}
     </div>
 </section>
 <section id="triage">
@@ -51,7 +52,7 @@
         <div class="vstack">
             <h4>Green Flags 🟢</h4>
             <div class="vstack" id="green-flags">
-                <clinic-input clinic-parameter="cataract-already-done"></clinic-input>
+                {% input "cataract-already-done" %}
                 <label>Able to Lay Flat<input type="checkbox" clinic-opposite="patient-cataract-lay-flat" tabindex=0></label>
                 <label>Understands English<input type="checkbox" clinic-opposite="patient-language-barrier" tabindex=0></label>
                 <label>Able to Hear<input type="checkbox" clinic-opposite="patient-deaf" tabindex=0></label>
@@ -84,25 +85,25 @@
             <h4>Yellow Flags ⚠️</h4>
             <div class="hstack">
                 <div class="vstack">
-                    <clinic-input clinic-parameter="patient-cataract-lay-flat"></clinic-input>
-                    <clinic-input clinic-parameter="patient-language-barrier"></clinic-input>
-                    <clinic-input clinic-parameter="patient-deaf"></clinic-input>
-                    <clinic-input clinic-parameter="patient-cognitive-impairment"></clinic-input>
-                    <clinic-input clinic-parameter="patient-unable-to-communicate"></clinic-input>
-                    <clinic-input clinic-parameter="patient-ppmicd"></clinic-input>
-                    <clinic-input clinic-parameter="patient-known-difficult-airway"></clinic-input>
-                    <clinic-input clinic-parameter="patient-known-mh"></clinic-input>
-                    <clinic-input clinic-parameter="patient-recent-respiratory-illness"></clinic-input>
-                    <clinic-input clinic-parameter="patient-public-guardian"></clinic-input>
+                    {% input "patient-cataract-lay-flat" %}
+                    {% input "patient-language-barrier" %}
+                    {% input "patient-deaf" %}
+                    {% input "patient-cognitive-impairment" %}
+                    {% input "patient-unable-to-communicate" %}
+                    {% input "patient-ppmicd" %}
+                    {% input "patient-known-difficult-airway" %}
+                    {% input "patient-known-mh" %}
+                    {% input "patient-recent-respiratory-illness" %}
+                    {% input "patient-public-guardian" %}
                 </div>
 
             </div>
             <h4>Red Flags 🚨</h4>
             <div class="hstack">
                 <div class="vstack">
-                    <clinic-input clinic-parameter="patient-recent-cardiac-event"></clinic-input>
-                    <clinic-input clinic-parameter="patient-recent-pe"></clinic-input>
-                    <clinic-input clinic-parameter="patient-recent-stroke"></clinic-input>
+                    {% input "patient-recent-cardiac-event" %}
+                    {% input "patient-recent-pe" %}
+                    {% input "patient-recent-stroke" %}
                 </div>
             </div>
         </div>
@@ -213,35 +214,133 @@
         <button tabindex="2" class="section-copy">Copy Section</button>
     </div>
     <div class="hstack">
-        {% include "html/components/medical-history.html" %}
         <div class="vstack">
-            <clinic-input clinic-parameter="previous-anaesthesia-freetext" class="bigbox medium"></clinic-input>
-            <hr>
-            <clinic-input clinic-parameter="medications-freetext" class="bigbox medium"></clinic-input>
-            <clinic-input clinic-parameter="allergies-freetext" class="bigbox short autotall"></clinic-input>
-            <hr>
+            <style>
+                aside::before {
+                    content: "↳ ";
+                    margin-left: 1ch;
+                    margin-top: 0;
+                }
+            </style>
+            <h4>CNS</h4>
             <label>
-                <span>Smoking</span>
-                <div class="hstack">
-                    <clinic-input clinic-parameter="smoking-status" label="false"></clinic-input>
-                    <!-- <clinic-input clinic-parameter="smoking-details" label="false"></clinic-input> -->
-                </div>
+                Stroke or TIA
+                <input type="checkbox">
             </label>
-            <div class="hstack">
-                <clinic-input clinic-parameter="alcohol-freetext"></clinic-input>
-                <clinic-input clinic-parameter="drugs-freetext"></clinic-input>
-            </div>
+            <label>
+                Epilepsy
+                <input type="checkbox">
+            </label>
+            <aside>Document last seizure</aside>
+            <label>
+                Cognitive Impairment
+                <input type="checkbox">
+            </label>
+            <aside>Document care requirements with ADLs</aside>
+            <h4>Cardiovascular</h4>
+            <label>
+                Ischaemic Heart Disease
+                <input type="checkbox">
+            </label>
+            <label>
+                Heart Failure
+                <input type="checkbox">
+            </label>
+            <label>
+                Arrhythmia
+                <input type="checkbox">
+            </label>
+            <aside>Document type and management</aside>
+            <label>
+                Pacemaker or ICD
+                <input type="checkbox">
+            </label>
+            <aside>Document type and last check</aside>
+            <h4>Respiratory</h4>
+            <label>
+                OSA
+                <input type="checkbox">
+            </label>
+            <aside>Document CPAP use</aside>
+            <label>
+                Asthma
+                <input type="checkbox">
+            </label>
+            <label>
+                COPD
+                <input type="checkbox">
+            </label>
+            <label>
+                Recent URTI
+                <input type="checkbox">
+            </label>
+            <label>
+                Recent LRTI
+                <input type="checkbox">
+            </label>
+            <h4>Endocrine</h4>
+            <label>
+                Diabetes
+                <input type="checkbox">
+            </label>
+            <aside>Document usual BSL and any complications</aside>
+            <label>
+                Thyroid Disease
+                <input type="checkbox">
+            </label>
+            <h4>Gastrointestinal</h4>
+            <label>
+                GORD
+                <input type="checkbox">
+            </label>
+            <aside>Document severity</aside>
+            <h4>Other</h4>
+            <label>
+                Arthritis
+                <input type="checkbox">
+            </label>
+            <label>
+                Active Smoker
+                <input type="checkbox">
+            </label>
+            <label>
+                Daily Alcohol
+                <input type="checkbox">
+            </label>
         </div>
-        
+        {% input "history-freetext" classes="bigbox autotall" %}
     </div>
+    <!-- <hr>
+    <div class="vstack">
+        {% input "previous-anaesthesia-freetext" classes="bigbox medium" %}
+        <hr>
+        <label>
+            <span>Smoking</span>
+            <div class="hstack">
+                {% input "smoking-status" label=False %}
+            </div>
+        </label>
+        <div class="hstack">
+            {% input "alcohol-freetext" %}
+            {% input "drugs-freetext" %}
+        </div>
+    </div> -->
 </section>
-<!-- <section id="gashx">
+
+<section id="rx">
     <div class="section-topper">
-        <img class="icon" src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}">
-        <h2><mark class="grey">Anaesthesia</mark></h2>
+        <img class="icon" src="{{ 'icons/colour_pill.svg' | static_base64 }}">
+        <h2><mark class="grey">Medications</mark></h2>
         <button tabindex="2" class="section-copy">Copy Section</button>
     </div>
-</section> -->
+    <div class="hstack">
+        {% input "medications-freetext" classes="bigbox autotall" %}
+        <div class="vstack">
+            {% input "supplements-freetext" classes="bigbox short" %}
+            {% input "allergies-freetext" classes="bigbox short" %}
+        </div>
+    </div>
+</section>
 
 <section id="plan">
     <div class="section-topper">
@@ -249,22 +348,9 @@
         <h2><mark class="grey">Plan</mark></h2>
         <button tabindex="2" class="section-copy">Copy Section</button>
     </div>
-    <div class="vstack">
         <div class="hstack">
-            <div class="vstack">
-                <clinic-input clinic-parameter="issues" class="bigbox short autotall"></clinic-input>
-                <clinic-input clinic-parameter="plan" class="bigbox short autotall"></clinic-input>
-            </div>
-            <div class="vstack" id="warnings-container">
-                <div class="label-ish">
-                    Smart Suggestions ✨
-                    <div id="warnings">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="hstack">
-            <clinic-input clinic-parameter="plan-medications" class="bigbox short"></clinic-input>
+            {% input "issues" classes="bigbox short autotall" %}
+            {% input "plan-medications" classes="bigbox medium" %}
         </div>
     </div>
 </section>

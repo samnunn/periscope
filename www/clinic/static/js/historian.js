@@ -1,4 +1,4 @@
-import { getAnyInputValue, setAnyInputValue } from './utils.js'
+import { getAnyInputValue, setAnyInputValue } from '/static/js/utils.js'
 
 //    _   _ _     _             _                                                  
 //   | | | (_)___| |_ ___  _ __(_) __ _ _ __                                       
@@ -247,7 +247,7 @@ document.addEventListener('focusin', (e) => {
 })
 
 // ESCAPE to go back to search
-diagnosisList.addEventListener('keydown', (e) => {
+diagnosisList?.addEventListener('keydown', (e) => {
     if (e.key == "Escape") {
         diagnosisSearchBox.focus()
     }
@@ -299,7 +299,7 @@ function insertSearchResult(target, data) {
     target.insertAdjacentElement("beforeend", newResult)
 }
 
-diagnosisSearchBox.addEventListener('input', (e) => {
+diagnosisSearchBox?.addEventListener('input', (e) => {
     // Find matches with fuzzysort
     let searchString = e.target.value.trim()
     let results = fuzzysort.go(searchString, window.allDiagnoses, {
@@ -329,13 +329,13 @@ diagnosisSearchBox.addEventListener('input', (e) => {
     diagnosisSearchResultsList?.firstElementChild?.setAttribute('aria-selected', 'true')
 })
 
-diagnosisSearchBox.addEventListener('focusout', (e) => {
+diagnosisSearchBox?.addEventListener('focusout', (e) => {
     diagnosisSearchResultsList.innerHTML = ''
     diagnosisSearchBox.value = ''
 
 })
 
-diagnosisSearchBox.addEventListener('keydown', (e) => {
+diagnosisSearchBox?.addEventListener('keydown', (e) => {
     if (e.key == "Escape") {
         if (diagnosisSearchBox.value.length == 0) {
             diagnosisSearchBox.blur()
