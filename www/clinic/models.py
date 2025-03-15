@@ -3,7 +3,12 @@ from django.db import models
 
 # Create your models here.
 class PeriscopeDataType(models.Model):
-    ugly_name = models.CharField(max_length=200, blank=False, unique=True)
+    ugly_name = models.CharField(
+        max_length=200,
+        blank=False,
+        unique=True,
+        primary_key=True,
+    )
     pretty_name = models.CharField(max_length=200, blank=False)
     search_name = models.CharField(max_length=200, blank=True)
 
@@ -17,3 +22,6 @@ class PeriscopeDataType(models.Model):
     clinician_facing_description = models.TextField(blank=True)
 
     html = models.TextField(blank=False)
+
+    def natural_key(self):
+        return self.ugly_name

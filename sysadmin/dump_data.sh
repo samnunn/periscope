@@ -1,4 +1,1 @@
-docker exec -it periscope pipenv run python manage.py dumpdata\
-    --exclude=auth\
-    --exclude=contenttypes\
-    --output clinic/fixtures/default_data.json
+docker exec -it periscope pipenv run python lib/dump_data.py

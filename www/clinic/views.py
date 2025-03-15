@@ -2,8 +2,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
-
-from clinic.lib import redcap, tenants
+from lib import redcap, tenants
 
 
 def clinic_default(request):

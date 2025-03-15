@@ -99,7 +99,7 @@ WSGI_APPLICATION = "periscope.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db" / "periscope.sqlite3",
+        "NAME": BASE_DIR / "data" / "periscope.sqlite3",
     }
 }
 

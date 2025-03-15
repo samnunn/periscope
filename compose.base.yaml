@@ -6,7 +6,7 @@ services:
     ports:
       - "8070:8070"
     volumes:
-      - ./db:/app/db
+      - ./data:/app/data
     environment:
       - CMD=pipenv run gunicorn -b 0.0.0.0:8070 periscope.wsgi
     env_file:

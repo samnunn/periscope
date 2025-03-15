@@ -1,1 +1,1 @@
-docker exec -it periscope pipenv run python manage.py loaddata clinic/fixtures/default_data.json
+docker exec -it periscope pipenv run python manage.py loaddata data/defaults/default_data.json
