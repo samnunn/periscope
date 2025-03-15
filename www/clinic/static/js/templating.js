@@ -135,7 +135,7 @@ Consent taken from: {{consent-source}}
 {{plan}}
 
 # Medications and Fasting
-{{medication}}
+{{plan-medications}}
 
 # Cited Guidelines
 {{citations}}`
