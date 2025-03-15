@@ -32,6 +32,7 @@ else:
     DEBUG = False
 
 ALLOWED_HOSTS = [
+    "sim-brain",
     "localhost",
     "127.0.0.1",
     "periscope.net.au",
