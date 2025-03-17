@@ -92,14 +92,14 @@
         if (surveyInfo.prompt_visible == true) {
             if (promptList.querySelector(`li[clinic-redcap-survey="${surveyInfo.ugly_name}"]`)) return
             
-            promptList.insertAdjacentHTML("afterbegin",`
+            promptList?.insertAdjacentHTML("afterbegin",`
                 <li clinic-redcap-survey="${surveyInfo.ugly_name}">
                     Add to "${surveyInfo.name}"
                     <button>Register</button>
                 </li>
             `)
         } else {
-            promptList.querySelector(`li[clinic-redcap-survey="${surveyInfo.ugly_name}"]`)?.remove()
+            promptList?.querySelector(`li[clinic-redcap-survey="${surveyInfo.ugly_name}"]`)?.remove()
         }
     }
 
