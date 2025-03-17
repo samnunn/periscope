@@ -1,5 +1,5 @@
-import { citationSnippets } from '../data/citation-data.js'
-import { allPublications } from '../data/publication-data.js'
+import { citationSnippets } from '/static/data/citation-data.js'
+import { allPublications } from '/static/data/publication-data.js'
 
 //    / ___|___  _ __  ___  ___ _ __ | |_                                          
 //   | |   / _ \| '_ \/ __|/ _ \ '_ \| __|                                         

@@ -1,4 +1,4 @@
-import { setAnyInputValue, getAnyInputValue } from './utils.js'
+import { setAnyInputValue, getAnyInputValue } from '/static/js/utils.js'
 
 // AUTO DOT POINTS
 let validDotPoints = ['- ', '--> ']

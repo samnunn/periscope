@@ -1,4 +1,4 @@
-import { getAnyInputValue } from './utils.js'
+import { getAnyInputValue } from '/static/js/utils.js'
 //    ____   ___  ____ _____   ____                                                
 //   / ___| / _ \|  _ \_   _| / ___|  ___ ___  _ __ ___                            
 //   \___ \| | | | |_) || |   \___ \ / __/ _ \| '__/ _ \                           

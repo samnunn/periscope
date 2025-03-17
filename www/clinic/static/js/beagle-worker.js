@@ -1,5 +1,5 @@
-import { boneData } from "../data/beagle-data.js"
-import { runRuleSafely } from "../js/beagle-utils.js"
+import { boneData } from "/static/data/beagle-data.js"
+import { runRuleSafely } from "/static/js/beagle-utils.js"
 
 //    ____                   _                                                     
 //   | __ )  ___  __ _  __ _| | ___     ***           ****                         
