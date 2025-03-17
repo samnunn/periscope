@@ -1,14 +1,5 @@
 import { renderEntireDocument } from '/static/js/templating.js'
 
-import "/static/js/draggable-list.js"
-import "/static/js/navigable-list.js"
-import "/static/js/text-editing.js"
-import "/static/js/beagle-mainthread.js"
-import "/static/js/citations.js"
-import "/static/js/templating.js"
-import "/static/js/scrollspy.js"
-import "/static/js/calculators.js"
-
 //    ____                  _       _    ____                                      
 //   / ___| _ __   ___  ___(_) __ _| |  / ___|__ _ ___  ___  ___                   
 //   \___ \| '_ \ / _ \/ __| |/ _` | | | |   / _` / __|/ _ \/ __|                  
