@@ -307,21 +307,22 @@
                 {% input "issues" classes="bigbox short autotall" %}
                 {% input "plan" classes="bigbox short autotall" %}
             </div>
-            <div class="vstack" id="warnings-container">
-                <div class="label-ish">
-                    Smart Suggestions ✨
-                    <div id="redcap-prompts">
-                        <ul class="pill-list">
-                        </ul>
-                    </div>
-                    <div id="warnings">
-                    </div>
-                </div>
-            </div>
+            {% include "clinic/components/beagle-suggestions.html" %}
         </div>
         <div class="hstack">
             {% input "plan-medications" classes="bigbox short" %}
         </div>
     </div>
+</section>
+<section id="disclaimer">
+    <style>
+        @scope {
+            p {
+                text-align: center;
+            }
+        }
+    </style>
+    <p>Every effort has been made to ensure that Periscope won't steer you wrong, but you are still the responsible doctor.</p>
+    <p><strong>This software is provided free under the terms of the <a target="_blank" href="https://github.com/samnunn/periscope/blob/main/LICENSE.txt">AGPLv3 License</a>.</strong></p>
 </section>
 {% endblock %}

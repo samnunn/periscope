@@ -10,7 +10,7 @@
         >p {
             text-align: center;
             text-wrap: pretty;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         .tenant-cell {
             display: flex;
@@ -38,27 +38,38 @@
 </style>
 <dialog id="authorisation">
     <span aria-roledescription="button" class="dialog-close"></span>
-    <h1><mark class="green">{% if request.session.tenant_data %}You Are Connected{% else %}Get Connected{% endif %}</mark></h1>
-    <img src="{{ 'illustrations/anaesthetic_machine_hospital.svg' | static_base64 }}" alt="">
-    {% if not request.session.tenant_data %}
-    <p>Unlock special Periscope features with your hospital's code.</p>
-    {% else %}
+    <h1><mark class="red">{% if request.session.tenant_data %}You're Connected{% else %}Get Connected{% endif %}</mark></h1>
+    {% if request.session.tenant_data %}
     <p>All special Periscope features are unlocked.</p>
+    {% else %}
+    <p>Unlock special Periscope features with your hospital's code.</p>
+    {% endif %}
+    <img src="{{ 'illustrations/anaesthetic_machine_hospital.svg' | static_base64 }}" alt="">
+    {% if request.session.tenant_data %}
+    <!-- <p>All special Periscope features are unlocked.</p> -->
+    {% else %}
+    <p>If you don't have a code yet, <a href="mailto:admin@periscope.net.au?subject=Hospital%20Code%20Request">get in touch with us</a>.</p>
     {% endif %}
 
     {% if request.session.tenant_data %}
     <div class="tenant-cell">
         <p>🟢  {{ request.session.tenant_data.pretty_name }}</p>
-        <button form="deauthorise" type="submit">Disconnect</button>
+        <button form="deauthorise" type="submit" autofocus>Disconnect</button>
     </div>
     <form id="deauthorise" action="{% url "tenant_deauthorise" %}" method="post">{% csrf_token %}</form>
     {% else %}        
     <div class="tenant-cell">
-        <input form="authorise" type="text" name="tenant_secret" placeholder="Hospital ID" required>
-        <button form="authorise" type="submit">Connect</button>
+        <input form="authorise" type="text" name="tenant_secret" placeholder="Hospital Code" required>
+        <button form="authorise" type="submit" autofocus>Connect</button>
     </div>
     <form id="authorise" action="{% url "tenant_authorise" %}" method="post">{% csrf_token %}</form>
     {% endif %}
 </dialog>
-<script>                                                                              
+{% if not request.session.tenant_data %}
+<script>                                                                           
+    let welcomeDialog = document.querySelector('#authorisation')
+    window.addEventListener("DOMContentLoaded", (e) => {
+        welcomeDialog.showModal()
+    })                                                                           
 </script>
+{% endif %}

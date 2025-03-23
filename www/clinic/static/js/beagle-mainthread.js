@@ -12,7 +12,7 @@ let boneInput = document.querySelector('[clinic-parameter="issues"]')
 
 document.beagle.addEventListener('message', (m) => {
     // console.info(m.data['type'], m.data)
-    
+
     // add bones
     if (m.data['type'] == 'beagle-bone-add') {
         let issuePillContainer = document.createElement('ul')
@@ -47,19 +47,19 @@ document.beagle.addEventListener('message', (m) => {
         // add container to boneList
         boneList.insertAdjacentElement("afterbegin", issuePillContainer)
     }
-    
+
     // update bones
     if (m.data['type'] == 'beagle-bone-update') {
         let staleBone = document.querySelector(`[beagle-bone-id="${m.data.id}"] > li.issue-pill > span`)
         staleBone.innerText = m.data.name
     }
-    
+
     // delete bones
     if (m.data['type'] == 'beagle-bone-delete') {
         let staleBone = document.querySelector(`[beagle-bone-id="${m.data.id}"]`)
         staleBone?.remove()
     }
-    
+
     // add suggestions
     if (m.data['type'] == 'beagle-suggestion-add') {
         let targetList = document.querySelector(`ul[beagle-bone-id="${m.data.bone}"]`)?.querySelector('ul')
@@ -101,7 +101,7 @@ document.beagle.addEventListener('message', (m) => {
         })
         targetList.appendChild(toAdd)
     }
-    
+
     // delete suggestions
     if (m.data['type'] == 'beagle-suggestion-delete') {
         let staleSuggestion = document.querySelector(`[beagle-suggestion-name="${m.data.suggestion}"]`)
@@ -109,8 +109,3 @@ document.beagle.addEventListener('message', (m) => {
     }
 })
 
-export function sendToBeagle(inputData) {
-    document.beagle.postMessage({
-        inputData: inputData,
-    })
-}

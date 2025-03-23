@@ -1,5 +1,5 @@
 import { getAnyInputValue, setAnyInputValue } from '/static/js/utils.js'
-import { sendToBeagle } from '/static/js/beagle-mainthread.js'
+import { sendToBeagle } from '/static/js/beagle-utils.js'
 import { insertClinicDiagnosis, diagnosisList } from '/static/js/historian.js'
 
 //    ____        _          ____               _     _                            
@@ -46,11 +46,13 @@ let persistentDataProxy = new Proxy(persistentDataStore, {
         if (oldValue != value) {
             // Dispatch event
             // debugger
-            document.dispatchEvent(new CustomEvent('clinic:value-changed', { detail: {
-                oldValue: oldValue,
-                newValue: value,
-                key: key,
-            }}))
+            document.dispatchEvent(new CustomEvent('clinic:value-changed', {
+                detail: {
+                    oldValue: oldValue,
+                    newValue: value,
+                    key: key,
+                }
+            }))
         }
 
         return true
@@ -80,10 +82,10 @@ window.addEventListener("DOMContentLoaded", async () => {
     for (let p in persistentDataProxy) {
         // Get the stored data for the current property
         let storedData = persistentDataProxy[p]
-        
+
         // Find all input elements that have a 'clinic-parameter' attribute matching the current property
         let targetInputs = document.querySelectorAll(`[clinic-parameter="${p}"]`)
-        
+
         // For each matching input element
         for (let i of targetInputs) {
             // Set the value of the input element to the stored data
@@ -99,15 +101,13 @@ window.addEventListener("DOMContentLoaded", async () => {
             continue
         }
         let genericDiagnosisData = window.allDiagnoses.find((d) => d['id'] == storedData['id'])
-    
+
         storedData['html'] = genericDiagnosisData?.html || ''
         insertClinicDiagnosis(storedData, diagnosisList, "afterbegin", false)
     }
 
     // give Beagle its intial sniff
-    document.beagle.postMessage({
-        inputData: persistentDataStore,
-    })
+    sendToBeagle(persistentDataProxy)
 })
 
 // listen for input events on any element with clinic-parameter

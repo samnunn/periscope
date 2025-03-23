@@ -9,15 +9,15 @@ export function runRuleSafely(rule, inputData) {
 
 // used in beagle-data.js
 export function diagnosisExists(inputData, diagnosis) {
-    return Object.keys(inputData).some( (k) => k.includes(diagnosis))
+    return Object.keys(inputData).some((k) => k.includes(diagnosis))
 }
 
 // used in beagle-data.js
 export function gradeOSA(inputData) {
     let score = inputData['stopbang-score']
     let risk
-    if (score >= 0 && score <=2) risk = 'low'
-    if (score >= 3 && score <=4) risk = 'intermediate'
+    if (score >= 0 && score <= 2) risk = 'low'
+    if (score >= 3 && score <= 4) risk = 'intermediate'
     if (score >= 5) risk = 'high'
 
 
@@ -28,4 +28,10 @@ export function gradeOSA(inputData) {
     if (stopCriteria.length >= 2 && highRiskCriteria.length >= 1) risk = 'high'
 
     return risk
+}
+
+export function sendToBeagle(inputData) {
+    document?.beagle?.postMessage({
+        inputData: inputData,
+    })
 }

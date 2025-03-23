@@ -64,16 +64,12 @@
                     <span class="left">Source Code</span>
                 </li>
             </a>
-            <a class="invisible-link" href="mailto:hello@gasnotes.net?subject=Bug%20Report%20for%20Periscope">
+            <a class="invisible-link" href="mailto:admin@periscope.net.au?subject=Bug%20Report%20for%20Periscope">
                 <li title="Report a Bug" role="button">
                     <span class="icon"><img src="{{ 'icons/colour_bug.svg' | static_base64 }}"></span>
                     <span class="left">Report a Bug</span>
                 </li>
             </a>
-            <li title="Link to this tool's terms" onclick="document.querySelector('#big-welcome').showModal()" role="button">
-                <span class="icon"><img src="{{ 'icons/colour_edit.svg' | static_base64 }}"></span>
-                <span class="left">Terms</span>
-            </li>
             <hr>
             <li title="Toggle menu" role="button" id="sidebar-lock">
                 <span class="icon" id="icon-locked"><img src="{{ 'icons/colour_lock.svg' | static_base64 }}"></span>
@@ -93,7 +89,6 @@
 {% endif %}
 
 <!-- DIALOGUES -->
-{% include 'clinic/components/modal-welcome.html' %}
 {% include 'clinic/components/quick-find.html' %}
 {% include 'clinic/components/shortcuts.html' %}
 
@@ -110,7 +105,6 @@
 <script type="module">{{ 'js/draggable-list.js' | static_include | safe }}</script>
 <script type="module">{{ 'js/navigable-list.js' | static_include | safe }}</script>
 <script type="module">{{ 'js/text-editing.js' | static_include | safe }}</script>
-<script type="module">{{ 'js/beagle-mainthread.js' | static_include | safe }}</script>
 <script type="module">{{ 'js/citations.js' | static_include | safe }}</script>
 <script type="module">{{ 'js/templating.js' | static_include | safe }}</script>
 <script type="module">{{ 'js/scrollspy.js' | static_include | safe }}</script>

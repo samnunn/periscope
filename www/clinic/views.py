@@ -5,6 +5,10 @@ from django.urls import reverse
 from lib import redcap, tenants
 
 
+def clinic_start(request):
+    return render(request, "clinic/layouts/start.html")
+
+
 def clinic_default(request):
     return render(request, "clinic/layouts/default.html")
 
