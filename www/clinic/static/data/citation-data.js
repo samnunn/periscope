@@ -76,7 +76,7 @@ export let citationSnippets = [
     {
         id: 'esc-2022-severity',
         body: `
-            Surgical risk estimate is a broad approximation of <b>30 day risk of CV death, MI, and stroke</b> that takes into account only the specific surgical intervention, without considering the patient's comorbidities.
+            Surgical risk estimate is a broad approximation of <b>30 day risk of CV death, MI, and stroke</b> that takes into account only the specific surgical intervention, <b>without</b>without considering the patient's comorbidities</b>.
             <h3>Low Risk (<1%)</h3>
             <ul>
                 <li>Breast</li>

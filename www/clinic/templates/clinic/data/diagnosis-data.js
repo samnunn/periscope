@@ -7,7 +7,7 @@ window.allDiagnoses = [
         html: `
             <div class="hstack">
                 <label>
-                    Insulin Dependent
+                    IDDM
                     <div class="selectbox">
                         <select diagnosis-parameter="Insulin dependent">
                             <option value="" selected></option>

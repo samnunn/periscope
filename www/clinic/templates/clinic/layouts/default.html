@@ -56,7 +56,18 @@
         </div>
         <div class="hstack">
             {% input "operation-freetext" classes="quintuple" %}
-            {% input "operation-risk" %}
+            <label>
+                <span>
+                    Risk
+                    <clinic-modal-popup>
+                        <button class="infobutton" tabindex="-1"></button>
+                        <template>
+                            <clinic-citation-snippet citation-id="esc-2022-severity"></clinic-citation-snippet>
+                        </template>
+                    </clinic-modal-popup>
+                </span>
+                {% input "operation-risk" label=False %}
+            </label>
         </div>
     </div>
 </section>

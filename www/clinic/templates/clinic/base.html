@@ -30,7 +30,6 @@
                 {% endif %}
             </li>
             {% endif %}
-
             {% if flags.redcap and request.session.tenant_data %}
             <li title="Export to REDCap" role="button" dialog="redcap">
                 <span class="icon"><img src="{{ 'icons/colour_cap.svg' | static_base64 }}"></span>

@@ -19,7 +19,7 @@ document.addEventListener("clinic:value-changed", (e) => {
         let w = parseInt(document.persistentDataProxy['patient-weight'] || 0)
         let h = parseInt(document.persistentDataProxy['patient-height'] || 0)
         if (w <= 0 || h <= 0) return // sanity check
-        document.persistentDataProxy['patient-bmi'] = (w / (h/100)**2).toFixed(1)
+        document.persistentDataProxy['patient-bmi'] = (w / (h / 100) ** 2).toFixed(1)
     }
 
     // SEX -> STOPBANG
@@ -60,7 +60,7 @@ document.addEventListener("clinic:value-changed", (e) => {
 //   |____/ \___/ \_/\_/ |_| |_|_|\___/ \__,_|\__,_|\___|_|                        
 
 function downloadDocument() {
-    let formattedDate = new Date().toISOString().slice(0,10)
+    let formattedDate = new Date().toISOString().slice(0, 10)
 
     // Fabricate a filename (date + UMRN)
     let filename = `${formattedDate} Clinic Patient.txt`
@@ -68,14 +68,14 @@ function downloadDocument() {
     let textDump = renderEntireDocument()
 
     // Create sham download link
-	let downloadLink = document.createElement('a')
-	downloadLink.setAttribute('href','data:text/plain;charset=utf-8,' + encodeURIComponent(textDump))
+    let downloadLink = document.createElement('a')
+    downloadLink.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(textDump))
     downloadLink.setAttribute('download', filename)
-	downloadLink.style.display = "none"
-	document.body.appendChild(downloadLink)
+    downloadLink.style.display = "none"
+    document.body.appendChild(downloadLink)
 
     // Pull the lever, Kronk
-	downloadLink.click()
+    downloadLink.click()
 }
 
 document.querySelector('#download')?.addEventListener('click', (e) => {
@@ -96,7 +96,7 @@ let sidebar = document.querySelector("#sidebar")
 let sidebarLock = document.querySelector("#sidebar-lock")
 let sidebarLockText = sidebarLock.querySelector('span.left')
 
-function updateSideBarLock(toggle=false) {
+function updateSideBarLock(toggle = false) {
     // get stored state
     let storedState = localStorage.getItem('clinic-sidebar-locked') || 'true'
     storedState = storedState == 'true' ? true : false
@@ -145,7 +145,7 @@ document.addEventListener("click", (e) => {
 document.addEventListener('click', (e) => {
     if (!document.querySelector('dialog[open]')) return
     if (!e.target.matches('dialog')) return
-    
+
     let rect = e.target.getBoundingClientRect()
     if (
         e.clientY < rect.top ||
