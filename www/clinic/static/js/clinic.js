@@ -98,7 +98,7 @@ let sidebarLockText = sidebarLock.querySelector('span.left')
 
 function updateSideBarLock(toggle = false) {
     // get stored state
-    let storedState = localStorage.getItem('clinic-sidebar-locked') || 'true'
+    let storedState = localStorage.getItem('clinic-sidebar-locked') || 'false'
     storedState = storedState == 'true' ? true : false
 
     // flip it
