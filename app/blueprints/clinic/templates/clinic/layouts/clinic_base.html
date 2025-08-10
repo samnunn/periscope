@@ -24,10 +24,12 @@
                 <span class="right">🔴</span>
                 {% endif %}
             </li>
+            {% if session['tenant'] %}
             <li title="Export to REDCap" role="button" dialog="redcap">
                 <span class="icon"><img src="{{ 'icons/colour_cap.svg' | static_base64 }}"></span>
                 <span class="left">REDCap</span>
             </li>
+            {% endif %}
             <li title="Shortcuts" role="button" id="shortcuts-button">
                 <span class="icon"><img src="{{ 'icons/colour_fast_forward.svg' | static_base64 }}"></span>
                 <span class="left">Shortcuts</span>
@@ -93,7 +95,10 @@
 {% include 'clinic/components/quick-find.html' %}
 {% include 'clinic/components/shortcuts.html' %}
 {% include 'clinic/components/modal-tenant-connect.html' %}
+
+{% if session['tenant'] %}
 {% include 'clinic/components/modal-redcap.html' %}
+{% endif %}
 
 <!-- SCRIPTS -->
 <script type="module">{{ 'js/sidebar.js' | static_include | safe }}</script>
