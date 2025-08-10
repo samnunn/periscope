@@ -1,11 +1,15 @@
 services:
   clinic:
     environment:
-      - CMD=pipenv run python manage.py runserver 0.0.0.0:8070
-      # - CMD=sleep infinity
-      - ENV=development
+      - DEBUG=1
     develop:
       watch:
         - action: sync
-          path: www
+          path: app
           target: /app
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    env_file:
+      - env/development

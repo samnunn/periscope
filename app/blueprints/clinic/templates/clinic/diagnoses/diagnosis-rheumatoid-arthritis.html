@@ -1,0 +1,41 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Rheumatoid arthritis{% endblock %}
+{% block search_keywords %}rheumatoid arthritis{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        C-Spine Involvement
+        <div class="selectbox">
+            <select diagnosis-parameter="C-Spine involvement">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Immune Suppressed
+        <div class="selectbox">
+            <select diagnosis-parameter="Immune suppressed">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

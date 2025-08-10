@@ -1,0 +1,17 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Aortic stenosis{% endblock %}
+{% block search_keywords %}AS aortic stenosis{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<label>
+    Radiographic Severity
+    <input diagnosis-parameter="Radiographic severity" type="text"/>
+</label>
+<label>
+    Symptom Burden
+    <input diagnosis-parameter="Symptoms" type="text"/>
+</label>
+{% endblock %}

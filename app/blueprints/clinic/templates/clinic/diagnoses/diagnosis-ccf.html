@@ -1,0 +1,19 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Heart failure{% endblock %}
+{% block search_keywords %}HF HFpEF HFrEF congestive cardiac heart failure{% endblock %}
+{% block added_callback %}inputData['rcri-ccf'] = true{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="vstack">
+    <label>
+        Aetiology
+        <input diagnosis-parameter="Aetiology" type="text"/>
+    </label>
+    <div class="hstack">
+        {{ clinic_input("hf-nyha") | safe }}
+        {{ clinic_input("hf-lvef") | safe }}
+    </div>
+</div>
+{% endblock %}

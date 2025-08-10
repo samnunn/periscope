@@ -1,0 +1,18 @@
+{% extends 'clinic/inputs/_base_input.html' %}
+
+{% block label %}Consent Source{% endblock %}
+{% block prefix %}Consent Source{% endblock %}
+{% block suffix %}{% endblock %}
+{% block search %}Consent Source{% endblock %}
+
+{% block input %}
+<div class="selectbox">
+<select autocomplete="off">
+	<option value="" selected></option>
+	<option value="patient">Patient</option>
+	<option value="next of kin">Next of Kin</option>
+	<option value="enduring guardian">Enduring Guardian</option>
+	<option value="state-appointed (public) guardian">State-Appointed Guardian</option>
+</select>
+</div>
+{% endblock %}

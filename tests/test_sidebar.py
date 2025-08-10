@@ -1,94 +1,74 @@
 from playwright.sync_api import Page, expect
+from utils import run_preamble
 
 
 def test_sidebar_open_by_default(page: Page):
-    page.goto("http://127.0.0.1:8070/clinic")
-    page.get_by_role("button", name="Accept").click()
+    run_preamble(page)
 
-    expect(
-        page.get_by_role("button", name="Search ⌘K").locator("span.right")
-    ).to_be_visible()
+    #     page.get_by_role("button", name="Unlock Sidebar").click()
+    #     page.get_by_role("textbox", name="Operation").click()
+
+    # wait until sidebar has finished animating
+    # there was a race condition here where .offsetWidth() was called too early
+    page.locator("#sidebar").scroll_into_view_if_needed()
+    page.wait_for_timeout(500)
+
+    calculated_width = page.evaluate("document.querySelector('#sidebar').offsetWidth")
+    calculated_width = int(calculated_width)
+    assert calculated_width > 100  # px
 
 
-def test_sidebar_hides(page: Page):
-    page.goto("http://127.0.0.1:8070/clinic")
-    page.get_by_role("button", name="Accept").click()
+def test_sidebar_hides_on_first_toggle(page: Page):
+    run_preamble(page)
 
-    page.get_by_role("button", name="Unlock Sidebar").click()
+    page.get_by_role("button", name="Close Sidebar").click()
     page.get_by_role("textbox", name="Operation").click()
 
     # wait until sidebar has finished animating
     # there was a race condition here where .offsetWidth() was called too early
-    # page.locator("#sidebar").scroll_into_view_if_needed()
-    page.wait_for_timeout(1000)
+    page.locator("#sidebar").scroll_into_view_if_needed()
+    page.wait_for_timeout(500)
 
     calculated_width = page.evaluate("document.querySelector('#sidebar').offsetWidth")
     calculated_width = int(calculated_width)
-    assert calculated_width < 100
+    assert calculated_width < 100  # px
 
 
-# def test_sidebar_reveals_on_hover(page: Page):
-#     page.goto("http://127.0.0.1:8070/clinic")
-#     page.get_by_role("button", name="Accept").click()
+def test_sidebar_reveals_again_after_hidden(page: Page):
+    run_preamble(page)
 
-#     page.get_by_role("button", name="Unlock Sidebar").click()
-#     page.get_by_role("textbox", name="Operation").click()
-#     page.locator("#sidebar li:first-child .icon").hover()
-#     # page.get_by_role("button", name="Unlock Sidebar").hover(
-#     #     force=True, position={"x": 10, "y": 10}
-#     # )
-
-#     # wait until sidebar has finished animating
-#     # there was a race condition here where .offsetWidth() was called too early
-#     page.locator("#sidebar").scroll_into_view_if_needed()
-
-#     calculated_width = page.evaluate("document.querySelector('#sidebar').offsetWidth")
-#     calculated_width = int(calculated_width)
-#     assert calculated_width > 100
-
-
-def test_sidebar_remembers_unlock(page: Page):
-    page.goto("http://127.0.0.1:8070/clinic")
-    page.get_by_role("button", name="Accept").click()
-
-    page.get_by_role("button", name="Unlock Sidebar").click()
+    page.get_by_role("button", name="Close Sidebar").click()
     page.get_by_role("textbox", name="Operation").click()
-
-    page.reload()
 
     # wait until sidebar has finished animating
     # there was a race condition here where .offsetWidth() was called too early
-    # page.locator("#sidebar").scroll_into_view_if_needed()
-    page.wait_for_timeout(1000)
+    page.locator("#sidebar").scroll_into_view_if_needed()
+    page.wait_for_timeout(500)
+
+    page.get_by_role("button", name="Close Sidebar").click()
+    page.get_by_role("textbox", name="Operation").click()
+    page.wait_for_timeout(500)
 
     calculated_width = page.evaluate("document.querySelector('#sidebar').offsetWidth")
     calculated_width = int(calculated_width)
-    assert calculated_width < 100
-
-    page.reload()
+    assert calculated_width > 100  # px
 
 
-def test_sidebar_remembers_lock(page: Page):
-    page.goto("http://127.0.0.1:8070/clinic")
-    page.get_by_role("button", name="Accept").click()
+def test_sidebar_remembers_nondefault_state_after_refresh(page: Page):
+    run_preamble(page)
 
-    # unlocks it
-    page.get_by_role("button", name="Unlock Sidebar").click()
+    page.get_by_role("button", name="Close Sidebar").click()
     page.get_by_role("textbox", name="Operation").click()
-
-    # locks it
-    page.get_by_role("button", name="Lock Sidebar").click()
-    page.get_by_role("textbox", name="Operation").click()
-
-    page.reload()
 
     # wait until sidebar has finished animating
     # there was a race condition here where .offsetWidth() was called too early
-    # page.locator("#sidebar").scroll_into_view_if_needed()
-    page.wait_for_timeout(1000)
+    page.locator("#sidebar").scroll_into_view_if_needed()
+    page.wait_for_timeout(500)
+
+    page.reload()
+    page.wait_for_load_state()
+    page.wait_for_timeout(500)
 
     calculated_width = page.evaluate("document.querySelector('#sidebar').offsetWidth")
     calculated_width = int(calculated_width)
-    assert calculated_width > 100
-
-    page.reload()
+    assert calculated_width < 100  # px

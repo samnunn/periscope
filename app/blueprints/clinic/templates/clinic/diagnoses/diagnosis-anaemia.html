@@ -1,0 +1,17 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Anaemia{% endblock %}
+{% block search_keywords %}iron deficiency anaemia{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<label>
+    Aetiology
+    <input diagnosis-parameter="Aetiology" type="text"/>
+</label>
+<label>
+    Treatment
+    <input diagnosis-parameter="Treatment" type="text"/>
+</label>
+{% endblock %}

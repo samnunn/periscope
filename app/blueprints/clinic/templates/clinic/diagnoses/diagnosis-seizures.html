@@ -1,0 +1,49 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Seizure disorder{% endblock %}
+{% block search_keywords %}epilepsy seizure{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<label>
+    Triggers
+    <input diagnosis-parameter="Triggers" type="text"/>
+</label>
+<label>
+    Seizure Frequency
+    <input diagnosis-parameter="Frequency" type="text"/>
+</label>
+<div class="hstack">
+    <label>
+        AED Compliant
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Compliant with AEDs">
+                <option selected="" value="">
+                </option>
+                <option value="yes">
+                    Yes
+                </option>
+                <option value="NO">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Previous Status Epilepticus
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Previous status epilepticus">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

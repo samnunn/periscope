@@ -1,0 +1,16 @@
+{% extends 'clinic/inputs/_base_input.html' %}
+
+{% block label %}Mode{% endblock %}
+{% block prefix %}Appointment mode{% endblock %}
+{% block suffix %}{% endblock %}
+{% block search %}Mode (telephone/face-to-face){% endblock %}
+
+{% block input %}
+<div class="selectbox">
+<select autocomplete="off">
+	<option value="" selected></option>
+	<option value="face-to-face">Face-to-face</option>
+	<option value="telephone">Telephone</option>
+</select>
+</div>
+{% endblock %}

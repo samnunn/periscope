@@ -1,11 +1,11 @@
 import re
 
 from playwright.sync_api import Page, expect
+from utils import run_preamble
 
 
 def test_text_expansion(page: Page) -> None:
-    page.goto("http://127.0.0.1:8070/clinic")
-    page.get_by_role("button", name="Accept").click()
+    run_preamble(page)
     page.get_by_label("Medications and Fasting").click()
     page.get_by_label("Medications and Fasting").fill("@fast")
     page.wait_for_timeout(50)
@@ -15,8 +15,7 @@ def test_text_expansion(page: Page) -> None:
 
 
 def test_auto_dotpoints(page: Page) -> None:
-    page.goto("http://127.0.0.1:8070/clinic")
-    page.get_by_role("button", name="Accept").click()
+    run_preamble(page)
     page.get_by_label("Medications and Fasting").click()
     page.keyboard.insert_text("- Foo")
     page.keyboard.press("Enter")

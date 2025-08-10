@@ -1,0 +1,44 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}ICD in situ{% endblock %}
+{% block search_keywords %}internal cardiac defibrillator{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Indication
+        <input diagnosis-parameter="Indication" type="text"/>
+    </label>
+    <label>
+        Last Checked
+        <input diagnosis-parameter="Last checked" type="text"/>
+    </label>
+</div>
+<div class="hstack">
+    <label>
+        Diathermy in Use
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Diathermy in use">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Manufacturer
+        <input diagnosis-parameter="Manufacturer" type="text"/>
+    </label>
+</div>
+<label>
+    Trigger Frequency
+    <input diagnosis-parameter="Trigger frequency" type="text"/>
+</label>
+{% endblock %}

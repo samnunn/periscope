@@ -1,0 +1,346 @@
+{% extends 'clinic/layouts/clinic_base.html' %}
+
+{% block navigation %}
+<li title="Patient Details">
+    <span class="icon"><img src="{{ 'icons/gasper_favicon.png' | static_base64 }}"></span>
+    <span class="left">Periscope</span>
+</li>
+<hr>
+<li title="Patient Details" role="button" scroll-target="details">
+    <span class="icon"><img src="{{ 'icons/colour_bookmark.svg' | static_base64 }}"></span>
+    <span class="left">Patient Details</span>
+</li>
+<li title="Medical History" role="button" scroll-target="medicalhx">
+    <span class="icon"><img src="{{ 'icons/colour_heart.svg' | static_base64 }}"></span>
+    <span class="left">Medical History</span>
+</li>
+<li title="Medications" role="button" scroll-target="rx">
+    <span class="icon"><img src="{{ 'icons/colour_pill.svg' | static_base64 }}"></span>
+    <span class="left">Medications</span>
+</li>
+<li title="Anaesthesia" role="button" scroll-target="gashx">
+    <span class="icon"><img src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}"></span>
+    <span class="left">Anaesthesia</span>
+</li>
+<li title="Investigations" role="button" scroll-target="ix">
+    <span class="icon"><img src="{{ 'icons/colour_droplet.svg' | static_base64 }}"></span>
+    <span class="left">Investigations</span>
+</li>
+<li title="Consent" role="button" scroll-target="consent">
+    <span class="icon"><img src="{{ 'icons/colour_pen_tool.svg' | static_base64 }}"></span>
+    <span class="left">Consent</span>
+</li>
+<li title="Risk Profile" role="button" scroll-target="risk">
+    <span class="icon"><img src="{{ 'icons/colour_life_buoy.svg' | static_base64 }}"></span>
+    <span class="left">Risk Profile</span>
+</li>
+<li title="Plan" role="button" scroll-target="plan">
+    <span class="icon"><img src="{{ 'icons/colour_check_circle.svg' | static_base64 }}"></span>
+    <span class="left">Plan</span>
+</li>
+{% endblock %}
+
+{% block inputs %}
+<section id="details">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_bookmark.svg' | static_base64 }}">
+        <h2><mark class="grey">Patient Details</mark></h2>
+    </div>
+    <div class="vstack">
+        <div class="hstack">
+            {{ clinic_input("patient-age") | safe }}
+            {{ clinic_input("patient-sex") | safe }}
+            {{ clinic_input("patient-height") | safe }}
+            {{ clinic_input("patient-weight") | safe }}
+            {{ clinic_input("patient-bmi") | safe }}
+            {{ clinic_input("appointment-mode") | safe }}
+        </div>
+        <div class="hstack">
+            {{ clinic_input("operation-freetext", classes="quintuple") | safe }}
+            <label>
+                <span>
+                    Risk
+                    <clinic-modal-popup>
+                        <button class="infobutton" tabindex="-1"></button>
+                        <template>
+                            <clinic-citation-snippet citation-id="esc-2022-severity"></clinic-citation-snippet>
+                        </template>
+                    </clinic-modal-popup>
+                </span>
+                {{ clinic_input("operation-risk", label_visible=False) | safe }}
+            </label>
+        </div>
+    </div>
+</section>
+
+<section id="medicalhx">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_heart.svg' | static_base64 }}">
+        <h2><mark class="grey">Medical History</mark></h2>
+    </div>
+    <div class="hstack">
+        {% include "clinic/components/medical-history.html" %}
+        <div class="vstack">
+            <div class="hstack">
+                {{ clinic_input("patient-mets") | safe }}
+                {{ clinic_input("patient-flat") | safe }}
+            </div>
+            {{ clinic_input("patient-mets-details") | safe }}
+            {{ clinic_input("rockwood-cfs") | safe }}
+            <hr>
+            <label>
+                <span>Smoking</span>
+                <div class="hstack">
+                    {{ clinic_input("smoking-status", label_visible=False) | safe }}
+                    {{ clinic_input("smoking-details", label_visible=False) | safe }}
+                </div>
+            </label>
+            <div class="hstack">
+                {{ clinic_input("alcohol-freetext") | safe }}
+                {{ clinic_input("drugs-freetext") | safe }}
+            </div>
+            <div class="hstack">
+                {{ clinic_input("occupation-freetext") | safe }}
+                {{ clinic_input("functioning-freetext") | safe }}
+            </div>
+            {{ clinic_input("other-shx", classes="bigbox short autotall") | safe }}
+        </div>
+        
+    </div>
+</section>
+
+<section id="rx">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_pill.svg' | static_base64 }}">
+        <h2><mark class="grey">Medications</mark></h2>
+    </div>
+    <div class="hstack">
+        {{ clinic_input("medications-freetext", classes="bigbox autotall") | safe }}
+        <div class="vstack">
+            {{ clinic_input("supplements-freetext", classes="bigbox short") | safe }}
+            {{ clinic_input("allergies-freetext", classes="bigbox short") | safe }}
+        </div>
+    </div>
+</section>
+
+<section id="gashx">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_gas_mask.svg' | static_base64 }}">
+        <h2><mark class="grey">Anaesthesia</mark></h2>
+    </div>
+    <div class="hstack">
+        <div class="vstack">
+            {{ clinic_input("previous-anaesthesia-freetext", classes="bigbox autotall") | safe }}
+            <div class="vstack">
+                {{ clinic_input("previous-bvm") | safe }}
+                {{ clinic_input("previous-lma") | safe }}
+                {{ clinic_input("previous-ett") | safe }}
+                {{ clinic_input("previous-anaesthesia-complications") | safe }}
+            </div>
+            <label>
+                Family Issues with Anaesthesia
+                <div class="hstack">
+                    {{ clinic_input("previous-anaesthesia-fhx", label_visible=False) | safe }}
+                    {{ clinic_input("previous-anaesthesia-fhx-details", label_visible=False) | safe }}
+                </div>
+            </label>
+        </div>
+        <div class="vstack">
+            <div class="vstack">
+                {{ clinic_input("airway-dentition") | safe }}
+                <div class="hstack">
+                    {{ clinic_input("airway-mallampati") | safe }}
+                    {{ clinic_input("airway-mouth-opening") | safe }}
+                </div>
+                <div class="hstack">
+                    {{ clinic_input("airway-tmd") | safe }}
+                    {{ clinic_input("airway-cricothyroid") | safe }}
+                </div>
+                <div class="hstack">
+                    {{ clinic_input("airway-jaw-protrusion") | safe }}
+                    {{ clinic_input("airway-neckrom") | safe }}
+                </div>
+                <div class="hstack">
+                    {{ clinic_input("airway-beard") | safe }}
+                    {{ clinic_input("vein-quality") | safe }}
+                </div>
+            </div>
+            <hr>
+            <div class="vstack">
+                
+                <!-- <h4>General Examination</h4> -->
+                <div class="hstack">
+                    {{ clinic_input("examination-heart") | safe }}
+                    {{ clinic_input("examination-lungs") | safe }}
+                </div>
+                {{ clinic_input("examination-freetext", classes="bigbox short") | safe }}
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<section id="ix">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_droplet.svg' | static_base64 }}">
+        <h2><mark class="grey">Investigations</mark></h2>
+        <!-- <button tabindex="2" class="section-copy">Copy Section</button> -->
+    </div>
+    <div class="hstack">
+        <div class="vstack">
+            {{ clinic_input("investigations-source") | safe }}
+            <div class="hstack">
+                {{ clinic_input("investigations-fbc") | safe }}
+                {{ clinic_input("investigations-uec") | safe }}
+            </div>
+            <div class="hstack">
+                {{ clinic_input("investigations-lft") | safe }}
+                {{ clinic_input("investigations-hba1c") | safe }}
+            </div>
+            <div class="hstack">
+                {{ clinic_input("investigations-haematinics") | safe }}
+                {{ clinic_input("investigations-coags") | safe }}
+            </div>
+            {{ clinic_input("investigations-ecg") | safe }}
+        </div>
+        {{ clinic_input("investigations-other", classes="bigbox autotall") | safe }}
+        
+    </div>
+</section>
+
+<section id="consent">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_pen_tool.svg' | static_base64 }}">
+        <h2><mark class="grey">Consent</mark></h2>
+        <!-- <button tabindex="2" class="section-copy">Copy Section</button> -->
+    </div>
+    <div class="hstack">
+        <div class="vstack">
+            <clinic-input clinic-parameter="consent-source"></clinic-input>
+            <div class="label-ish">
+                <span>Pro Forma</span>
+                <div>
+                    {{ clinic_input("consent-ga") | safe }}
+                    {{ clinic_input("consent-sedation") | safe }}
+                    {{ clinic_input("consent-regional") | safe }}
+                    {{ clinic_input("consent-neuraxial") | safe }}
+                    {{ clinic_input("consent-artline") | safe }}
+                    {{ clinic_input("consent-cvc") | safe }}
+                    {{ clinic_input("consent-blood") | safe }}
+                </div>
+            </div>
+        </div>
+        {{ clinic_input("consent-notes", classes="bigbox autotall") | safe }}
+    </div>
+</section>
+
+<section id="risk">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_life_buoy.svg' | static_base64 }}">
+        <h2><mark class="grey">Risk Profile</mark></h2>
+        <!-- <button tabindex="2" class="section-copy">Copy Section</button> -->
+    </div>
+    <div class="vstack">
+        <div class="hstack">
+            <div class="vstack">
+                <div class="label-ish" clinic-calculator clinic-calculator-interpreter="stopbang" clinic-calculator-parameter="stopbang-score">
+                    <span>STOP-BANG ({{ clinic_input("stopbang-score", label_visible=False) | safe }})</span> 
+                    <div clinic-search="STOP-BANG Calculator">
+                        {{ clinic_input("stopbang-snorer") | safe }}
+                        {{ clinic_input("stopbang-tiredness") | safe }}
+                        {{ clinic_input("stopbang-apnoea") | safe }}
+                        {{ clinic_input("stopbang-hypertensive") | safe }}
+                        {{ clinic_input("stopbang-bmi-35") | safe }}
+                        {{ clinic_input("stopbang-age") | safe }}
+                        {{ clinic_input("stopbang-neck") | safe }}
+                        {{ clinic_input("stopbang-male") | safe }}
+                        <span>
+                            <span clinic-calculator-interpretation clinic-parameter="stopbang-interpretation"></span>
+                            <clinic-modal-popup>
+                                <button class="infobutton" tabindex="-1"></button>
+                                <template>
+                                    <clinic-citation-snippet citation-id="stopbang-interpretation"></clinic-citation-snippet>
+                                </template>
+                            </clinic-modal-popup>
+                        </span>
+                    </div>
+                </div>
+                <div class="label-ish" clinic-calculator clinic-calculator-interpreter="rcri" clinic-calculator-parameter="rcri-score">
+                    <span>RCRI ({{ clinic_input("rcri-score", label_visible=False) | safe }})</span>
+                    <div clinic-search="RCRI Calculator">
+                        {{ clinic_input("rcri-risky") | safe }}
+                        {{ clinic_input("rcri-ihd") | safe }}
+                        {{ clinic_input("rcri-ccf") | safe }}
+                        {{ clinic_input("rcri-cva") | safe }}
+                        {{ clinic_input("rcri-insulin") | safe }}
+                        {{ clinic_input("rcri-creatinine") | safe }}
+                        <span>
+                            <span clinic-calculator-interpretation clinic-parameter="rcri-interpretation"></span>
+                            <clinic-modal-popup>
+                                <button class="infobutton" tabindex="-1"></button>
+                                <template>
+                                    <clinic-citation-snippet citation-id="rcri-interpretation"></clinic-citation-snippet>
+                                </template>
+                            </clinic-modal-popup>
+                        </span>
+                    </div>
+                    <aside><small>* Peritoneal, thoracic, or supra-inguinal vascular surgery</small></aside>
+                </div>
+                <div class="label-ish" clinic-calculator clinic-calculator-interpreter="apfel" clinic-calculator-parameter="apfel-score">
+                    <span>Apfel ({{ clinic_input("apfel-score", label_visible=False) | safe }})</span>
+                    <div clinic-search="Apfel Calculator">
+                        {{ clinic_input("apfel-sex") | safe }}
+                        {{ clinic_input("apfel-smoking") | safe }}
+                        {{ clinic_input("apfel-ponv") | safe }}
+                        {{ clinic_input("apfel-opioids") | safe }}
+                        <span>
+                            <span clinic-calculator-interpretation clinic-parameter="apfel-interpretation"></span>
+                            <clinic-modal-popup>
+                                <button class="infobutton" tabindex="-1"></button>
+                                <template>
+                                    <clinic-citation-snippet citation-id="apfel-interpretation"></clinic-citation-snippet>
+                                </template>
+                            </clinic-modal-popup>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% include "clinic/components/sort-score.html" %}
+        </div>
+    </div>
+    
+</section>
+
+<section id="plan">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_check_circle.svg' | static_base64 }}">
+        <h2><mark class="grey">Plan</mark></h2>
+        <!-- <button tabindex="2" class="section-copy">Copy Section</button> -->
+    </div>
+    <div class="vstack">
+        <div class="hstack">
+            <div class="vstack">
+                {{ clinic_input("issues", classes="bigbox short autotall") | safe }}
+                {{ clinic_input("plan", classes="bigbox short autotall") | safe }}
+            </div>
+            {% include "clinic/components/beagle-suggestions.html" %}
+        </div>
+        <div class="hstack">
+            {{ clinic_input("plan-medications", classes="bigbox short") | safe }}
+        </div>
+    </div>
+</section>
+
+<section id="disclaimer">
+    <style>
+        @scope {
+            p {
+                text-align: center;
+            }
+        }
+    </style>
+    <p>Every effort has been made to ensure that Periscope won't steer you wrong, but you are still the responsible doctor.</p>
+    <p><strong>This software is provided free under the terms of the <a target="_blank" href="https://github.com/samnunn/periscope/blob/main/LICENSE.txt">AGPLv3 License</a>.</strong></p>
+</section>
+
+{% endblock %}

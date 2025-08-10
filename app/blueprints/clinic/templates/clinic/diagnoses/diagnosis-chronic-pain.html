@@ -1,0 +1,47 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Chronic pain{% endblock %}
+{% block search_keywords %}chronic pain CRPS{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Opioid Tolerance
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Opioid tolerance">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        CRPS Features
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="CRPS features">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+<div class="hstack">
+    <label>
+        Pain Specialist
+        <input diagnosis-parameter="Treating specialist" type="text"/>
+    </label>
+</div>
+{% endblock %}

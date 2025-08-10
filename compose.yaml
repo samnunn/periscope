@@ -1,0 +1,15 @@
+services:
+  clinic:
+    container_name: periscope-clinic
+    restart: unless-stopped
+    build:
+      context: app
+      dockerfile: Dockerfile
+    ports:
+      - "8070:8070"
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    env_file:
+      - env/production

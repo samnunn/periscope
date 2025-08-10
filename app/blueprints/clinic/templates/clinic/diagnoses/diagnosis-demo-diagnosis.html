@@ -1,0 +1,38 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Demo Diagnosis{% endblock %}
+{% block addedcallback %}console.log(){% endblock %}
+{% block deletedcallback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        IDDM
+        <div class="selectbox">
+            <select diagnosis-parameter="Insulin dependent">
+                <option value="" selected></option>
+                <option value="YES">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Hypo Aware
+        <div class="selectbox">
+            <select diagnosis-parameter="Hypoglycaemia awareness">
+                <option value="" selected></option>
+                <option value="intact">Yes</option>
+                <option value="NO">No</option>
+            </select>
+        </div>
+    </label>
+</div>
+<label>
+    Microvascular Complications
+    <input type="text" diagnosis-parameter="Microvascular complications">
+</label>
+<label>
+    Macrovascular Complications
+    <input type="text" diagnosis-parameter="Macrovascular complications">
+</label>
+{% endblock %}

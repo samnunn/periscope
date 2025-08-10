@@ -1,0 +1,33 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Pacemaker in situ{% endblock %}
+{% block search_keywords %}permanent pacemaker{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Indication
+        <input diagnosis-parameter="Indication" type="text"/>
+    </label>
+    <label>
+        Last Checked
+        <input diagnosis-parameter="Last checked" type="text"/>
+    </label>
+</div>
+<div class="hstack">
+    <label>
+        Mode
+        <input diagnosis-parameter="Mode" type="text"/>
+    </label>
+    <label>
+        Manufacturer
+        <input diagnosis-parameter="Manufacturer" type="text"/>
+    </label>
+</div>
+<label>
+    Pacing Dependence
+    <input diagnosis-parameter="Pacing dependence" type="text"/>
+</label>
+{% endblock %}

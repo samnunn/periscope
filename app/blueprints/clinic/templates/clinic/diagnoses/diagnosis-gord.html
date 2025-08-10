@@ -1,0 +1,41 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}GORD{% endblock %}
+{% block search_keywords %}gastro-oesophageal reflux disease{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Medicated
+        <div class="selectbox">
+            <select diagnosis-parameter="Medicated">
+                <option selected="" value="">
+                </option>
+                <option value="yes">
+                    Yes
+                </option>
+                <option value="NO">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Ongoing Symptoms
+        <div class="selectbox">
+            <select diagnosis-parameter="Ongoing symptoms">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

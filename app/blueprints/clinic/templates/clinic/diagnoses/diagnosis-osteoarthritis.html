@@ -1,0 +1,30 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Osteoarthritis{% endblock %}
+{% block search_keywords %}OA osteoarthritis{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<label>
+    Affected Joints
+    <input diagnosis-parameter="Affected joints" type="text"/>
+</label>
+<div class="hstack">
+    <label>
+        Opioid Dependent
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Opioid dependent">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Peripheral vascular disease{% endblock %}
+{% block search_keywords %}carotid stenosis peripheral vascular disease claudication{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Stable Disease
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Stable disease">
+                <option selected="" value="">
+                </option>
+                <option value="yes">
+                    Yes
+                </option>
+                <option value="NO">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Fontaine Grade
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Stable disease">
+                <option selected="" value="">
+                </option>
+                <option value="I">
+                    I – Asymptomatic
+                </option>
+                <option value="IIa">
+                    IIa – Mild claudication
+                </option>
+                <option value="IIb">
+                    IIb – Moderate-severe claudication
+                </option>
+                <option value="III">
+                    III – Rest pain
+                </option>
+                <option value="IV">
+                    IV – Ulceration or gangrene
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

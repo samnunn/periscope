@@ -1,0 +1,27 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}HIV{% endblock %}
+{% block search_keywords %}human immunodeficiency virus{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        CD4 Count
+        <input diagnosis-parameter="CD4 count" type="text"/>
+    </label>
+    <label>
+        Viral Load
+        <input diagnosis-parameter="Viral load" type="text"/>
+    </label>
+</div>
+<label>
+    Infectious Complications
+    <input diagnosis-parameter="Viral load" type="text"/>
+</label>
+<label>
+    Antiviral Regimen
+    <input diagnosis-parameter="Antiviral regimen" type="text"/>
+</label>
+{% endblock %}

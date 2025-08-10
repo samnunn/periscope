@@ -1,0 +1,120 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Asthma{% endblock %}
+{% block search_keywords %}asthma{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        NSAID Reactive
+        <div class="selectbox">
+            <select diagnosis-parameter="NSAID reactive">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Admissions
+        <div class="selectbox">
+            <select diagnosis-parameter="Previous admissions">
+                <option selected="" value="">
+                </option>
+                <option value="has been admitted to ICU for asthma">
+                    ICU admissions
+                </option>
+                <option value="ward-based admissions only">
+                    Ward-based admissions only
+                </option>
+                <option value="none, but flares have been managed in community">
+                    Community-managed flares only
+                </option>
+                <option value="none">
+                    None
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+<hr/>
+<span>
+    In the past
+    <b>
+        four weeks
+    </b>
+    , has the patient had:
+</span>
+<div class="hstack">
+    <label>
+        Day Symptoms
+        <div class="selectbox">
+            <select diagnosis-parameter="Daytime symptoms">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Night Symptoms
+        <div class="selectbox">
+            <select diagnosis-parameter="Night symptoms">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+<div class="hstack">
+    <label>
+        Used SABA ≥ 2x Weekly
+        <div class="selectbox">
+            <select diagnosis-parameter="Heavy reliever use">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Activity Limitation
+        <div class="selectbox">
+            <select diagnosis-parameter="Activity limitation">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+<hr/>
+{% endblock %}

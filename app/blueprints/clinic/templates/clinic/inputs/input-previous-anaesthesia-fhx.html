@@ -1,0 +1,16 @@
+{% extends 'clinic/inputs/_base_input.html' %}
+
+{% block label %}Family Issues with Anaesthesia{% endblock %}
+{% block prefix %}Complications{% endblock %}
+{% block suffix %}{% endblock %}
+{% block search %}Family History (FHx) of Issues with Anaesthesia{% endblock %}
+
+{% block input %}
+<div class="selectbox">
+<select autocomplete="off">
+	<option value="" selected></option>
+	<option value="Has a FHx of issues with anaesthesia">Yes</option>
+	<option value="No known FHx of issues with anaesthesia">No</option>
+</select>
+</div>
+{% endblock %}

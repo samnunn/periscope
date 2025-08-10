@@ -1,8 +1,6 @@
-
 .DS_Store
 _private
-www/tenant_data/*
-www/*.env
-Pipfile.lock
-tests/secret*
-*.sqlite3
+env/*
+.pytest_cache
+__pycache__
+tests/demo_tenant.txt

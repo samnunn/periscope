@@ -1,0 +1,17 @@
+{% extends 'clinic/inputs/_base_input.html' %}
+
+{% block label %}Urgency{% endblock %}
+{% block prefix %}Urgency{% endblock %}
+{% block suffix %}{% endblock %}
+{% block search %}Urgency (SORT)ge{% endblock %}
+
+{% block input %}
+<div class="selectbox">
+<select autocomplete="off">
+	<option value="Elective" selected>Elective</option>
+	<option value="Expedited">Expedited</option>
+	<option value="Urgent">Urgent</option>
+	<option value="Immediate">Immediate</option>
+</select>
+</div>
+{% endblock %}

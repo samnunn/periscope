@@ -1,0 +1,101 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}COPD{% endblock %}
+{% block search_keywords %}copd chronic obstructive pulmonary airways disease{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        GOLD Class
+        <div class="selectbox">
+            <select diagnosis-parameter="GOLD classification">
+                <option selected="" value="">
+                </option>
+                <option value="mild (FEV1 ≥ 80% predicted)">
+                    Mild – FEV1 ≥ 80% predicted
+                </option>
+                <option value="moderate (FEV1 50-79% predicted)">
+                    Moderate – FEV1 50-79% predicted
+                </option>
+                <option value="severe (FEV1 < 49% predicted)">
+                    Severe – FEV1 < 49% predicted
+                </option>
+                <option value="very severe (FEV1 < 30% predicted)">
+                    Very severe – FEV1 < 30% predicted
+                </option>
+            </select>
+        </div>
+    </label>
+    {{ clinic_input("smoking-status") | safe }}
+</div>
+<div class="hstack">
+    <label>
+        pHTN or RV Failure
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="PHTN/RV failure">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        <span>
+            Home
+            <span>
+                O
+                <sub>
+                    2
+                </sub>
+            </span>
+            <div class="selectbox">
+                <select autocomplete="off" diagnosis-parameter="Home O2">
+                    <option selected="" value="">
+                    </option>
+                    <option value="YES">
+                        Yes
+                    </option>
+                    <option value="no">
+                        No
+                    </option>
+                </select>
+            </div>
+        </span>
+    </label>
+</div>
+<label>
+    mMRC Dyspnoea Scale
+    <div class="selectbox">
+        <select autocomplete="off" diagnosis-parameter="mMRC dyspnoea">
+            <option selected="" value="">
+            </option>
+            <option value="0">
+                0 – Dyspnea only with strenuous exercise
+            </option>
+            <option value="1">
+                1 – Dyspnea when hurrying or walking up a slight hill
+            </option>
+            <option value="2">
+                2 – Walks slower than people of the same age because of dyspnea or has to stop for breath when walking at own pace
+            </option>
+            <option value="3">
+                3 – Stops for breath after walking 100 yards (91 m) or after a few minutes
+            </option>
+            <option value="4">
+                4 – Too dyspneic to leave house or breathless when dressing
+            </option>
+        </select>
+    </div>
+</label>
+<label>
+    Recent Exacerbations
+    <input diagnosis-parameter="Recent exacerbations" type="text"/>
+</label>
+{% endblock %}

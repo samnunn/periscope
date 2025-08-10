@@ -1,0 +1,30 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Hypertension{% endblock %}
+{% block search_keywords %}essential hypertension htn{% endblock %}
+{% block added_callback %}inputData['stopbang-hypertensive'] = true{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Baseline BP
+        <input diagnosis-parameter="Baseline BP" type="text"/>
+    </label>
+    <label>
+        End Organ Damage
+        <div class="selectbox">
+            <select diagnosis-parameter="End-organ damage">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'clinic/inputs/_base_input.html' %}
+
+{% block label %}Height (cm){% endblock %}
+{% block prefix %}Height{% endblock %}
+{% block suffix %}{% endblock %}
+{% block search %}Height{% endblock %}
+
+{% block input %}
+<input type="number" step="0.1" min="0" max="300">
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Ehlers-Danlos syndrome{% endblock %}
+{% block search_keywords %}Ehlers-Danlos syndrome{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Beighton score
+        <input diagnosis-parameter="Beighton score" max="9" min="0" step="1" type="number"/>
+    </label>
+    <label>
+        Manifestations
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Manifestations">
+                <option selected="" value="">
+                </option>
+                <option value="hypermobility only">
+                    Hypermobility only
+                </option>
+                <option value="gastroparesis only">
+                    Gastroparesis only
+                </option>
+                <option value="BOTH gastroparesis and hypermobility">
+                    Both
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

@@ -14,4 +14,4 @@ def browser_context_args(browser_context_args):
 
 
 def pytest_configure(config):
-    config.option.base_url = "http://127.0.01:8070"
+    config.option.base_url = "http://127.0.0.1:8070"

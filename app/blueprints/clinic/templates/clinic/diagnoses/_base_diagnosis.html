@@ -1,0 +1,32 @@
+<template id="diagnosis-{{ id }}">
+<clinic-diagnosis
+    clinic-parameter="diagnosis-{{ id }}"
+    data-diagnosis-id="diagnosis-{{ id }}"
+    data-diagnosis-default-name="{% block default_name %}{% endblock %}"
+    data-diagnosis-search-keywords="{% block search_keywords %}{% endblock %}"
+    data-diagnosis-added-callback="{% block added_callback %}{% endblock %}"
+    data-diagnosis-added-callback="{% block deleted_callback %}{% endblock %}"
+>
+    
+    <div class="clinic-diagnosis-top">
+        <span class="draghandle"></span>
+        <label>
+            <input type="text" class="diagnosis-title" diagnosis-parameter="name" value="">
+        </label>
+        <button class="clinic-diagnosis-edit" tabindex="3">Edit</button>
+        <button class="clinic-diagnosis-close" tabindex="3" onclick="this.closest('clinic-diagnosis').unfocus()">Close</button>
+    </div>
+
+    <div class="clinic-diagnosis-body vstack">
+        {% block inputs %}{% endblock %}
+        <label>
+            Details
+            <textarea type="text" class="bigbox short" diagnosis-parameter="other-details"></textarea>
+        </label>
+    </div>
+    
+    <div class="clinic-diagnosis-bottom">
+        <button onclick="this.closest('clinic-diagnosis')?.delete()">Delete</button>
+    </div>
+</clinic-diagnosis>
+</template>

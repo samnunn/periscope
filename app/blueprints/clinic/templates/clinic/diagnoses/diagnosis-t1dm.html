@@ -1,0 +1,39 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}T1DM{% endblock %}
+{% block search_keywords %}T1DM type one 1 I insulin dependent diabetes mellitus IDDM{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Year Diagnosed
+        <input diagnosis-parameter="Diagnosed" type="text"/>
+    </label>
+    <label>
+        Hypo Aware
+        <div class="selectbox">
+            <select diagnosis-parameter="Hypoglycaemia awareness">
+                <option selected="" value="">
+                </option>
+                <option value="intact">
+                    Yes
+                </option>
+                <option value="NO">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    {{ clinic_input("investigations-hba1c") | safe }}
+</div>
+<label>
+    Microvascular Complications
+    <input diagnosis-parameter="Microvascular complications" type="text"/>
+</label>
+<label>
+    Microvascular Complications
+    <input diagnosis-parameter="Macrovascular complications" type="text"/>
+</label>
+{% endblock %}

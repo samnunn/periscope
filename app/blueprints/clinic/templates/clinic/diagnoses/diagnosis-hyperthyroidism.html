@@ -1,0 +1,30 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Hyperthyroidism{% endblock %}
+{% block search_keywords %}hyperthyroidism high T4 T3{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Symptomatic
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Symptomatic">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Aetiology
+        <input diagnosis-parameter="Aetiology" type="text"/>
+    </label>
+</div>
+{% endblock %}

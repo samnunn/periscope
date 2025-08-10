@@ -1,0 +1,30 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}TAVI{% endblock %}
+{% block search_keywords %}transcatheter aortic valve implant replacment{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Year Implanted
+        <input diagnosis-parameter="Year implanted" type="text"/>
+    </label>
+    <label>
+        Known Leak
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Known leak">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

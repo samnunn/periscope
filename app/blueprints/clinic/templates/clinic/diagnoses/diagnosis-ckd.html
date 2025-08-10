@@ -1,0 +1,66 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}CKD{% endblock %}
+{% block search_keywords %}ckd chronic kidney disease{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        KDIGO Stage
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="KDIGO stage">
+                <option selected="" value="">
+                </option>
+                <option value="1">
+                    1 (GFR ≥ 90)
+                </option>
+                <option value="2">
+                    2 (GFR 60–89)
+                </option>
+                <option value="3a">
+                    3a (GFR 45–59)
+                </option>
+                <option value="3b">
+                    3b (GFR 30–44)
+                </option>
+                <option value="4">
+                    4 (GFR 15–29)
+                </option>
+                <option value="5">
+                    5 (GFR ≤ 14 or on dialysis)
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Aetiology
+        <input diagnosis-parameter="Aetiology" type="text"/>
+    </label>
+</div>
+<div class="hstack">
+    <label>
+        Dialysis Dependent
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Dialysis-dependent">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        <input diagnosis-parameter="Dialysis details" placeholder="Details" type="text"/>
+    </label>
+</div>
+<label>
+    Renal Physician
+    <input diagnosis-parameter="Renal physician" type="text"/>
+</label>
+{% endblock %}

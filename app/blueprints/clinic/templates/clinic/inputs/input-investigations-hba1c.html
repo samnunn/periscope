@@ -1,0 +1,10 @@
+{% extends 'clinic/inputs/_base_input.html' %}
+
+{% block label %}HbA1c{% endblock %}
+{% block prefix %}HbA1c{% endblock %}
+{% block suffix %}{% endblock %}
+{% block search %}Glycosylated Haemoglobin (HbA1c){% endblock %}
+
+{% block input %}
+<input type="number" min="4" max="30" step="0.1">
+{% endblock %}

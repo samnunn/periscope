@@ -1,0 +1,15 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Pregnant{% endblock %}
+{% block search_keywords %}pregnancy pregnant{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Due Date
+        <input diagnosis-parameter="Current gestational age" type="date"/>
+    </label>
+</div>
+{% endblock %}

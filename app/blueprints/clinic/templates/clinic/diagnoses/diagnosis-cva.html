@@ -1,0 +1,47 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Cerebrovascular accident{% endblock %}
+{% block search_keywords %}cva stroke transient ischaemic attack cerebrovascular accident{% endblock %}
+{% block added_callback %}inputData['rcri-cva'] = true{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Details of Infarct(s)
+        <input diagnosis-parameter="Infarct details" type="text"/>
+    </label>
+</div>
+<div class="hstack">
+    <label>
+        Motor Weakness
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Residual motor weakness">
+                <option selected="" value="">
+                </option>
+                <option value="yes">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    <label>
+        Pharyngeal Symptoms
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Residual pharyngeal symptoms">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

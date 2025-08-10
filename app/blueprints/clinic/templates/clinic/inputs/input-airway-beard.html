@@ -1,0 +1,17 @@
+{% extends 'clinic/inputs/_base_input.html' %}
+
+{% block label %}Beard{% endblock %}
+{% block prefix %}Beard{% endblock %}
+{% block suffix %}{% endblock %}
+{% block search %}Beard{% endblock %}
+
+{% block input %}
+<div class="selectbox">
+<select autocomplete="off">
+	<option value="" selected></option>
+	<option value="YES, will trim">Will trim</option>
+	<option value="YES, won't trim">Won't trim</option>
+	<option value="no">No</option>
+</select>
+</div>
+{% endblock %}

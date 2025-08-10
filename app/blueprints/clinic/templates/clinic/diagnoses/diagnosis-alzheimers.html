@@ -1,0 +1,38 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Cognitive impairment{% endblock %}
+{% block search_keywords %}alzheimer's cognitive impairment dementia{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<label>
+    Type
+    <input diagnosis-parameter="Type" type="text"/>
+</label>
+<label>
+    Aetiology
+    <input diagnosis-parameter="Aetiology" type="text"/>
+</label>
+<div class="hstack">
+    <label>
+        Baseline MoCA/MMSE
+        <input diagnosis-parameter="Baseline MoCA/MMSE" max="30" min="0" step="1" type="number"/>
+    </label>
+    <label>
+        Can Lay Still
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Can lay still">
+                <option selected="" value="">
+                </option>
+                <option value="yes">
+                    Yes
+                </option>
+                <option value="NO">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

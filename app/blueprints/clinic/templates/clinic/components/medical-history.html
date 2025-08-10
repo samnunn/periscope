@@ -1,0 +1,28 @@
+<div id="diagnosis-box" class="vstack">
+    <clinic-navigable-list>
+        <div class="vstack" id="diagnosis-search">
+            <label>
+                PMHx
+                <div class="input-with-hints">
+                    <input type="text" placeholder="Search for a condition" clinic-search="Past Medical History (PMHx)">
+                    <div class="hints">
+                        <kbd class="key"><img alt="Up Arrow" src="{{ 'icons/arrow_up.svg' | static_base64 }}"></kbd><kbd class="key"><img alt="Down Arrow" src="{{ 'icons/arrow_down.svg' | static_base64 }}"></kbd> to select  <kbd class="key"><img alt="Return Key" src="{{ 'icons/arrow_down_left.svg' | static_base64 }}"></kbd> to add  <kbd class="key">esc</kbd> to reset
+                    </div>
+                </div>
+            </label>
+            <div id="diagnosis-results">
+                <ul class="pill-list">
+                </ul>
+            </div>
+        </div>
+    </clinic-navigable-list>
+    <clinic-draglist id="diagnosis-draglist" list-selector="#diagnosis-list" item-selector="clinic-diagnosis">
+        <div id="diagnosis-list" class="vstack label-ish">
+        </div>
+    </clinic-draglist>
+    <div id="diagnosis-placeholder">
+        <!-- <p>Enter conditions using the search bar.</p> -->
+        <img width="200" src="{{ random_placeholder_illustration() }}" alt="">
+    </div>
+    <hr id="pmhx-divider">
+</div>

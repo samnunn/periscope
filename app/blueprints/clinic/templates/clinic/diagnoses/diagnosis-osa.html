@@ -1,0 +1,30 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}OSA{% endblock %}
+{% block search_keywords %}obstructive sleep apnoea{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        AHI
+        <input diagnosis-parameter="AHI" max="300" min="0" step="1" type="number"/>
+    </label>
+    <label>
+        CPAP User
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="CPAP">
+                <option selected="" value="">
+                </option>
+                <option value="yes">
+                    Yes
+                </option>
+                <option value="NO">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

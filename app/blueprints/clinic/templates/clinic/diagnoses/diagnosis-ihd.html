@@ -1,0 +1,31 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Ischaemic heart disease{% endblock %}
+{% block search_keywords %}ischaemic heart disease NSTEMI{% endblock %}
+{% block added_callback %}inputData['rcri-ihd'] = true{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Stable Disease
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Stable disease">
+                <option selected="" value="">
+                </option>
+                <option value="yes">
+                    Yes
+                </option>
+                <option value="NO">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+    {{ clinic_input("antiplatelet-use") | safe }}
+</div>
+<label>
+    Last Stress Test
+    <input diagnosis-parameter="Last stress test" placeholder="Date and findings" type="text"/>
+</label>
+{% endblock %}

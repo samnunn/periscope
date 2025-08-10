@@ -1,0 +1,10 @@
+{% extends 'clinic/inputs/_base_input.html' %}
+
+{% block label %}Weight (kg){% endblock %}
+{% block prefix %}Weight{% endblock %}
+{% block suffix %}{% endblock %}
+{% block search %}Weight{% endblock %}
+
+{% block input %}
+<input type="number" step="0.1" min="0" max="400">
+{% endblock %}

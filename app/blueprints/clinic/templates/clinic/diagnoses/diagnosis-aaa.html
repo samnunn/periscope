@@ -1,0 +1,30 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}AAA{% endblock %}
+{% block search_keywords %}abdominal aortic aneurysm{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Size (cm)
+        <input diagnosis-parameter="Size" max="30" min="0" step="0.1" type="number"/>
+    </label>
+    <label>
+        Stable
+        <div class="selectbox">
+            <select autocomplete="off" diagnosis-parameter="Stable">
+                <option selected="" value="">
+                </option>
+                <option value="yes">
+                    Yes
+                </option>
+                <option value="NO">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+{% endblock %}

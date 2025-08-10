@@ -1,9 +1,9 @@
 from playwright.sync_api import Page, expect
+from utils import run_preamble
 
 
 def test_consent(page):
-    page.goto("http://127.0.0.1:8070/clinic")
-    page.get_by_role("button", name="Accept").click()
+    run_preamble(page)
     page.locator("#consent").get_by_label("General Anaesthesia").check()
     page.locator("#consent").get_by_label("Sedation").check()
     page.locator("#consent").get_by_label("Regional").check()
@@ -22,8 +22,7 @@ def test_consent(page):
 
 
 def test_download(page: Page):
-    page.goto("http://127.0.0.1:8070/clinic")
-    page.get_by_role("button", name="Accept").click()
+    run_preamble(page)
     page.locator("#details").get_by_label("Age").fill("26")
     page.get_by_role("textbox", name="Operation").fill("Left ectomy")
     page.get_by_label("Non-smoker").check()

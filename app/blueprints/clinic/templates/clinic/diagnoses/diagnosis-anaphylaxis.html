@@ -1,0 +1,30 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Anaphylaxis{% endblock %}
+{% block search_keywords %}anaphylaxis{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    <label>
+        Confirmed Diagnosis
+        <div class="selectbox">
+            <select diagnosis-parameter="Confirmed diagnosis">
+                <option selected="" value="">
+                </option>
+                <option value="YES">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+    </label>
+</div>
+<label>
+    Triggers
+    <input diagnosis-parameter="Triggers" type="text"/>
+</label>
+{% endblock %}

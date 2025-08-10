@@ -4,22 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
-gunicorn = "*"
-eventlet = "*"
-pytest = "*"
-playwright = "*"
-pytest-playwright = "*"
-flask-minify = "*"
-pytest-xdist = "*"
-livereload = "*"
-flask-limiter = "*"
-django = "*"
-jinja2 = "*"
-sentry-sdk = {extras = ["django"], version = "*"}
-whitenoise = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.9"
