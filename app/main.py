@@ -23,6 +23,7 @@ app.register_blueprint(tenant, url_prefix="/tenant")
 # ROUTES
 @app.route("/")
 @app.route("/clinic")
+@app.route("/clinic/")
 def hello_world() -> str:
     # return 'You\'re late. <a href="/clinic">Go to clinic…</a>'
     return redirect(url_for("clinic.preop"))
