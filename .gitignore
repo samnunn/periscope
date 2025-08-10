@@ -4,3 +4,5 @@ env/*
 .pytest_cache
 __pycache__
 tests/demo_tenant.txt
+/app/blueprints/tenant/sites
+/app/blueprints/tenant/surveys
