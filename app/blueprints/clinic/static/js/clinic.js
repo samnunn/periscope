@@ -78,7 +78,13 @@ function downloadDocument() {
     downloadLink.click()
 }
 document.querySelector('#download')?.addEventListener('click', (e) => {
-    downloadDocument()
+    try {
+        downloadDocument()
+        document.displayToast("Note downloaded", "success")
+    } catch (e) {
+        console.error(`Failed to render and download a markdown copy of the assessment:\n${e}`)
+        document.displayToast("Download failed", "error")
+    }
 })
 
 function downloadPrettyDocument() {
