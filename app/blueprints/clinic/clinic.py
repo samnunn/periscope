@@ -55,12 +55,13 @@ def static_base64(str_in):
 
 @clinic.context_processor
 def clinic_input_processor():
-    def clinic_input(parameter, label_visible=True, classes=""):
+    def clinic_input(parameter, label_visible=True, hidden=False, classes=""):
         template_path = f"clinic/inputs/input-{parameter}.html"
         return render_template(
             template_path,
             parameter=parameter,
             label_visible=label_visible,
+            hidden=hidden,
             classes=classes,
         )
 
