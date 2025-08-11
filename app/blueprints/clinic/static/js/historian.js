@@ -170,11 +170,22 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
 
 export function insertClinicDiagnosis(data, target, focus = true) {
     let template = document.querySelector(`template#${data["id"]}`)
+    let customName
+    if (!template) {
+        template = document.querySelector("template#diagnosis-blank")
+        customName = data["name"]
+    }
     let newDiagnosisNode = template.content.cloneNode(true)
 
     // Set a unique transition ID
     // Each one needs its own unique ID so they can transition independently
     newDiagnosisNode.style = `view-transition-name: ${data["id"]};`
+    newDiagnosisNode.querySelector("clinic-diagnosis").setAttribute("data-diagnosis-id", data["id"])
+
+    // handle custom-named diagnoses
+    if (customName) {
+        newDiagnosisNode.querySelector("clinic-diagnosis").setAttribute("data-diagnosis-default-name", data["name"])
+    }
 
     // Create new diagnosis markup with data from target <li>
     target.prepend(newDiagnosisNode)
@@ -288,7 +299,6 @@ diagnosisSearchBox?.addEventListener('input', (e) => {
         console.log()
         insertSearchResult(diagnosisSearchResultsList, { ...r.obj })
     }
-
     // Post unedited query string as the last option
     if (searchString.length > 0) {
         insertSearchResult(diagnosisSearchResultsList, { name: escapeHTML(searchString), id: `diagnosis-user-defined-${Math.floor(Math.random() * 1000000000)}` })
