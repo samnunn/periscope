@@ -29,7 +29,8 @@ def auth():
 
     # nonexistent
     if not os.path.exists(tenant_path):
-        abort(403)
+        flash("Invalid Hospital Code", "warning")
+        return redirect(request.origin)
 
     with open(tenant_path, "r") as f:
         try:
