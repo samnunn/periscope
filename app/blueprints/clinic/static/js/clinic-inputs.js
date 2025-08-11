@@ -10,6 +10,11 @@ customElements.define('clinic-input', class extends HTMLElement {
         // identify input element
         this.inputElement = this.querySelector("input, select, textarea, span")
 
+        if (!this.inputElement) {
+            console.error(`<clinic-input> for "${this.dataset.clinicParameter}" does not contain and input element`)
+            debugger
+        }
+
         // input handling
         this.addEventListener('input', (e) => {
             this.dispatchEvent(new CustomEvent("clinic:user-input", { bubbles: true }))
