@@ -22,31 +22,6 @@ document.addEventListener("clinic:value-changed", (e) => {
         document.persistentDataProxy['patient-bmi'] = (w / (h / 100) ** 2).toFixed(1)
     }
 
-    // HEIGHT -> IBW/ABW
-    if (e.detail.key == "patient-height") {
-        let proposedIBW = (parseFloat(e.detail.newValue) - 100).toFixed(1)
-
-        let nominatedSex = document.persistentDataProxy["patient-sex"]
-        if (nominatedSex == "F") {
-            proposedIBW = proposedIBW * 0.9
-        }
-
-        document.persistentDataProxy["patient-weight-ideal"] = proposedIBW
-    }
-
-    if (e.detail.key == "patient-weight-ideal") {
-        let proposedABW = (parseFloat(e.detail.newValue) * 1.4).toFixed(1)
-        proposedABW = Math.max(0, proposedABW)
-
-        let actualWeight = document.persistentDataProxy["patient-weight"] || 0
-
-        let finalABW = Math.min(proposedABW, actualWeight)
-
-        if (finalABW != 0) {
-            document.persistentDataProxy["patient-weight-adjusted"] = finalABW
-        }
-    }
-
     // SEX -> STOPBANG
     if (e.detail.key == "patient-sex") {
         document.persistentDataProxy['stopbang-male'] = e.detail.newValue == 'M'
