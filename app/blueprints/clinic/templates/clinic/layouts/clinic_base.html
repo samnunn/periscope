@@ -93,11 +93,8 @@
 <!-- DIALOGS -->
 {% include 'clinic/components/quick-find.html' %}
 {% include 'clinic/components/shortcuts.html' %}
-{% include 'clinic/components/modal-tenant-connect.html' %}
-
-{% if session['tenant'] %}
-{% include 'clinic/components/modal-redcap.html' %}
-{% endif %}
+{% include 'tenant/auth.html' %}
+{% include 'tenant/surveys.html' %}
 
 <!-- SCRIPTS -->
 <script type="module">{{ 'js/sidebar.js' | static_include | safe }}</script>

@@ -64,6 +64,7 @@
         }
     }
 </style>
+
 <dialog id="redcap">
     <span aria-roledescription="button" class="dialog-close"></span>
     <h1><mark>REDCap Surveys</mark></h1>
@@ -71,6 +72,7 @@
     <p>Periscope will automatically identify when your patient fits the inclusion criteria for these surveys.</p>
     <div id="redcap-surveys"></div>
 </dialog>
+
 <script type="module">
 import { diagnosisExists } from '/app/static/js/beagle-utils.js'
 let surveys = {{ surveys() | safe }}
