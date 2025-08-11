@@ -5,6 +5,7 @@
     data-clinic-output-prefix="{% block prefix %}{% endblock %}"
     data-clinic-output-suffix="{% block suffix %}{% endblock %}"
     data-clinic-search-string="{% block search %}{% endblock %}"
+    {% if hidden %}hidden{% endif %}
 >
     {% if label_visible %}<label>{% endif %}
     {% if label_visible %}{% block label %}{% endblock %}{% endif %}
