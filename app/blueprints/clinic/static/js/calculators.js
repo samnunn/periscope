@@ -1,5 +1,3 @@
-import { setAnyInputValue } from '/app/static/js/utils.js'
-
 //     ____      _            _       _                                            
 //    / ___|__ _| | ___ _   _| | __ _| |_ ___  _ __ ___                            
 //   | |   / _` | |/ __| | | | |/ _` | __/ _ \| '__/ __|                           
@@ -43,9 +41,9 @@ function updateCalculator(c) {
     // save score
     document.persistentDataProxy[c.output_parameter] = score
 
-    // get interpretation
+    // set interpretation
     if (c.interpreter && c.interpretation) {
-        setAnyInputValue(c.interpretation, c.interpreter(score))
+        c.interpretation.innerText = c.interpreter(score)
     }
 }
 
