@@ -73,7 +73,7 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         let output = ""
 
         // get name
-        output += `1. ${data['name']}`
+        output += `- ${data['name']}`
 
         // delete surplus keys
         delete data['name']
@@ -88,16 +88,17 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
             if (`${value}`.length == 0) continue
 
             // append to output
-            output = output + `\n    - ${key}: ${value}`
+            output = output + `\n\t- ${key}: ${value}`
         }
 
         // add in <clinic-input> elements
         // TODO: eliminate the need for this hack
         for (let input of this.querySelectorAll('clinic-input')) {
             try {
-                let pre = input?.data?.pretty_name
-                let post = document.persistentDataProxy[input.dataset.clinicParameter]
-                output = output + `\n    - ${pre}: ${post}`
+                let pre = input.dataset.clinicOutputPrefix
+                let main = document.persistentDataProxy[input.dataset.clinicParameter]
+                let suffix = input.dataset.clinicOutputSuffix || ""
+                output = output + `\n\t- ${pre}: ${main}${suffix}`
             } catch (e) {
                 console.error(`Failed to render text for <clinic-input> embedded in <clinic-diagnosis>`, e)
             }
