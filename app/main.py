@@ -1,7 +1,7 @@
 import os
-import random
 
 from blueprints.clinic.clinic import clinic
+from blueprints.public.public import public
 from blueprints.tenant.tenant import tenant
 from flask import (
     Flask,
@@ -18,6 +18,7 @@ DEBUG: bool = os.environ.get("DEBUG", "0") == "1"
 # BLUEPRINTS
 app.register_blueprint(clinic, url_prefix="/app")
 app.register_blueprint(tenant, url_prefix="/tenant")
+app.register_blueprint(public, url_prefix="/public")
 
 
 # ROUTES
