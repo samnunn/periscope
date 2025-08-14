@@ -1,4 +1,3 @@
-import { getAnyInputValue, setAnyInputValue } from '/app/static/js/utils.js'
 import { sendToBeagle } from '/app/static/js/beagle-utils.js'
 import { insertClinicDiagnosis, diagnosisList } from '/app/static/js/historian.js'
 
@@ -40,7 +39,7 @@ document.persistentDataProxy = new Proxy(persistentDataStore, {
             if (ip.matches(':focus, :focus-within')) continue
 
             // set value
-            setAnyInputValue(ip, value)
+            ip.setValue(value)
         }
 
         if (oldValue != value) {
@@ -90,10 +89,10 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 // listen for input events on any element with clinic-parameter
 document.body.addEventListener('clinic:user-input', (e) => {
-    document.persistentDataProxy[e.target.dataset.clinicParameter] = getAnyInputValue(e.target)
-
     if (e.target.tagName == 'CLINIC-DIAGNOSIS') {
         document.persistentDataProxy[e.target.dataset.diagnosisId] = e.target.serialise()
+    } else {
+        document.persistentDataProxy[e.target.dataset.clinicParameter] = e.target.getValue()
     }
 })
 

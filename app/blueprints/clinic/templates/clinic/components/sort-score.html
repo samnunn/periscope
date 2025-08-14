@@ -31,7 +31,7 @@
     </div>
     {{ clinic_input("sort-tgv") | safe }}
     
-    <span clinic-calculator-interpretation>
+    <span>
         {{ clinic_input("sort-score", label_visible=False) | safe }} % 30-day mortality
         <clinic-modal-popup>
             <button class="infobutton" tabindex="-1"></button>

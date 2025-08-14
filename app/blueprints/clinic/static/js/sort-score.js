@@ -1,4 +1,3 @@
-import { getAnyInputValue, setAnyInputValue } from '/app/static/js/utils.js'
 //    ____   ___  ____ _____   ____                                                
 //   / ___| / _ \|  _ \_   _| / ___|  ___ ___  _ __ ___                            
 //   \___ \| | | | |_) || |   \___ \ / __/ _ \| '__/ _ \                           
@@ -121,12 +120,12 @@ sortContainer?.addEventListener('input', (e) => {
     for (let k in requiredData) {
         let targetElement = sortContainer.querySelector(`[data-clinic-parameter="${k}"]`)
         // TODO: change to persistentDataProxy method once sort-operation is in the proxy
-        let value = getAnyInputValue(targetElement)
+        let value = targetElement.getValue()
 
         if (value != "") {
             requiredData[k] = value
         } else {
-            setAnyInputValue(sortScoreOutput, "")
+            sortScoreOutput.setValue("")
             return
         }
     }

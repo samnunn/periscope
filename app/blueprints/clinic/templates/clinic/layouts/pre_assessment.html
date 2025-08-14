@@ -70,6 +70,13 @@
                 {{ clinic_input("operation-risk", label_visible=False) | safe }}
             </label>
         </div>
+        {{ anon_input(
+            parameter="""
+                <input type='number'>
+                <input type='text'>
+            """,
+            foo = "bar"
+        ) }}
     </div>
 </section>
 
@@ -257,7 +264,7 @@
                         {{ clinic_input("stopbang-neck") | safe }}
                         {{ clinic_input("stopbang-male") | safe }}
                         <span>
-                            <span clinic-calculator-interpretation clinic-parameter="stopbang-interpretation"></span>
+                            <span clinic-calculator-interpretation></span>
                             <clinic-modal-popup>
                                 <button class="infobutton" tabindex="-1"></button>
                                 <template>

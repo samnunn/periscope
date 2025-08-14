@@ -1,5 +1,3 @@
-import { setAnyInputValue, getAnyInputValue } from '/app/static/js/utils.js'
-
 // AUTO DOT POINTS
 let validDotPoints = ['- ', '--> ']
 document.body.addEventListener('keydown', (e) => {
@@ -19,9 +17,9 @@ document.body.addEventListener('keydown', (e) => {
 
         if (dotPoint) {
             let newLineText = `\n${dotPoint}`
-            let oldValue = getAnyInputValue(textarea)
+            let oldValue = textarea.value
             let newValue = oldValue.substring(0, cursorPosition) + newLineText + oldValue.substring(cursorPosition)
-            setAnyInputValue(textarea, newValue)
+            textarea.value = newValue
             // TODO: should this be applied to the containing <clinic-input>, or is that unncessarily restrictive?
             textarea.dispatchEvent(new CustomEvent('input', { bubbles: true }))
 
