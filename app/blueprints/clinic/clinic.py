@@ -3,6 +3,7 @@ import os
 import random
 
 from flask import Blueprint, redirect, render_template, url_for
+from markupsafe import Markup
 
 clinic: Blueprint = Blueprint(
     "clinic", __name__, template_folder="templates", static_folder="static"
@@ -66,6 +67,14 @@ def clinic_input_processor():
         )
 
     return dict(clinic_input=clinic_input)
+
+
+@clinic.context_processor
+def anon_input_processor() -> dict:
+    def anon_input(parameter: str, **kwargs) -> Markup:
+        return Markup("hmm: " + parameter)
+
+    return dict(anon_input=anon_input)
 
 
 @clinic.context_processor
