@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="manifest" href="{{ url_for('clinic.static', filename='public/manifest.json') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icons/gasper_favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('clinic.static', filename='icons/gasper_favicon.png') }}">
     <!-- OpenGraph Nonsense -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Periscope">
@@ -14,9 +14,7 @@
     <meta property="og:description" content="A little web app to help perioperative doctors get through their clinic days.">
     <link rel="canonical" href="https://periscope.net.au/">
     <meta property="og:url" content="https://periscope.net.au/">
-    <meta property="og:image" content="{{ url_for('static', filename='icons/gasper_favicon.png') }}">
-    <style>
-    </style>
+    <meta property="og:image" content="{{ url_for('clinic.static', filename='public/clinic-opengraph-banner.jpg') }}">
     {% block head %}
     {% endblock %}
 </head>
