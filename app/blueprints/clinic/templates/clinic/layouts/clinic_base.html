@@ -41,10 +41,10 @@
             </li> -->
 
             <hr>
-            <!-- <li id="copy-all" title="Print Note" role="button">
-                <span class="icon"><img src="{{ 'icons/colour_copy.svg' | static_base64 }}"></span>
-                <span class="left">Print Note</span>
-            </li> -->
+            <li id="" title="Print Note" role="button" clinic-print-trigger>
+                <span class="icon"><img src="{{ 'icons/colour_zap.svg' | static_base64 }}"></span>
+                <span class="left">Print</span>
+            </li>
             <li id="copy-all" title="Copy Note" role="button">
                 <span class="icon"><img src="{{ 'icons/colour_copy.svg' | static_base64 }}"></span>
                 <span class="left">Copy Note</span>
@@ -96,6 +96,9 @@
 {% include 'tenant/auth.html' %}
 {% include 'tenant/surveys.html' %}
 
+<!-- PRINTING -->
+{% include "clinic/components/pretty-print.html" %}
+
 <!-- SCRIPTS -->
 <script type="module">{{ 'js/sidebar.js' | static_include | safe }}</script>
 <script type="module">{{ 'js/beagle-mainthread.js' | static_include | safe }}</script>
@@ -110,7 +113,6 @@
 <script type="module" src="/app/static/js/historian.js"></script>
 <script type="module">{{ "js/clinic-inputs.js" | static_include | safe }}</script>
 <script>{{ "js/fuzzysort.min.js" | static_include | safe }}</script>
-<script>{{ "js/showdown.min.js" | static_include | safe }}</script>
 <script type="module">{{ "js/clinic.js" | static_include | safe }}</script>
 
 {% endblock %}

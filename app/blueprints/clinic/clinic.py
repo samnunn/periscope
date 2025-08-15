@@ -22,6 +22,11 @@ def preop():
     return render_template("clinic/layouts/pre_assessment.html")
 
 
+@clinic.route("/print")
+def print():
+    return render_template("clinic/layouts/print.html")
+
+
 # CONTEXT PROCESSORS AND FILTERS
 
 

@@ -1,0 +1,130 @@
+:root {
+    --spacing-base: 0.3cm;
+    --header-height: 1.5cm;
+    
+    --colour-red: rgb(192, 57, 43);
+    --colour-darkgrey: #1e272e;
+}
+@media print {
+    * {
+        print-color-adjust: exact;
+        font-family: sans-serif;
+    }
+}
+@page {
+    margin: 0.5cm 1cm 1cm 0.5cm;
+    @bottom-right {
+        content: "Page " counter(page) " of " counter(pages);
+    }
+    @bottom-center {
+        content: "PLEASE TURN OVER";
+        font-weight: bold;
+        font-size: 0.8rem;
+    }
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 0.85rem;
+}
+h1 {
+    font-size: 2.5em;
+}
+h2 {
+    font-size: 1.5em;
+}
+h1, h2, h3 {
+    margin: 0;
+}
+
+ul {
+    list-style-position: inside;
+}
+
+/* UTILS */
+.hstack {
+    display: grid;
+    column-gap: calc(var(--spacing-base) * 0.6);
+    row-gap: 0;
+    grid-template-columns: repeat(auto-fit, minmax(0%, 1fr));
+    max-width: 100%;
+}
+.vstack {
+    display: flex;
+    flex-direction: column;
+    column-gap: 0;
+    row-gap: calc(var(--spacing-base) * 0.6);
+}
+.box {
+    background-color: var(--colour-darkgrey);
+    border-radius: var(--spacing-base);
+    padding: var(--spacing-base);
+    color: white;
+}
+.box.alert {
+    background-color: var(--colour-red);
+    text-align: center;
+    font-weight: bold;
+}
+
+header {
+    height: var(--header-height);
+    display: flex;
+}
+
+aside {
+    width: 5cm;
+    height: calc(100vh - var(--header-height));
+    margin: 0;
+    padding: 0;
+    padding-right: 0.5cm;
+    float: left;
+    gap: 0.5cm;
+    display: block;
+}
+
+
+table.summary-table {
+    font-size: 9pt;
+    color: currentColor;
+    .summary-label {
+        width: 100%;
+    }
+}
+table {
+    .airway-value {
+        text-align: right;
+    }
+}
+
+#anthropometry {
+    grid-template-columns: auto 0.9fr;
+    td:last-of-type {
+        text-align: right;
+    }
+    #bmi {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-weight: bold;
+        text-align: center;
+        span:last-of-type {
+            font-size: 2.5rem;
+        }
+    }
+}
+
+#allergies {
+    font-size: 3rem;
+}
+#airway-alert {
+    font-size: 1.25em;
+}
+section {
+    break-inside: avoid;
+}
+
+section:first-of-type {
+    break-inside: auto;
+}

@@ -229,47 +229,6 @@ export function renderEntireDocument() {
 }
 document.renderEntireDocument = () => renderEntireDocument() // make available from main thread
 
-// PRETTY RENDERING
-export function renderPrettyDocument() {
-    // Create a text dump
-    let htmlDump = ''
-    let sectionElements = [...document.querySelectorAll('section')]
-
-    for (let s of sectionElements) {
-        // Render to markdown intermediate
-        let renderedMarkdown = getRenderedSection(s.id)
-
-        // Make markdown into HTML
-        var converter = new showdown.Converter()
-        let renderedHtml = converter.makeHtml(renderedMarkdown)
-
-        // Append section to htmlDump
-        htmlDump += renderedHtml.trim() + '\n\n'
-    }
-    let cssDump = `
-
-
-    <style>
-    body {
-        font-family: sans-serif;
-        margin: 2rem 3rem;
-    }
-    h1 {
-        font-size: 1.4rem;
-        padding-bottom: 0.1em;
-        &:before {
-            content: "# ";
-            color: grey;
-        }
-    }
-    h2, h3, h4 {
-        font-size: 1.1rem;
-    }
-    </style>
-    <span style="font-size: 2.2rem; font-weight: bold; text-align: center;">Royal Perth Hospital</span>`
-    return cssDump + htmlDump
-}
-document.renderPrettyDocument = () => renderPrettyDocument() // make available from main thread
 
 document.addEventListener('mousedown', (e) => {
     if (e.target.matches('div.section-topper, div.section-topper *')) {

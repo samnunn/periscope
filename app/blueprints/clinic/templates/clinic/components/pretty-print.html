@@ -1,0 +1,49 @@
+<script>{{ "js/showdown.min.js" | static_include | safe }}</script>
+<script>
+    document.addEventListener("click", (e) => {
+        if (!e.target.matches("[clinic-print-trigger]")) return
+        
+        // render plaintext
+        
+        // render pretty text
+        let output = ""
+
+        // Create a text dump
+        let markdown = document.renderEntireDocument()
+        
+        // Make markdown into HTML
+        var converter = new showdown.Converter()
+        let html = converter.makeHtml(markdown)
+        
+        // Append section to htmlDump
+        output += html.trim() + '\n\n'
+        let css = `
+
+        <style>
+        body {
+            font-family: sans-serif;
+            margin: 2rem 3rem;
+        }
+        h1 {
+            font-size: 1.4rem;
+            padding-bottom: 0.1em;
+            &:before {
+                content: "# ";
+                color: grey;
+            }
+        }
+        h2, h3, h4 {
+            font-size: 1.1rem;
+        }
+        </style>
+        <span style="font-size: 2.2rem; font-weight: bold; text-align: center;">Royal Perth Hospital</span>`
+        
+        output += css
+
+        console.log(output)
+        
+        // open a new window
+        
+        
+    })
+</script>
