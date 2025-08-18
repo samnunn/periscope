@@ -12,8 +12,8 @@
         <input diagnosis-parameter="Aetiology" type="text"/>
     </label>
     <div class="hstack">
-        {{ clinic_input("hf-nyha") | safe }}
-        {{ clinic_input("hf-lvef") | safe }}
+        {{ clinic_input(template="hf-nyha") }}
+        {{ clinic_input(template="hf-lvef") }}
     </div>
 </div>
 {% endblock %}

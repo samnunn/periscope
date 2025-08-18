@@ -2,7 +2,15 @@ import base64
 import os
 import random
 
-from flask import Blueprint, redirect, render_template, url_for
+import jinja2
+from flask import (
+    Blueprint,
+    redirect,
+    render_template,
+    render_template_string,
+    request,
+    url_for,
+)
 from markupsafe import Markup
 
 clinic: Blueprint = Blueprint(
@@ -59,27 +67,113 @@ def static_base64(str_in):
         return f"data:{map[ext]};base64," + b64.decode("utf-8")
 
 
-@clinic.context_processor
-def clinic_input_processor():
-    def clinic_input(parameter, label_visible=True, hidden=False, classes=""):
-        template_path = f"clinic/inputs/input-{parameter}.html"
-        return render_template(
-            template_path,
-            parameter=parameter,
-            label_visible=label_visible,
-            hidden=hidden,
-            classes=classes,
-        )
+# @clinic.context_processor
+# def clinic_input_processor():
+#     def clinic_input(template, label_visible=True, hidden=False, classes=""):
+#         template_path = f"clinic/inputs/input-{template}.html"
+#         output = render_template(
+#             template_path,
+#             parameter=template,
+#             label_visible=label_visible,
+#             hidden=hidden,
+#             classes=classes,
+#         )
+#         return Markup(output)
 
-    return dict(clinic_input=clinic_input)
+#     return dict(clinic_input=clinic_input)
+
+
+def render_template_from_file(template, **kwargs):
+    template_path = f"clinic/inputs/input-{template}.html"
+    output = render_template(
+        template_path,
+        parameter=template,
+        label_visible=kwargs.get("label_visible", True),
+        classes=kwargs.get("classes", ""),
+    )
+    return Markup(output)
 
 
 @clinic.context_processor
 def anon_input_processor() -> dict:
-    def anon_input(parameter: str, **kwargs) -> Markup:
-        return Markup("hmm: " + parameter)
+    def anon_input(
+        name="",
+        template="",
+        label="",
+        prefix="",
+        suffix="",
+        options=[],
+        *args,
+        **kwargs,
+    ) -> Markup:
+        # when template is set, render from template on disk
+        # otherwise proceed to render an "anonymous" input on the fly
+        if template:
+            return render_template_from_file(template, **kwargs)
 
-    return dict(anon_input=anon_input)
+        # sanity check
+        if not name:
+            raise TypeError('clinic_input() needs parameter "name" to be set')
+
+        # preflight
+        if not hasattr(request, "anon_templates"):
+            request.anon_templates = []
+
+        # can't use an parameter name for more than one input
+        if name in request.anon_templates:
+            raise jinja2.TemplateError(
+                f"Namespace collision when rendering anonymous templates (the name '{name}' has already been used for another anonymous input)"
+            )
+        request.anon_templates.append(name)
+
+        # render
+        attrs = ""
+        for key, val in kwargs.items():
+            attrs += f' {key}="{val}"'
+
+        # special case for <select>
+        if kwargs.get("type", "") == "select":
+            optionstring = ""
+            for o in options:
+                optionstring += f'<option value="{o[0]}">{o[1]}</option>\n'
+
+            inputblock = f"""
+            {{% block input %}}
+            <div class="selectbox">
+            <select{attrs}>
+            <option value="" selected></option>
+            {optionstring}
+            </select>
+            </div>
+            {{% endblock %}}
+            """
+
+        # special case for textarea
+        elif kwargs.get("type", "") == "textarea":
+            inputblock = f"""{{% block input %}}<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="{kwargs.get("placeholder", "")}"{attrs}></textarea>{{% endblock %}}"""
+
+        # general case
+        else:
+            inputblock = f"{{% block input %}}<input{attrs}>{{% endblock %}}"
+
+        templatestring = f"""
+        {{% extends 'clinic/inputs/_base_input.html' %}}
+        {{% block label %}}{label}{{% endblock %}}
+        {{% block prefix %}}{prefix}{{% endblock %}}
+        {{% block suffix %}}{suffix}{{% endblock %}}
+        {inputblock}
+        """
+
+        output = render_template_string(
+            templatestring,
+            parameter=name,
+            label_visible=bool(label),
+            classes=kwargs.get("classes", ""),
+        )
+
+        return Markup(output)
+
+    return dict(clinic_input=anon_input)
 
 
 @clinic.context_processor

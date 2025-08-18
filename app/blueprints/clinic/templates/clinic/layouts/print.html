@@ -1,233 +1,159 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>{% include "clinic/css/print.css" %}</style>
-</head>
-<body>
-    <header>
-        <h1>Anaesthetic Assessment</h1>
-    </header>
-    <aside class="vstack">
-        <div class="box alert" id="allergies">
-            <span>NKDA</span>
-        </div>
-        <div class="box vstack">
-            <h3>System Summary</h3>
+<template id="clinic-prettyprint">
+
+<style>{% include "clinic/css/print.css" %}</style>
+<div id="addressograph">
+    ATTACH PATIENT LABEL
+</div>
+<header>
+    <h1>Anaesthetic Assessment</h1>
+</header>
+<aside class="vstack">
+    <div class="box alert" id="allergies-alert">
+        <span>NKDA</span>
+    </div>
+    <div class="box vstack">
+        <h3>Summary</h3>
+        <table class="summary-table">
+            <tbody>
+                <tr>
+                    <td class="summary-label">Previous Anaesthesia</td>
+                    <td class="summary-indicator">✅</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Anaesthesia Issues</td>
+                    <td class="summary-indicator">❌</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Family History</td>
+                    <td class="summary-indicator">❌</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">&lt; 4 METs</td>
+                    <td class="summary-indicator">✅</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Cardiovascular</td>
+                    <td class="summary-indicator">✅</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Respiratory</td>
+                    <td class="summary-indicator">✅</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">GORD</td>
+                    <td class="summary-indicator">✅</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Diabetes</td>
+                    <td class="summary-indicator">✅</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Neurological</td>
+                    <td class="summary-indicator">✅</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Chronic Pain</td>
+                    <td class="summary-indicator">❌</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Alcohol</td>
+                    <td class="summary-indicator">❌</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Smoking</td>
+                    <td class="summary-indicator">❌</td>
+                </tr>
+                <tr>
+                    <td class="summary-label">Substance Use</td>
+                    <td class="summary-indicator">✅</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="box vstack" id="anthropometry">
+        <h3>Anthropometry</h3>
+        <div class="hstack" id="anthropometry">
             <table class="summary-table">
                 <tbody>
                     <tr>
-                        <td class="summary-label">Previous Anaesthesia</td>
-                        <td class="summary-indicator">✅</td>
+                        <td>Height</td>
+                        <td>183 cm</td>
                     </tr>
                     <tr>
-                        <td class="summary-label">Anaesthesia Issues</td>
-                        <td class="summary-indicator">❌</td>
+                        <td>Weight</td>
+                        <td>99 kg</td>
                     </tr>
                     <tr>
-                        <td class="summary-label">Family History</td>
-                        <td class="summary-indicator">❌</td>
+                        <td>↳ IBW</td>
+                        <td>75 kg</td>
                     </tr>
                     <tr>
-                        <td class="summary-label">&lt; 4 METs</td>
-                        <td class="summary-indicator">✅</td>
-                    </tr>
-                    <tr>
-                        <td class="summary-label">Cardiovascular</td>
-                        <td class="summary-indicator">✅</td>
-                    </tr>
-                    <tr>
-                        <td class="summary-label">Respiratory</td>
-                        <td class="summary-indicator">✅</td>
-                    </tr>
-                    <tr>
-                        <td class="summary-label">GORD</td>
-                        <td class="summary-indicator">✅</td>
-                    </tr>
-                    <tr>
-                        <td class="summary-label">Diabetes</td>
-                        <td class="summary-indicator">✅</td>
-                    </tr>
-                    <tr>
-                        <td class="summary-label">Neurological</td>
-                        <td class="summary-indicator">✅</td>
-                    </tr>
-                    <tr>
-                        <td class="summary-label">Chronic Pain</td>
-                        <td class="summary-indicator">❌</td>
-                    </tr>
-                    <tr>
-                        <td class="summary-label">Alcohol</td>
-                        <td class="summary-indicator">❌</td>
-                    </tr>
-                    <tr>
-                        <td class="summary-label">Smoking</td>
-                        <td class="summary-indicator">❌</td>
-                    </tr>
-                    <tr>
-                        <td class="summary-label">Substance Use</td>
-                        <td class="summary-indicator">✅</td>
+                        <td>↳ ABW</td>
+                        <td>82 kg</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="box vstack" id="anthropometry">
-            <h3>Anthropometry</h3>
-            <div class="hstack" id="anthropometry">
-                <table class="summary-table">
-                    <tbody>
-                        <tr>
-                            <td>Height</td>
-                            <td>183 cm</td>
-                        </tr>
-                        <tr>
-                            <td>Weight</td>
-                            <td>99 kg</td>
-                        </tr>
-                        <tr>
-                            <td>↳ IBW</td>
-                            <td>75 kg</td>
-                        </tr>
-                        <tr>
-                            <td>↳ ABW</td>
-                            <td>82 kg</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="" id="bmi">
-                    <span>BMI</span>
-                    <span>29</span>
-                </div>
+            <div class="" id="bmi">
+                <span>BMI</span>
+                <span>29</span>
             </div>
         </div>
-        <div class="box vstack">
-            <h3>Airway Findings</h3>
-            <table class="summary-table">
-                <tbody>
-                    <tr>
-                        <td class="airway-parameter">Mallampati</td>
-                        <td class="airway-value">1</td>
-                    </tr>
-                    <tr>
-                        <td class="airway-parameter">Thyromental</td>
-                        <td class="airway-value">5 cm</td>
-                    </tr>
-                    <tr>
-                        <td class="airway-parameter">Mouth Opening</td>
-                        <td class="airway-value">3 cm</td>
-                    </tr>
-                    <tr>
-                        <td class="airway-parameter">Jaw Protrusion</td>
-                        <td class="airway-value">A</td>
-                    </tr>
-                    <tr>
-                        <td class="airway-parameter">Neck Extension</td>
-                        <td class="airway-value">Limited</td>
-                    </tr>
-                    <tr>
-                        <td class="airway-parameter">Beard</td>
-                        <td class="airway-value">Won't trim</td>
-                    </tr>
-                    <tr>
-                        <td class="airway-parameter">Cricothyroid</td>
-                        <td class="airway-value">Impalpable</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="box alert" id="airway-alert">
-            <span>DIFFICULT AIRWAY</span>
-        </div>
-    </aside>
-    <section>
-        <h2>Key Issues</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <ul>
-            <li>High-grade right distal ureter TCC (2024)
-                
-                <ul>
-                    <li>T1 N0 M0</li>
-                    <li>Open right distal ureterectomy (2024)
-                        
-                        <ul>
-                            <li>Complicated by ischaemic limb (with AKA), wound breakdown</li>
-                        </ul></li>
-                        <li>Initially thought to have clear margins</li>
-                        <li>Surveillance cystoscopy in 12/2024 concerning for carcinoma in situ, hence this TURBT</li>
-                    </ul></li>
-                    <li>Metastatic left RCC (2020)
-                        
-                        <ul>
-                            <li>T3 N0 M0, 90 mm, sarcomatoid, grade 4 renal cell carcinoma</li>
-                            <li>Left laparoscopic nephroureterectomy (2020)</li>
-                            <li>Four cycles ipilimumab plus nivolumab (2021)</li>
-                        </ul></li>
-                        <li>Ischaemic heart disease
-                            
-                            <ul>
-                                <li>STEMI 2013 with LAD stent</li>
-                                <li>CTCA 02/2024 showed in-stent LAD stenosis and diffuse disease elsewhere, for medical management</li>
-                            </ul></li>
-                            <li>HFrEF
-                                
-                                <ul>
-                                    <li>NYHA: 3</li>
-                                    <li>Aetiology: ischaemic</li>
-                                    <li>TTE 02/2028
-                                        
-                                        <ul>
-                                            <li>LV: normal ventricular size, ejection fraction of 30%, anterior regional wall abnormality</li>
-                                            <li>RV: mildly dilated</li>
-                                            <li>PASP: ~32 mmHg</li>
-                                        </ul></li>
-                                        <li>Known to Dr Doolittle privately</li>
-                                        <li>Seen by Athula Karu several times during 2024</li>
-                                    </ul></li>
-                                    <li>CKD
-                                        
-                                        <ul>
-                                            <li>KDIGO stage: 3a</li>
-                                            <li>Aetiology: single kidney with obstructive nephropathy</li>
-                                        </ul></li>
-                                        <li>Hypertension</li>
-                                    </ul>
-    </section>
-    <section>
-        <h2>Medical History</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <ul>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-        </ul>
-    </section>
-    <section>
-        <h2>Tootle Pip</h2>
-        <p>Middle page stuff.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </section>
-    <section>
-        <h2>Previous Anaesthesia</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </section>
-    <section>
-        <h2>Anaesthetic Plan</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <ul>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-            <li>Lorem ipsum</li>
-        </ul>
-    </section>
-        
-</body>
-</html>
+    </div>
+    <div class="box vstack">
+        <h3>Airway Findings</h3>
+        <table class="summary-table">
+            <tbody>
+                <tr>
+                    <td class="airway-parameter">Mallampati</td>
+                    <td class="airway-value">1</td>
+                </tr>
+                <tr>
+                    <td class="airway-parameter">Thyromental</td>
+                    <td class="airway-value">5 cm</td>
+                </tr>
+                <tr>
+                    <td class="airway-parameter">Mouth Opening</td>
+                    <td class="airway-value">3 cm</td>
+                </tr>
+                <tr>
+                    <td class="airway-parameter">Jaw Protrusion</td>
+                    <td class="airway-value">A</td>
+                </tr>
+                <tr>
+                    <td class="airway-parameter">Neck Extension</td>
+                    <td class="airway-value">Limited</td>
+                </tr>
+                <tr>
+                    <td class="airway-parameter">Beard</td>
+                    <td class="airway-value">Won't trim</td>
+                </tr>
+                <tr>
+                    <td class="airway-parameter">Cricothyroid</td>
+                    <td class="airway-value">Impalpable</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="box alert" id="airway-alert">
+        <span>DIFFICULT AIRWAY</span>
+    </div>
+</aside>
+<!-- <section id="key-issues">
+    <h2>Key Issues</h2>
+</section>
+<section id="pmhx">
+    <h2>Medical History</h2>
+</section>
+<section>
+    <h2>Tootle Pip</h2>
+    <p>Middle page stuff.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</section>
+<section>
+    <h2>Previous Anaesthesia</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</section>
+<section id="plan">
+    <h2>Anaesthetic Plan</h2>
+</section> -->
+</template>

@@ -92,13 +92,9 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         }
 
         // add in <clinic-input> elements
-        // TODO: eliminate the need for this hack
         for (let input of this.querySelectorAll('clinic-input')) {
             try {
-                let pre = input.dataset.clinicOutputPrefix
-                let main = document.persistentDataProxy[input.dataset.clinicParameter]
-                let suffix = input.dataset.clinicOutputSuffix || ""
-                output = output + `\n\t- ${pre}: ${main}${suffix}`
+                output += `\n\t- ${input.renderText()}`
             } catch (e) {
                 console.error(`Failed to render text for <clinic-input> embedded in <clinic-diagnosis>`, e)
             }
@@ -135,10 +131,10 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
 
         // call removedCallback()
         try {
-            let callback = new Function('inputData', this.dataset.diagnosisRemovedCallback)
+            let callback = new Function('inputData', this.dataset.diagnosisDeletedCallback)
             callback(document.persistentDataProxy)
         } catch (e) {
-            console.warn(`Failed to execute diagnosis-removed-callback for ${this.dataset.diagnosisId}:\n`, e)
+            console.warn(`Failed to execute diagnosis-deleted-callback for ${this.dataset.diagnosisId}:\n`, e)
         }
 
         // delete from document.persistentDataProxy (which will trigger Beagle to re-evaulate too)

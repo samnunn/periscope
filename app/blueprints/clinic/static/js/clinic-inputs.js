@@ -30,6 +30,21 @@ customElements.define('clinic-input', class extends HTMLElement {
         }
     }
 
+    renderText() {
+        let main = document.persistentDataProxy[this.dataset.clinicParameter]
+        if (!main) {
+            return ""
+        }
+
+        let prefix = this.dataset.clinicOutputPrefix
+        if (prefix == "self")
+            return main
+        else {
+            let suffix = this.dataset.clinicOutputSuffix || ""
+            return `${prefix}: ${main}${suffix}`
+        }
+    }
+
     setValue(value) {
         if (this.inputElement.tagName == 'select' && this.inputElement.selectedIndex > 0) {
             this.inputElement.value = value

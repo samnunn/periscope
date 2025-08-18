@@ -1,49 +1,200 @@
+{% include "clinic/layouts/print.html" %}
 <script>{{ "js/showdown.min.js" | static_include | safe }}</script>
+{% raw %}
+<div id="clinic-prettyprint-target"></div>
 <script>
-    document.addEventListener("click", (e) => {
-        if (!e.target.matches("[clinic-print-trigger]")) return
-        
+    let prettyPrintTemplate = document.querySelector("template#clinic-prettyprint")
+    let prettyPrintTarget = document.querySelector("#clinic-prettyprint-target")
+
+
+    let outputTemplate = `
+## Key Issues
+{{issues}}
+
+## Medical Background
+{{pmhx}}
+
+## Physical Fitness
+- {{patient-mets}}
+- {{patient-flat}}
+- Exercise tolerance: {{patient-mets-details}}
+- Clinical frailty score: {{rockwood-cfs}}
+
+## Social History
+- Smoking: {{smoking-status}}
+--> {{smoking-details}}
+- etOH: {{alcohol-freetext}}
+- Illicit drugs: {{drugs-freetext}}
+- Occupation: {{occupation-freetext}}
+- Functional status: {{functioning-freetext}}
+{{other-shx}}
+
+## Medications
+{{medications-freetext}}
+
+### Supplements
+{{supplements-freetext}}
+
+### Allergies
+{{allergies-freetext}}
+
+## Previous Anaesthesia
+{{previous-anaesthesia-freetext}}
+
+### Anaesthesia Summary
+- BVM: {{previous-bvm}}
+- LMA: {{previous-lma}}
+- ETT: {{previous-ett}}
+- Complications: {{previous-anaesthesia-complications}}
+- {{previous-anaesthesia-fhx}}
+--> {{previous-anaesthesia-fhx-details}}
+
+## Examination Findings
+- Heart sounds: {{examination-heart}}
+- Lung sounds: {{examination-lungs}}
+{{examination-freetext}}
+
+## Investigations
+- Source: {{investigations-source}}
+- {{investigations-fbc}}
+- {{investigations-uec}}
+- {{investigations-lft}}
+- {{investigations-hba1c}}%
+- {{investigations-haematinics}}
+- {{investigations-coags}}
+- {{investigations-ecg}}
+{{investigations-other}}
+
+## Informed Consent
+{{consent-output}}
+
+### Special Notes
+{{consent-notes}}
+
+## Risk Assessment
+- {{patient-asa}}
+- {{stopbang-score}}/8
+- {{apfel-score}}/4
+- {{rcri-score}}/6
+- {{sort-score}}% predicted 30-day mortality
+
+## Anaesthetic Plan
+{{plan}}
+{{plan-medications}}
+
+## Cited Guidelines
+{{citations}}`
+    // RENDER
+    function renderDocument() {
+        // special case: consent
+        // if (id == 'consent') {
+        //     let consentSwitches = document.querySelectorAll('section#consent clinic-input:has(input[type="checkbox"]:checked)')
+
+        //     let consent = ''
+        //     for (let s of consentSwitches) {
+        //         let consentType = s.dataset.clinicParameter
+        //         let consentSnippet = consentSnippets[consentType]
+        //         consent += consentSnippet
+        //         consent += '\n\n'
+        //     }
+        //     consent = consent.trim()
+        //     outputTemplate = outputTemplate.replace('{{consent-output}}', consent)
+        // }
+
+
+        // special case: citations
+        // if (id == 'plan' && document.persistentDataProxy['citations']?.length > 0) {
+        //     let output = ""
+        //     let count = 1
+
+        //     let publications = []
+        //     for (let c of document.persistentDataProxy['citations']) {
+        //         let citation = citationSnippets.find(s => s.id == c)
+        //         if (!citation) continue
+        //         let publication = allPublications.find((p) => p.id == citation.publication)
+        //         if (!publication) continue
+        //         if (!publications.includes(publication)) publications.push(publication)
+        //     }
+        //     for (let p of publications) {
+        //         output += `${count}. ${p.ugly}\n`
+        //         count += 1
+        //     }
+
+        //     outputTemplate = outputTemplate.replace('{{citations}}', output)
+        // }
+        let template = outputTemplate
+
+        // special case: pmhx
+        let pmhx = ""
+        for (let d of document.querySelectorAll("clinic-diagnosis")) {
+            pmhx += d.renderText()
+            pmhx += '\n'
+        }
+        pmhx = pmhx.trim()
+        template = template.replace("{{pmhx}}", pmhx)
+
+
+        // general case
+        for (let c of template.matchAll(/\{\{(.*?)\}\}/gmi)) {
+            let stringToReplace = c[0]
+            let dataKey = c[1]
+
+            try {
+                let relevantInput = document.querySelector(`[data-clinic-parameter="${dataKey}"]`)
+                let dataValue = relevantInput.renderText()
+                template = template.replace(stringToReplace, dataValue)
+            } catch (e) {
+                console.error(`Unable to render input text from "${dataKey}"`)
+                continue
+            }
+        }
+
+        // delete lines containing unreplaced values
+        for (let l of template.matchAll(/^.*({{.*?}}).*$\n?/gm)) {
+            template = template.replace(l[0], '')
+        }
+
+        // remove ## headers with nothing under them
+        for (let h of template.matchAll(/^#* .+(?=\n*$)(?!\n[^#\s])\n*/gm)) {
+            template = template.replace(h[0], '')
+        }
+
+        return template
+    }
+
+    function prettyPrint() {
         // render plaintext
+        let markdown = renderDocument()
         
         // render pretty text
         let output = ""
-
-        // Create a text dump
-        let markdown = document.renderEntireDocument()
         
-        // Make markdown into HTML
+        // // Make markdown into HTML
         var converter = new showdown.Converter()
         let html = converter.makeHtml(markdown)
         
         // Append section to htmlDump
         output += html.trim() + '\n\n'
-        let css = `
 
-        <style>
-        body {
-            font-family: sans-serif;
-            margin: 2rem 3rem;
-        }
-        h1 {
-            font-size: 1.4rem;
-            padding-bottom: 0.1em;
-            &:before {
-                content: "# ";
-                color: grey;
-            }
-        }
-        h2, h3, h4 {
-            font-size: 1.1rem;
-        }
-        </style>
-        <span style="font-size: 2.2rem; font-weight: bold; text-align: center;">Royal Perth Hospital</span>`
-        
-        output += css
+        // // open a new window
+        let templateNode = prettyPrintTemplate.content.cloneNode(true)
+        prettyPrintTarget.innerHTML = ""
+        prettyPrintTarget.appendChild(templateNode)
+        prettyPrintTarget.insertAdjacentHTML("beforeend", output)
+    }
 
-        console.log(output)
-        
-        // open a new window
-        
-        
+    document.addEventListener("click", (e) => {
+        if (!e.target.matches("[clinic-print-trigger]")) return
+        window.print()
     })
+    
+    window.addEventListener("beforeprint", (e) => {
+        prettyPrint()
+    })
+
+
+
+
 </script>
+
+{% endraw %}

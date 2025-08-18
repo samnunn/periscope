@@ -48,15 +48,15 @@
     </div>
     <div class="vstack">
         <div class="hstack">
-            {{ clinic_input("patient-age") | safe }}
-            {{ clinic_input("patient-sex") | safe }}
-            {{ clinic_input("patient-height") | safe }}
-            {{ clinic_input("patient-weight") | safe }}
-            {{ clinic_input("patient-bmi") | safe }}
-            {{ clinic_input("appointment-mode") | safe }}
+            {{ clinic_input(template="patient-age") }}
+            {{ clinic_input(template="patient-sex") }}
+            {{ clinic_input(template="patient-height") }}
+            {{ clinic_input(template="patient-weight") }}
+            {{ clinic_input(template="patient-bmi") }}
+            {{ clinic_input(template="appointment-mode") }}
         </div>
         <div class="hstack">
-            {{ clinic_input("operation-freetext", classes="quintuple") | safe }}
+            {{ clinic_input(template="operation-freetext", classes="quintuple") }}
             <label>
                 <span>
                     Risk
@@ -67,16 +67,9 @@
                         </template>
                     </clinic-modal-popup>
                 </span>
-                {{ clinic_input("operation-risk", label_visible=False) | safe }}
+                {{ clinic_input(template="operation-risk", label_visible=False) }}
             </label>
         </div>
-        {{ anon_input(
-            parameter="""
-                <input type='number'>
-                <input type='text'>
-            """,
-            foo = "bar"
-        ) }}
     </div>
 </section>
 
@@ -90,28 +83,28 @@
         {% include "clinic/components/medical-history.html" %}
         <div class="vstack">
             <div class="hstack">
-                {{ clinic_input("patient-mets") | safe }}
-                {{ clinic_input("patient-flat") | safe }}
+                {{ clinic_input(template="patient-mets") }}
+                {{ clinic_input(name="patient-flat", label="Can Lie Flat", prefix="self", type="select", options=[("Able to lay flat", "Yes"), ("Unable to lay flat comfortably", "No")]) }}
             </div>
-            {{ clinic_input("patient-mets-details") | safe }}
-            {{ clinic_input("rockwood-cfs") | safe }}
+            {{ clinic_input(template="patient-mets-details") }}
+            {{ clinic_input(template="rockwood-cfs") }}
             <hr>
             <label>
                 <span>Smoking</span>
                 <div class="hstack">
-                    {{ clinic_input("smoking-status", label_visible=False) | safe }}
-                    {{ clinic_input("smoking-details", label_visible=False) | safe }}
+                    {{ clinic_input(template="smoking-status", label_visible=False) }}
+                    {{ clinic_input(template="smoking-details", label_visible=False) }}
                 </div>
             </label>
             <div class="hstack">
-                {{ clinic_input("alcohol-freetext") | safe }}
-                {{ clinic_input("drugs-freetext") | safe }}
+                {{ clinic_input(template="alcohol-freetext") }}
+                {{ clinic_input(template="drugs-freetext") }}
             </div>
             <div class="hstack">
-                {{ clinic_input("occupation-freetext") | safe }}
-                {{ clinic_input("functioning-freetext") | safe }}
+                {{ clinic_input(template="occupation-freetext") }}
+                {{ clinic_input(template="functioning-freetext") }}
             </div>
-            {{ clinic_input("other-shx", classes="bigbox short autotall") | safe }}
+            {{ clinic_input(template="other-shx", classes="bigbox short autotall") }}
         </div>
         
     </div>
@@ -124,10 +117,10 @@
         <button tabindex="2" class="section-copy">Copy Section</button>
     </div>
     <div class="hstack">
-        {{ clinic_input("medications-freetext", classes="bigbox autotall") | safe }}
+        {{ clinic_input(template="medications-freetext", classes="bigbox autotall") }}
         <div class="vstack">
-            {{ clinic_input("supplements-freetext", classes="bigbox short") | safe }}
-            {{ clinic_input("allergies-freetext", classes="bigbox short") | safe }}
+            {{ clinic_input(template="supplements-freetext", classes="bigbox short") }}
+            {{ clinic_input(template="allergies-freetext", classes="bigbox short") }}
         </div>
     </div>
 </section>
@@ -140,39 +133,39 @@
     </div>
     <div class="hstack">
         <div class="vstack">
-            {{ clinic_input("previous-anaesthesia-freetext", classes="bigbox autotall") | safe }}
+            {{ clinic_input(template="previous-anaesthesia-freetext", classes="bigbox autotall") }}
             <div class="vstack">
-                {{ clinic_input("previous-bvm") | safe }}
-                {{ clinic_input("previous-lma") | safe }}
-                {{ clinic_input("previous-ett") | safe }}
-                {{ clinic_input("previous-anaesthesia-complications") | safe }}
+                {{ clinic_input(template="previous-bvm") }}
+                {{ clinic_input(template="previous-lma") }}
+                {{ clinic_input(template="previous-ett") }}
+                {{ clinic_input(template="previous-anaesthesia-complications") }}
             </div>
             <label>
                 Family Issues with Anaesthesia
                 <div class="hstack">
-                    {{ clinic_input("previous-anaesthesia-fhx", label_visible=False) | safe }}
-                    {{ clinic_input("previous-anaesthesia-fhx-details", label_visible=False) | safe }}
+                    {{ clinic_input(template="previous-anaesthesia-fhx", label_visible=False) }}
+                    {{ clinic_input(template="previous-anaesthesia-fhx-details", label_visible=False) }}
                 </div>
             </label>
         </div>
         <div class="vstack">
             <div class="vstack">
-                {{ clinic_input("airway-dentition") | safe }}
+                {{ clinic_input(template="airway-dentition") }}
                 <div class="hstack">
-                    {{ clinic_input("airway-mallampati") | safe }}
-                    {{ clinic_input("airway-mouth-opening") | safe }}
+                    {{ clinic_input(template="airway-mallampati") }}
+                    {{ clinic_input(template="airway-mouth-opening") }}
                 </div>
                 <div class="hstack">
-                    {{ clinic_input("airway-tmd") | safe }}
-                    {{ clinic_input("airway-cricothyroid") | safe }}
+                    {{ clinic_input(template="airway-tmd") }}
+                    {{ clinic_input(template="airway-cricothyroid") }}
                 </div>
                 <div class="hstack">
-                    {{ clinic_input("airway-jaw-protrusion") | safe }}
-                    {{ clinic_input("airway-neckrom") | safe }}
+                    {{ clinic_input(template="airway-jaw-protrusion") }}
+                    {{ clinic_input(template="airway-neckrom") }}
                 </div>
                 <div class="hstack">
-                    {{ clinic_input("airway-beard") | safe }}
-                    {{ clinic_input("vein-quality") | safe }}
+                    {{ clinic_input(template="airway-beard") }}
+                    {{ clinic_input(template="vein-quality") }}
                 </div>
             </div>
             <hr>
@@ -180,10 +173,10 @@
                 
                 <!-- <h4>General Examination</h4> -->
                 <div class="hstack">
-                    {{ clinic_input("examination-heart") | safe }}
-                    {{ clinic_input("examination-lungs") | safe }}
+                    {{ clinic_input(template="examination-heart") }}
+                    {{ clinic_input(template="examination-lungs") }}
                 </div>
-                {{ clinic_input("examination-freetext", classes="bigbox short") | safe }}
+                {{ clinic_input(template="examination-freetext", classes="bigbox short") }}
             </div>
         </div>
         
@@ -198,22 +191,22 @@
     </div>
     <div class="hstack">
         <div class="vstack">
-            {{ clinic_input("investigations-source") | safe }}
+            {{ clinic_input(template="investigations-source") }}
             <div class="hstack">
-                {{ clinic_input("investigations-fbc") | safe }}
-                {{ clinic_input("investigations-uec") | safe }}
+                {{ clinic_input(template="investigations-fbc") }}
+                {{ clinic_input(template="investigations-uec") }}
             </div>
             <div class="hstack">
-                {{ clinic_input("investigations-lft") | safe }}
-                {{ clinic_input("investigations-hba1c") | safe }}
+                {{ clinic_input(template="investigations-lft") }}
+                {{ clinic_input(template="investigations-hba1c") }}
             </div>
             <div class="hstack">
-                {{ clinic_input("investigations-haematinics") | safe }}
-                {{ clinic_input("investigations-coags") | safe }}
+                {{ clinic_input(template="investigations-haematinics") }}
+                {{ clinic_input(template="investigations-coags") }}
             </div>
-            {{ clinic_input("investigations-ecg") | safe }}
+            {{ clinic_input(template="investigations-ecg") }}
         </div>
-        {{ clinic_input("investigations-other", classes="bigbox autotall") | safe }}
+        {{ clinic_input(template="investigations-other", classes="bigbox autotall") }}
         
     </div>
 </section>
@@ -229,17 +222,17 @@
             <div class="label-ish">
                 <span>Pro Forma</span>
                 <div>
-                    {{ clinic_input("consent-ga") | safe }}
-                    {{ clinic_input("consent-sedation") | safe }}
-                    {{ clinic_input("consent-regional") | safe }}
-                    {{ clinic_input("consent-neuraxial") | safe }}
-                    {{ clinic_input("consent-artline") | safe }}
-                    {{ clinic_input("consent-cvc") | safe }}
-                    {{ clinic_input("consent-blood") | safe }}
+                    {{ clinic_input(template="consent-ga") }}
+                    {{ clinic_input(template="consent-sedation") }}
+                    {{ clinic_input(template="consent-regional") }}
+                    {{ clinic_input(template="consent-neuraxial") }}
+                    {{ clinic_input(template="consent-artline") }}
+                    {{ clinic_input(template="consent-cvc") }}
+                    {{ clinic_input(template="consent-blood") }}
                 </div>
             </div>
         </div>
-        {{ clinic_input("consent-notes", classes="bigbox autotall") | safe }}
+        {{ clinic_input(template="consent-notes", classes="bigbox autotall") }}
     </div>
 </section>
 
@@ -253,16 +246,16 @@
         <div class="hstack">
             <div class="vstack">
                 <div class="label-ish" clinic-calculator clinic-calculator-interpreter="stopbang" clinic-calculator-parameter="stopbang-score">
-                    <span>STOP-BANG ({{ clinic_input("stopbang-score", label_visible=False) | safe }})</span> 
+                    <span>STOP-BANG ({{ clinic_input(template="stopbang-score", label_visible=False) }})</span> 
                     <div clinic-search="STOP-BANG Calculator">
-                        {{ clinic_input("stopbang-snorer") | safe }}
-                        {{ clinic_input("stopbang-tiredness") | safe }}
-                        {{ clinic_input("stopbang-apnoea") | safe }}
-                        {{ clinic_input("stopbang-hypertensive") | safe }}
-                        {{ clinic_input("stopbang-bmi-35") | safe }}
-                        {{ clinic_input("stopbang-age") | safe }}
-                        {{ clinic_input("stopbang-neck") | safe }}
-                        {{ clinic_input("stopbang-male") | safe }}
+                        {{ clinic_input(template="stopbang-snorer") }}
+                        {{ clinic_input(template="stopbang-tiredness") }}
+                        {{ clinic_input(template="stopbang-apnoea") }}
+                        {{ clinic_input(template="stopbang-hypertensive") }}
+                        {{ clinic_input(template="stopbang-bmi-35") }}
+                        {{ clinic_input(template="stopbang-age") }}
+                        {{ clinic_input(template="stopbang-neck") }}
+                        {{ clinic_input(template="stopbang-male") }}
                         <span>
                             <span clinic-calculator-interpretation></span>
                             <clinic-modal-popup>
@@ -275,14 +268,14 @@
                     </div>
                 </div>
                 <div class="label-ish" clinic-calculator clinic-calculator-interpreter="rcri" clinic-calculator-parameter="rcri-score">
-                    <span>RCRI ({{ clinic_input("rcri-score", label_visible=False) | safe }})</span>
+                    <span>RCRI ({{ clinic_input(template="rcri-score", label_visible=False) }})</span>
                     <div clinic-search="RCRI Calculator">
-                        {{ clinic_input("rcri-risky") | safe }}
-                        {{ clinic_input("rcri-ihd") | safe }}
-                        {{ clinic_input("rcri-ccf") | safe }}
-                        {{ clinic_input("rcri-cva") | safe }}
-                        {{ clinic_input("rcri-insulin") | safe }}
-                        {{ clinic_input("rcri-creatinine") | safe }}
+                        {{ clinic_input(template="rcri-risky") }}
+                        {{ clinic_input(template="rcri-ihd") }}
+                        {{ clinic_input(template="rcri-ccf") }}
+                        {{ clinic_input(template="rcri-cva") }}
+                        {{ clinic_input(template="rcri-insulin") }}
+                        {{ clinic_input(template="rcri-creatinine") }}
                         <span>
                             <span clinic-calculator-interpretation clinic-parameter="rcri-interpretation"></span>
                             <clinic-modal-popup>
@@ -296,12 +289,12 @@
                     <aside><small>* Peritoneal, thoracic, or supra-inguinal vascular surgery</small></aside>
                 </div>
                 <div class="label-ish" clinic-calculator clinic-calculator-interpreter="apfel" clinic-calculator-parameter="apfel-score">
-                    <span>Apfel ({{ clinic_input("apfel-score", label_visible=False) | safe }})</span>
+                    <span>Apfel ({{ clinic_input(template="apfel-score", label_visible=False) }})</span>
                     <div clinic-search="Apfel Calculator">
-                        {{ clinic_input("apfel-sex") | safe }}
-                        {{ clinic_input("apfel-smoking") | safe }}
-                        {{ clinic_input("apfel-ponv") | safe }}
-                        {{ clinic_input("apfel-opioids") | safe }}
+                        {{ clinic_input(template="apfel-sex") }}
+                        {{ clinic_input(template="apfel-smoking") }}
+                        {{ clinic_input(template="apfel-ponv") }}
+                        {{ clinic_input(template="apfel-opioids") }}
                         <span>
                             <span clinic-calculator-interpretation clinic-parameter="apfel-interpretation"></span>
                             <clinic-modal-popup>
@@ -329,13 +322,13 @@
     <div class="vstack">
         <div class="hstack">
             <div class="vstack">
-                {{ clinic_input("issues", classes="bigbox short autotall") | safe }}
-                {{ clinic_input("plan", classes="bigbox short autotall") | safe }}
+                {{ clinic_input(name="issues", type="textarea", label="Key Issues", prefix="self", classes="bigbox short autotall") }}
+                {{ clinic_input(name="plan", type="textarea", label="Anaesthetic Plan", prefix="self", classes="bigbox short autotall") }}
             </div>
             {% include "clinic/components/beagle-suggestions.html" %}
         </div>
         <div class="hstack">
-            {{ clinic_input("plan-medications", classes="bigbox short") | safe }}
+            {{ clinic_input(template="plan-medications", classes="bigbox short") }}
         </div>
     </div>
 </section>

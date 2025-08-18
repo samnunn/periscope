@@ -47,7 +47,7 @@ let outputTemplates = {
 {{pmhx}}
 
 # Fitness
-- Achieving {{patient-mets}} METs
+- {{patient-mets}}
 - {{patient-flat}}
 - Exercise tolerance: {{patient-mets-details}}
 - Clinical frailty score: {{rockwood-cfs}}
@@ -58,7 +58,7 @@ let outputTemplates = {
 - etOH: {{alcohol-freetext}}
 - Illicit drugs: {{drugs-freetext}}
 - Occupation: {{occupation-freetext}}
-- Functional status: {{functional-freetext}}
+- Functional status: {{functioning-freetext}}
 {{other-shx}}`,
 
     'rx': `# Medications
