@@ -1,9 +1,11 @@
 :root {
-    --spacing-base: 0.3cm;
-    --header-height: 1.5cm;
+    --spacing-base: 0.25cm;
+    --header-height: 2cm;
     
     --colour-red: rgb(192, 57, 43);
     --colour-darkgrey: #1e272e;
+
+    --print-border-radius: 0.4rem;
 }
 
 #clinic-prettyprint-target {
@@ -25,9 +27,12 @@
         font-family: sans-serif;
     }
     @page {
-        margin: 0.5cm 1cm 1cm 0.5cm;
+        margin: 1cm 2cm 2cm 1cm;
         @bottom-right {
             content: "Page " counter(page) " of " counter(pages);
+        }
+        @bottom-left {
+            content: "{{ today_date }}";
         }
         @bottom-center {
             content: "PLEASE TURN OVER";
@@ -39,7 +44,8 @@
         margin: 0;
         padding: 0;
         font-family: sans-serif;
-        font-size: 0.85rem;
+        font-size: 1rem;
+        background-color: white;
     }
     h1 {
         font-size: 2.5em;
@@ -48,22 +54,31 @@
         font-size: 1.5em;
     }
     h3 {
-        font-size: 1.25em;
-    }
-    h4 {
         font-size: 1.1em;
     }
-    h5, h6 {
+    h4, h5, h6 {
         font-size: 1em;
     }
     h1, h2, h3, h4, h5, h6 {
         margin: 0;
     }
+
+
+    h2 {
+        background-color: var(--colour-darkgrey);
+        display: inline-block;
+        padding: 0.2em 0.4em;
+        position: relative;
+        /* transform: skew(-9deg); */
+        border-radius: var(--print-border-radius);
+        z-index: -1;
+        color: white;
+    }
     
     /* UTILS */
     .hstack {
         display: grid;
-        column-gap: calc(var(--spacing-base) * 0.6);
+        column-gap: calc(var(--spacing-base));
         row-gap: 0;
         grid-template-columns: repeat(auto-fit, minmax(0%, 1fr));
         max-width: 100%;
@@ -72,14 +87,14 @@
         display: flex;
         flex-direction: column;
         column-gap: 0;
-        row-gap: calc(var(--spacing-base) * 0.6);
+        row-gap: calc(var(--spacing-base));
     }
     .box {
-        /* background-color: var(--colour-darkgrey); */
-        background-color: rgb(241, 242, 246);
-        border-radius: var(--spacing-base);
+        background-color: var(--colour-darkgrey);
+        /* background-color: rgb(241, 242, 246); */
+        border-radius: var(--print-border-radius);
         padding: var(--spacing-base);
-        /* color: white; */
+        color: white;
     }
     .box.alert {
         background-color: var(--colour-red);
@@ -91,21 +106,23 @@
     header {
         height: var(--header-height);
         display: flex;
+        align-items: end;
+        margin-bottom: 2rem;
     }
     
     aside {
         float: left;
-        width: 5cm;
+        width: 5.5cm;
         height: calc(100vh - var(--header-height));
         margin: 0;
         padding: 0;
         padding-right: 0.5cm;
-        row-gap: 0.5cm !important;
+        row-gap: 0.25cm !important;
     }
     
     
     table.summary-table {
-        font-size: 9pt;
+        font-size: 10pt;
         color: currentColor;
         .summary-indicator {
             width: 2ch;
@@ -119,7 +136,7 @@
         border-collapse: collapse;
         td {
             border: none;
-            padding: 0;
+            padding: 0pt 0;
         }
         .airway-value {
             text-align: right;
@@ -127,18 +144,21 @@
     }
     
     #anthropometry {
-        grid-template-columns: 60% 40%;
+        grid-template-columns: 0.6fr 0.4fr;
+        max-width: 100%;
         td:last-of-type {
             text-align: right;
         }
         #bmi {
+            margin-left: 0.25rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-weight: bold;
             text-align: center;
+            font-size: 9pt;
             span:last-of-type {
                 font-size: 2rem;
+                font-weight: bold;
             }
         }
     }
@@ -146,14 +166,40 @@
     #allergies-alert {
         font-size: 3rem;
     }
+    #age-asa-alert {
+        grid-template-columns: auto auto;
+    }
+    #age-alert {
+        font-weight: bolder;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span:last-of-type {
+            font-size: 28pt;
+        }
+    }
+    }
+    #asa-alert {
+        text-align: center;
+        font-size: 9pt;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        span:last-of-type {
+            font-weight: bolder;
+            font-size: 28pt;
+        }
+    }
     #airway-alert {
         font-size: 1.25em;
     }
     section {
-        break-inside: avoid;
+        margin: 1rem 0;
     }
     
-    section:first-of-type {
+    section:nth-of-type(n+5) {
+        break-inside: avoid;
         break-inside: auto;
     }
     ul, ol {
@@ -167,13 +213,13 @@
     ul {
     list-style-position: outside;
     } */
-    body > ul, ol {
+    section > ul, ol {
         padding-inline-start: 3ch;
     }
     
     #addressograph {
-        width: 170px;
-        height: 70px;
+        height: var(--header-height);
+        aspect-ratio: 2.25;
         position: absolute;
         border: 1px dashed black;
         top: 0;

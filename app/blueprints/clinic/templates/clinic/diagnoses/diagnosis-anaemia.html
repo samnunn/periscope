@@ -6,12 +6,6 @@
 {% block deleted_callback %}{% endblock %}
 
 {% block inputs %}
-<label>
-    Aetiology
-    <input diagnosis-parameter="Aetiology" type="text"/>
-</label>
-<label>
-    Treatment
-    <input diagnosis-parameter="Treatment" type="text"/>
-</label>
+{{ clinic_input(name="anaemia-aetiology", label="Aetiology", type="text") }}
+{{ clinic_input(name="anaemia-treatment", label="Treatment", type="text") }}
 {% endblock %}

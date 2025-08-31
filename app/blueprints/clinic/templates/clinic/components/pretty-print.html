@@ -8,30 +8,33 @@
 
 
     let outputTemplate = `
+## Operation
+{{operation-freetext}}
+
 ## Key Issues
 {{issues}}
 
 ## Medical Background
 {{pmhx}}
 
-## Physical Fitness
+## Functional Status
 - {{patient-mets}}
+- {{patient-dasi}}
 - {{patient-flat}}
-- Exercise tolerance: {{patient-mets-details}}
-- Clinical frailty score: {{rockwood-cfs}}
+- {{rockwood-cfs}}
+- {{patient-mets-details}}
+- {{functioning-freetext}}
 
 ## Social History
-- Smoking: {{smoking-status}}
---> {{smoking-details}}
-- etOH: {{alcohol-freetext}}
-- Illicit drugs: {{drugs-freetext}}
-- Occupation: {{occupation-freetext}}
-- Functional status: {{functioning-freetext}}
+- {{smoking-status}}
+    - {{smoking-details}}
+- {{alcohol-freetext}}
+- {{drugs-freetext}}
+- {{occupation-freetext}}
 {{other-shx}}
 
 ## Medications
 {{medications-freetext}}
-
 ### Supplements
 {{supplements-freetext}}
 
@@ -42,16 +45,16 @@
 {{previous-anaesthesia-freetext}}
 
 ### Anaesthesia Summary
-- BVM: {{previous-bvm}}
-- LMA: {{previous-lma}}
-- ETT: {{previous-ett}}
-- Complications: {{previous-anaesthesia-complications}}
+- {{previous-bvm}}
+- {{previous-lma}}
+- {{previous-ett}}
+- {{previous-anaesthesia-complications}}
 - {{previous-anaesthesia-fhx}}
---> {{previous-anaesthesia-fhx-details}}
+- {{previous-anaesthesia-fhx-details}}
 
 ## Examination Findings
-- Heart sounds: {{examination-heart}}
-- Lung sounds: {{examination-lungs}}
+- {{examination-heart}}
+- {{examination-lungs}}
 {{examination-freetext}}
 
 ## Investigations
@@ -59,7 +62,7 @@
 - {{investigations-fbc}}
 - {{investigations-uec}}
 - {{investigations-lft}}
-- {{investigations-hba1c}}%
+- {{investigations-hba1c}}
 - {{investigations-haematinics}}
 - {{investigations-coags}}
 - {{investigations-ecg}}
@@ -130,7 +133,7 @@
             pmhx += d.renderText()
             pmhx += '\n'
         }
-        pmhx = pmhx.trim()
+        pmhx = pmhx
         template = template.replace("{{pmhx}}", pmhx)
 
 
@@ -142,6 +145,9 @@
             try {
                 let relevantInput = document.querySelector(`[data-clinic-parameter="${dataKey}"]`)
                 let dataValue = relevantInput.renderText()
+                
+                if (!dataValue) continue
+
                 template = template.replace(stringToReplace, dataValue)
             } catch (e) {
                 console.error(`Unable to render input text from "${dataKey}"`)
@@ -156,7 +162,7 @@
 
         // remove ## headers with nothing under them
         for (let h of template.matchAll(/^#* .+(?=\n*$)(?!\n[^#\s])\n*/gm)) {
-            template = template.replace(h[0], '')
+            template = template.replace(h[0], '\n')
         }
 
         return template
@@ -173,14 +179,21 @@
         var converter = new showdown.Converter()
         let html = converter.makeHtml(markdown)
         
+        // add <section> tags
+        // html = `<section>${html}</section>`
+        // html = html.replaceAll(/<h2.+?>/ig, "</section><section><h2>")
+        // // html = html.replaceAll("</h2>", "</h2><section>")
+
         // Append section to htmlDump
-        output += html.trim() + '\n\n'
+        
+        // console.log('markdown', markdown)
+        // console.log('html', html)
 
         // // open a new window
         let templateNode = prettyPrintTemplate.content.cloneNode(true)
         prettyPrintTarget.innerHTML = ""
         prettyPrintTarget.appendChild(templateNode)
-        prettyPrintTarget.insertAdjacentHTML("beforeend", output)
+        prettyPrintTarget.insertAdjacentHTML("beforeend", html)
     }
 
     document.addEventListener("click", (e) => {
@@ -189,6 +202,10 @@
     })
     
     window.addEventListener("beforeprint", (e) => {
+        prettyPrint()
+    })
+    
+    window.addEventListener("DOMContentLoaded", (e) => {
         prettyPrint()
     })
 

@@ -31,17 +31,17 @@ customElements.define('clinic-input', class extends HTMLElement {
     }
 
     renderText() {
-        let main = document.persistentDataProxy[this.dataset.clinicParameter]
-        if (!main) {
+        let body = document.persistentDataProxy[this.dataset.clinicParameter]
+        if (!body) {
             return ""
         }
 
         let prefix = this.dataset.clinicOutputPrefix
         if (prefix == "self")
-            return main
+            return body
         else {
             let suffix = this.dataset.clinicOutputSuffix || ""
-            return `${prefix}: ${main}${suffix}`
+            return `${prefix}: ${body}${suffix}`
         }
     }
 

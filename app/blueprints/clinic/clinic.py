@@ -1,4 +1,5 @@
 import base64
+import datetime
 import os
 import random
 
@@ -135,7 +136,10 @@ def anon_input_processor() -> dict:
         if kwargs.get("type", "") == "select":
             optionstring = ""
             for o in options:
-                optionstring += f'<option value="{o[0]}">{o[1]}</option>\n'
+                if isinstance(o, str):
+                    optionstring += f'<option value="{o}">{o}</option>\n'
+                else:
+                    optionstring += f'<option value="{o[0]}">{o[1]}</option>\n'
 
             inputblock = f"""
             {{% block input %}}
@@ -159,7 +163,7 @@ def anon_input_processor() -> dict:
         templatestring = f"""
         {{% extends 'clinic/inputs/_base_input.html' %}}
         {{% block label %}}{label}{{% endblock %}}
-        {{% block prefix %}}{prefix}{{% endblock %}}
+        {{% block prefix %}}{prefix or label or ""}{{% endblock %}}
         {{% block suffix %}}{suffix}{{% endblock %}}
         {inputblock}
         """
@@ -230,3 +234,8 @@ def random_number_processor():
         return "".join([str(random.randint(0, 9)) for _ in range(10)])
 
     return dict(random_number=random_number)
+
+
+@clinic.context_processor
+def inject_today_date():
+    return {"today_date": datetime.date.today()}

@@ -325,7 +325,17 @@
                 {{ clinic_input(name="issues", type="textarea", label="Key Issues", prefix="self", classes="bigbox short autotall") }}
                 {{ clinic_input(name="plan", type="textarea", label="Anaesthetic Plan", prefix="self", classes="bigbox short autotall") }}
             </div>
-            {% include "clinic/components/beagle-suggestions.html" %}
+            <div class="vstack" id="warnings-container">
+                <div class="label-ish">
+                    Smart Suggestions ✨
+                    <div id="redcap-prompts">
+                        <ul class="pill-list">
+                        </ul>
+                    </div>
+                    <div id="warnings">
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="hstack">
             {{ clinic_input(template="plan-medications", classes="bigbox short") }}

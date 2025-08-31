@@ -73,7 +73,7 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         let output = ""
 
         // get name
-        output += `- ${data['name']}`
+        output += `1. ${data['name']}`
 
         // delete surplus keys
         delete data['name']
@@ -176,7 +176,7 @@ export function insertClinicDiagnosis(data, target, focus = true) {
 
     // Set a unique transition ID
     // Each one needs its own unique ID so they can transition independently
-    newDiagnosisNode.style = `view-transition-name: ${data["id"]};`
+    newDiagnosisNode.querySelector("clinic-diagnosis").style = `view-transition-name: ${data["id"]};`
     newDiagnosisNode.querySelector("clinic-diagnosis").setAttribute("data-diagnosis-id", data["id"])
 
     // handle custom-named diagnoses

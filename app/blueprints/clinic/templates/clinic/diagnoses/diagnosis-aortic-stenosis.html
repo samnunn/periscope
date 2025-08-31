@@ -6,12 +6,7 @@
 {% block deleted_callback %}{% endblock %}
 
 {% block inputs %}
-<label>
-    Radiographic Severity
-    <input diagnosis-parameter="Radiographic severity" type="text"/>
-</label>
-<label>
-    Symptom Burden
-    <input diagnosis-parameter="Symptoms" type="text"/>
-</label>
+{{ clinic_input(name="as-severity", label="Radiographic severity", type="text") }}
+{{ clinic_input(name="as-symptoms", label="Symptoms", type="text") }}
+
 {% endblock %}

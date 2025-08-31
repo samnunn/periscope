@@ -7,24 +7,10 @@
 
 {% block inputs %}
 <div class="hstack">
-    <label>
-        Size (cm)
-        <input diagnosis-parameter="Size" max="30" min="0" step="0.1" type="number"/>
-    </label>
-    <label>
-        Stable
-        <div class="selectbox">
-            <select autocomplete="off" diagnosis-parameter="Stable">
-                <option selected="" value="">
-                </option>
-                <option value="yes">
-                    Yes
-                </option>
-                <option value="NO">
-                    No
-                </option>
-            </select>
-        </div>
-    </label>
+    {{ clinic_input(name="aaa-size", label="Current size", suffix=" cm", type="number", min="0", max="30", step="0.1") }}
+    {{ clinic_input(name="aaa-stable", label="Stable", prefix="self", type="select", options=[
+        ("Stable size", "Yes"),
+        ("Unstable size", "No")
+    ] ) }}
 </div>
 {% endblock %}
