@@ -1,7 +1,7 @@
 {% extends 'clinic/inputs/_base_input.html' %}
 
 {% block label %}Frailty Score{% endblock %}
-{% block prefix %}Rockwood CFS{% endblock %}
+{% block prefix %}self{% endblock %}
 {% block suffix %}{% endblock %}
 {% block search %}Rockwood Clinical Frailty Score{% endblock %}
 
@@ -9,15 +9,15 @@
 <div class="selectbox">
 <select autocomplete="off">
 	<option value="" selected></option>
-	<option value="1 (very fit)">1 – Very Fit</option>
-	<option value="2 (well)">2 – Well</option>
-	<option value="3 (managing well)">3 – Managing Well</option>
-	<option value="4 (vulnerable)">4 – Vulnerable</option>
-	<option value="5 (mildly frail)">5 – Mildly Frail</option>
-	<option value="6 (moderately frail)">6 – Moderately Frail</option>
-	<option value="7 (severely frail)">7 – Severely Frail</option>
-	<option value="8 (very severely frail)">8 – Very Severely Frail</option>
-	<option value="9 (terminally ill)">9 – Terminally Ill</option>
+	<option value="Rockwood CFS 1 (very fit)">1 – Very Fit</option>
+	<option value="Rockwood CFS 2 (well)">2 – Well</option>
+	<option value="Rockwood CFS 3 (managing well)">3 – Managing Well</option>
+	<option value="Rockwood CFS 4 (vulnerable)">4 – Vulnerable</option>
+	<option value="Rockwood CFS 5 (mildly frail)">5 – Mildly Frail</option>
+	<option value="Rockwood CFS 6 **(moderately frail)**">6 – Moderately Frail</option>
+	<option value="Rockwood CFS 7 **(severely frail)**">7 – Severely Frail</option>
+	<option value="Rockwood CFS 8 **(very severely **frail)">8 – Very Severely Frail</option>
+	<option value="Rockwood CFS 9 **(terminally ill)**">9 – Terminally Ill</option>
 </select>
 </div>
 {% endblock %}

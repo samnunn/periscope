@@ -7,33 +7,14 @@
 
 {% block inputs %}
 <div class="hstack">
-    <label>
-        KDIGO Stage
-        <div class="selectbox">
-            <select autocomplete="off" diagnosis-parameter="KDIGO stage">
-                <option selected="" value="">
-                </option>
-                <option value="1">
-                    1 (GFR ≥ 90)
-                </option>
-                <option value="2">
-                    2 (GFR 60–89)
-                </option>
-                <option value="3a">
-                    3a (GFR 45–59)
-                </option>
-                <option value="3b">
-                    3b (GFR 30–44)
-                </option>
-                <option value="4">
-                    4 (GFR 15–29)
-                </option>
-                <option value="5">
-                    5 (GFR ≤ 14 or on dialysis)
-                </option>
-            </select>
-        </div>
-    </label>
+    {{ clinic_input(name="ckd-kdigo-stage", label="KDIGO Stage", prefix="Stage", type="select", options=[
+        ("1", "1 (GFR ≥ 90)"),
+        ("2", "2 (GFR 60–89)"),
+        ("3a", "3a (GFR 45–59)"),
+        ("3b", "3b (GFR 30–44)"),
+        ("4", "4 (GFR 15–29)"),
+        ("5", "5 (GFR ≤ 14 or on dialysis)"),
+    ] ) }}
     <label>
         Aetiology
         <input diagnosis-parameter="Aetiology" type="text"/>

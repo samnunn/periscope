@@ -1,0 +1,291 @@
+<!--
+┌─────────────────────────────────┐
+│  ____ ____ ____ ____ ____ ____  │
+│ ||P |||R |||E |||T |||T |||Y || │
+│ ||__|||__|||__|||__|||__|||__|| │
+│ |/__\|/__\|/__\|/__\|/__\|/__\| │
+│     ____ ____ ____ ____ ____    │
+│    ||P |||R |||I |||N |||T ||   │
+│    ||__|||__|||__|||__|||__||   │
+│    |/__\|/__\|/__\|/__\|/__\|   │
+│                                 │
+└─────────────────────────────────┘
+
+This module creates a printable version of the current note in <div id="clinic-printed-page-container">, which is only visible when @media is print.
+-->
+
+
+<!-- Container for printed material (only visible when media type == print) -->
+<div id="clinic-printed-page-container"></div>
+
+
+<!-- CSS to show/hide printed page -->
+<style>
+    #clinic-printed-page-container {
+        display: none;
+    }
+    @media print {
+        #tab-box, dialog, #toasts {
+            display: none;
+        }
+        
+        #clinic-printed-page-container {
+            display: unset;
+        }
+    }
+</style>
+
+
+<!-- CSS for the printed page -->
+<style>{% include "clinic/components/pretty-print/printed-page.css" %}</style>
+
+
+<!-- Showdown is a MD -> HTML converter @ https://github.com/showdownjs/showdown-->
+<script>{% include "clinic/components/pretty-print/showdown.min.js" %}</script>
+
+<!-- Printing logic -->
+<script type="module">
+import { citationSnippets } from '/app/static/data/citation-data.js'
+import { allPublications } from '/app/static/data/publication-data.js'
+let prettyPrintTarget = document.querySelector("#clinic-printed-page-container")
+let printerBoilerplateMarkup = `{% include "clinic/components/pretty-print/printed-page.html" %}`
+
+{% raw %}
+
+    let consentSnippets = {
+        'consent-ga': `Discussed risks and benefits of GA by prevalence.  
+
+- Very common: sore throat (45% ETT, 20% LMA), PONV
+- Common: minor lip/tongue injury (1 in 100)
+- Rare: awareness, death (1 in 100,000 ASA 1, 1 in 50,000 for all ASAs)
+- Very rare: damage to teeth, severe allergy, nerve damage
+
+Specific risks including aspiration, LRTI, post op confusion, covert CVA with possible cognitive changes, temporary memory loss, myocardial infarction also discussed.`,
+        'consent-sedation': `Consented for sedation, with risks discussed including death, failure, allergy, awareness, pain and need to progress to GA with its associated risks.`,
+        'consent-regional': `Regional risks discussed - superficial skin infection, bleeding, nerve damage (parasthesia and/or paralysis), failure of block, damage to surrounding structures, adverse drug reactions.`,
+        'consent-neuraxial': `Discussed risks and benefits of neuraxial anaesthesia. Specifically, nausea and vomiting, backache, headache, prolonged numbness or tingling, hypotension, urinary retention, nerve injury (1 in 500 temporary, ~1 in 25,000 permanent) and failure of regional technique.`,
+        'consent-blood': `Consented to blood products.`,
+        'consent-artline': `Consented to arterial line placement. Risks discussed include infection, bleeding, nerve damage (parasthesia and/or paralysis, damage to surrounding structures, adverse drug reactions, compartment syndrome, distal ischaemia.`,
+        'consent-cvc': `Consented to central line placement. Risks discussed include infection, bleeding, arterial puncture, pneumothorax, thrombosis, air embolism, pain, vessel damage, arrhythmia.`,
+    }
+
+    let markdownTemplate = `
+## Operation
+{{operation-freetext}}
+
+## Key Issues
+{{issues}}
+
+## Risk Assessment
+- {{patient-asa}}
+- {{sort-score}}% predicted 30-day mortality
+- {{rcri-score}}
+- {{stopbang-score}}/8
+- {{apfel-score}}/4
+
+## Anaesthetic Plan
+{{plan}}
+
+## Medical Background
+{{pmhx}}
+
+## Medications
+### Regular
+{{medications-freetext}}
+
+### Supplements
+{{supplements-freetext}}
+
+### Allergies
+{{allergies-freetext}}
+
+## Functional Status
+- {{patient-mets}}
+- {{patient-flat}}
+- {{rockwood-cfs}}
+- {{patient-mets-details}}
+- {{functioning-freetext}}
+
+## Social History
+- {{smoking-status}}
+    - {{smoking-details}}
+- {{alcohol-freetext}}
+- {{drugs-freetext}}
+- {{occupation-freetext}}
+
+{{other-shx}}
+
+## Previous Anaesthesia
+### Surgical History
+{{previous-anaesthesia-freetext}}
+
+### Technical Summary
+- {{previous-bvm}}
+- {{previous-lma}}
+- {{previous-ett}}
+- {{previous-anaesthesia-complications}}
+- {{previous-anaesthesia-fhx}}
+- {{previous-anaesthesia-fhx-details}}
+
+## Examination Findings
+- {{vein-quality}}
+- {{examination-heart}}
+- {{examination-lungs}}
+
+{{examination-freetext}}
+
+## Investigations
+### Blood Tests
+- {{investigations-fbc}}
+- {{investigations-uec}}
+- {{investigations-lft}}
+- {{investigations-hba1c}}
+- {{investigations-haematinics}}
+- {{investigations-coags}}
+
+{{investigations-source}}
+
+### Other
+- {{investigations-ecg}}
+
+{{investigations-other}}
+
+## Informed Consent
+{{consent-output}}
+
+### Special Notes
+{{consent-notes}}
+
+## Cited Guidelines
+{{citations}}`
+    // RENDER
+    function renderMarkdownIntermediate() {
+        let template = markdownTemplate
+
+        let consentSwitches = document.querySelectorAll('section#consent clinic-input:has(input[type="checkbox"]:checked)')
+
+        let consent = ''
+        for (let s of consentSwitches) {
+            let consentType = s.dataset.clinicParameter
+            let consentSnippet = consentSnippets[consentType]
+            if (consentSnippet) {
+                consent += consentSnippet
+            }
+            consent += '\n\n'
+        }
+        consent = consent.trim()
+        template = template.replace("{{consent-output}}", consent)
+
+
+        // special case: citations
+        let citations = ""
+        let count = 1
+
+        let publications = []
+        for (let c of document.persistentDataProxy['citations'] || []) {
+            let citation = citationSnippets.find(s => s.id == c)
+            if (!citation) continue
+            let publication = allPublications.find((p) => p.id == citation.publication)
+            if (!publication) continue
+            if (!publications.includes(publication)) publications.push(publication)
+        }
+        for (let p of publications) {
+            citations += `${count}. ${p.ugly}\n`
+            count += 1
+        }
+        template = template.replace('{{citations}}', citations)
+
+        // special case: pmhx
+        let pmhx = ""
+        for (let d of document.querySelectorAll("clinic-diagnosis")) {
+            pmhx += d.renderText()
+            pmhx += '\n'
+        }
+        template = template.replace("{{pmhx}}", pmhx)
+
+        // general case
+        for (let c of template.matchAll(/\{\{(.*?)\}\}/gmi)) {
+            let stringToReplace = c[0]
+            let dataKey = c[1]
+
+            try {
+                let relevantInput = document.querySelector(`[data-clinic-parameter="${dataKey}"]`)
+                let dataValue = relevantInput.renderText()
+                
+                if (!dataValue) continue
+
+                template = template.replace(stringToReplace, dataValue)
+            } catch (e) {
+                console.error(`Unable to render input text from "${dataKey}"`)
+                continue
+            }
+        }
+
+        // delete lines containing unreplaced values
+        for (let l of template.matchAll(/^.*({{.*?}}).*$\n?/gm)) {
+            template = template.replace(l[0], '')
+        }
+
+        // remove h3+ headers with nothing under them
+        // for (let h of template.matchAll(/^#* .+(?=\n*$)(?!\n[^#\s])\n*/gm)) {
+        for (let h of template.matchAll(/^#{3,} .+\n+(?=#+ )/gm)) {
+            template = template.replace(h[0], '\n')
+        }
+
+        return template
+    }
+
+    function renderPrinterBoilerplateMarkup() {
+        let template = printerBoilerplateMarkup
+
+        // general case
+        for (let c of template.matchAll(/\{\{(.*?)\}\}/gmi)) {
+            let stringToReplace = c[0]
+            let dataKey = c[1]
+
+            let dataValue = document.persistentDataProxy[dataKey] || "—"
+            template = template.replace(stringToReplace, dataValue)
+        }
+        
+        return template
+    }
+
+    function prettyPrint() {
+        // render boilerplate
+        let boilerplateHtml = renderPrinterBoilerplateMarkup()
+
+        // render markdown derived from main inputs
+        let markdownIntermediate = renderMarkdownIntermediate()
+        
+        // make that markdown into HTML
+        var converter = new showdown.Converter()
+        converter.setOption("simpleLineBreaks", true) // most people don't use markdown-conformant lists or include a double-space at the end of their lines, sigh
+        let markdownHtml = converter.makeHtml(markdownIntermediate)
+        
+        // add <section> tags to markdown adjacent each <h2>
+        markdownHtml = `<section class="pretty-printed">${markdownHtml}</section>`
+        markdownHtml = markdownHtml.replaceAll("<h2", `</section><section class="pretty-printed"><h2`)
+        
+        // insert into DOM
+        prettyPrintTarget.innerHTML = boilerplateHtml + markdownHtml
+    }
+
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest("[clinic-print-trigger]")) return
+        window.print()
+    })
+    
+    window.addEventListener("beforeprint", (e) => {
+        prettyPrint()
+    })
+    
+    window.addEventListener("DOMContentLoaded", (e) => {
+        prettyPrint()
+    })
+
+
+
+
+</script>
+
+{% endraw %}

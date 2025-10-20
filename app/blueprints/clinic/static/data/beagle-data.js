@@ -744,6 +744,14 @@ export let boneData = [
         ],
     },
     {
+        static_name: "Known malignant hyperthermia",
+        id: "beagle-malignant-hyperthermia",
+        matchStrategy: "any",
+        matchRules: [
+            (inputData) => diagnosisExists(inputData, 'diagnosis-malignant-hyperthermia'),
+        ],
+    },
+    {
         static_name: "Immune-suppressed",
         id: "beagle-immune-suppressed",
         matchStrategy: "any",

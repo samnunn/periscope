@@ -34,9 +34,13 @@
     <span class="icon"><img src="{{ 'icons/colour_life_buoy.svg' | static_base64 }}"></span>
     <span class="left">Risk Profile</span>
 </li>
-<li title="Plan" role="button" scroll-target="plan">
+<li title="Summary" role="button" scroll-target="summary">
     <span class="icon"><img src="{{ 'icons/colour_check_circle.svg' | static_base64 }}"></span>
-    <span class="left">Plan</span>
+    <span class="left">Summary</span>
+</li>
+<li title="Suggestions" role="button" scroll-target="suggestions">
+    <span class="icon"><img src="{{ 'icons/colour_brain.svg' | static_base64 }}"></span>
+    <span class="left">Suggestions</span>
 </li>
 {% endblock %}
 
@@ -312,47 +316,68 @@
     </div>
     
 </section>
-
-<section id="plan">
+<section id="summary">
     <div class="section-topper">
         <img class="icon" src="{{ 'icons/colour_check_circle.svg' | static_base64 }}">
-        <h2><mark class="grey">Plan</mark></h2>
+        <h2><mark class="grey">Summary</mark></h2>
         <button tabindex="2" class="section-copy">Copy Section</button>
     </div>
     <div class="vstack">
-        <div class="hstack">
+        <div class="hstack" id="keyissues-split" style="column-gap: calc(var(--hstack-gap) * 2);">
             <div class="vstack">
                 {{ clinic_input(name="issues", type="textarea", label="Key Issues", prefix="self", classes="bigbox short autotall") }}
                 {{ clinic_input(name="plan", type="textarea", label="Anaesthetic Plan", prefix="self", classes="bigbox short autotall") }}
             </div>
-            <div class="vstack" id="warnings-container">
-                <div class="label-ish">
-                    Smart Suggestions ✨
-                    <div id="redcap-prompts">
-                        <ul class="pill-list">
-                        </ul>
-                    </div>
-                    <div id="warnings">
-                    </div>
+            <div class="label-ish">
+                <span> </span> 
+                <!-- dodgy… -->
+                <div class="vstack" id="pathology-summary">
+                    {{ clinic_input(name="summary-previous-anaesthesia", label="Prev. Anaesthesia", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-anaesthesia-issues", label="Anaesthesia Issues", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-anaesthesia-issues-fhx", label="Family History", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-mets", label="≤ 4 METs", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-cardiovascular", label="Cardiovascular", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-respiratory", label="Respiratory", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-gord", label="GORD", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-endocrine", label="DM/Endocrine", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-cns", label="CNS", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-chronic-pain", label="Chronic Pain", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-alcohol", label="Alcohol", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-smoking", label="Smoking", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-subtance-use", label="Substance Use", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
                 </div>
             </div>
-        </div>
-        <div class="hstack">
-            {{ clinic_input(template="plan-medications", classes="bigbox short") }}
         </div>
     </div>
 </section>
 
+<section id="suggestions">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_brain.svg' | static_base64 }}">
+        <h2><mark class="grey">Suggestions</mark></h2>
+    </div>
+    <div class="vstack" id="suggestions-issues">
+
+    </div>
+    <div class="vstack" id="warnings-container">
+        <div class="label-ish">
+            Smart Suggestions ✨
+            <div id="redcap-prompts">
+                <ul class="pill-list">
+                </ul>
+            </div>
+            <div id="warnings">
+            </div>
+        </div>
+    </div>
+</section>
 <section id="disclaimer">
-    <style>
-        @scope {
-            p {
-                text-align: center;
-            }
-        }
-    </style>
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_alert_octagon.svg' | static_base64 }}">
+        <h2><mark class="grey">Disclaimer</mark></h2>
+    </div>
     <p>Every effort has been made to ensure that Periscope won't steer you wrong, but you are still the responsible doctor.</p>
-    <p><strong>This software is provided free under the terms of the <a target="_blank" href="https://github.com/samnunn/periscope/blob/main/LICENSE.txt">AGPLv3 License</a>.</strong></p>
+    <p>Periscope is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. in no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.</p>
 </section>
 
 {% endblock %}

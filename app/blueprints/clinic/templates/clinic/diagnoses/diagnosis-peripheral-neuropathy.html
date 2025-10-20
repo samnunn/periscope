@@ -1,0 +1,13 @@
+{% extends 'clinic/diagnoses/_base_diagnosis.html' %}
+
+{% block default_name %}Peripheral Neuropathy{% endblock %}
+{% block search_keywords %}peripheral autonomic sensory neuropathy{% endblock %}
+{% block added_callback %}{% endblock %}
+{% block deleted_callback %}{% endblock %}
+
+{% block inputs %}
+<div class="hstack">
+    {{ clinic_input(name="patient-neuropathy-sensory", label="Sensory", prefix="self", type="select", options=[("yes", "Yes"), ("no", "No")]) }}
+    {{ clinic_input(name="patient-neuropathy-autonomic", label="Autonomic", prefix="self", type="select", options=[("yes", "Yes"), ("no", "No")]) }}
+</div>
+{% endblock %}

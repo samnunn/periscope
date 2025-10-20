@@ -2,6 +2,7 @@ import base64
 import datetime
 import os
 import random
+import re
 
 import jinja2
 from flask import (
@@ -68,22 +69,6 @@ def static_base64(str_in):
         return f"data:{map[ext]};base64," + b64.decode("utf-8")
 
 
-# @clinic.context_processor
-# def clinic_input_processor():
-#     def clinic_input(template, label_visible=True, hidden=False, classes=""):
-#         template_path = f"clinic/inputs/input-{template}.html"
-#         output = render_template(
-#             template_path,
-#             parameter=template,
-#             label_visible=label_visible,
-#             hidden=hidden,
-#             classes=classes,
-#         )
-#         return Markup(output)
-
-#     return dict(clinic_input=clinic_input)
-
-
 def render_template_from_file(template, **kwargs):
     template_path = f"clinic/inputs/input-{template}.html"
     output = render_template(
@@ -103,6 +88,7 @@ def anon_input_processor() -> dict:
         label="",
         prefix="",
         suffix="",
+        default="",
         options=[],
         *args,
         **kwargs,
@@ -116,6 +102,13 @@ def anon_input_processor() -> dict:
         if not name:
             raise TypeError('clinic_input() needs parameter "name" to be set')
 
+        name_validator = re.compile(r"^\w[\w-]+\w$")
+        matches = re.match(pattern=name_validator, string=name)
+        if not matches:
+            raise ValueError(
+                "clinic_input() needs a name containing only lowercase letters and en-dashes"
+            )
+
         # preflight
         if not hasattr(request, "anon_templates"):
             request.anon_templates = []
@@ -127,12 +120,15 @@ def anon_input_processor() -> dict:
             )
         request.anon_templates.append(name)
 
+        # create a random id to be assigned to the input, for its <label for="boo"> to refer to
+        input_id = random.randint(10**9, 10**10 - 1)
+
         # render
-        attrs = ""
+        attrs = f' id="{input_id}"'
         for key, val in kwargs.items():
             attrs += f' {key}="{val}"'
 
-        # special case for <select>
+        # special case for type="select"
         if kwargs.get("type", "") == "select":
             optionstring = ""
             for o in options:
@@ -149,6 +145,22 @@ def anon_input_processor() -> dict:
             {optionstring}
             </select>
             </div>
+            {{% endblock %}}
+            """
+
+        # special case for type="radio"
+        elif kwargs.get("type", "") == "radio":
+            radiobuttons = ""
+            for o in options:
+                radiobuttons += f"""
+                    <input type="radio" name="radios-{name}" id="{input_id}-{o[0]}" tabindex="0" value="{o[0]}">
+                    <label for="{input_id}-{o[0]}">{o[1]}</label>
+                """
+            inputblock = f"""
+            {{% block input %}}
+            <fieldset {attrs} class="segmented-control">
+            {radiobuttons}
+            </fieldset>
             {{% endblock %}}
             """
 
@@ -171,6 +183,8 @@ def anon_input_processor() -> dict:
         output = render_template_string(
             templatestring,
             parameter=name,
+            input_id=input_id,
+            default_value=default,
             label_visible=bool(label),
             classes=kwargs.get("classes", ""),
         )

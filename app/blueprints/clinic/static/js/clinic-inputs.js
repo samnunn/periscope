@@ -6,11 +6,10 @@ customElements.define('clinic-input', class extends HTMLElement {
 
     connectedCallback() {
         // identify input element
-        this.inputElement = this.querySelector("input, select, textarea, span")
+        this.inputElement = this.querySelector("fieldset, input, select, textarea, span")
 
         if (!this.inputElement) {
             console.error(`<clinic-input> for "${this.dataset.clinicParameter}" does not contain and input element`)
-            debugger
         }
 
         // input handling
@@ -24,7 +23,11 @@ customElements.define('clinic-input', class extends HTMLElement {
         // restore stored data
         if (document.persistentDataProxy) {
             let storedValue = document.persistentDataProxy[this.dataset.clinicParameter]
-            if (storedValue) this.setValue(storedValue)
+            if (storedValue) {
+                this.setValue(storedValue)
+            } else if (this.dataset.clinicDefaultValue) {
+                this.setValue(this.dataset.clinicDefaultValue)
+            }
         } else {
             console.error(`document.persistentDataProxy was not available when connectedCallback() was called on <clinic-input> named "${this.dataset.clinicParameter}"`)
         }
@@ -52,6 +55,9 @@ customElements.define('clinic-input', class extends HTMLElement {
             this.inputElement.checked = value
         } else if (this.inputElement.tagName == 'P' || this.inputElement.tagName == 'SPAN') {
             this.inputElement.innerText = value
+        } else if (this.inputElement.tagName == "FIELDSET") {
+            let checkTarget = this.querySelector(`input[value="${value}"]`)
+            checkTarget.checked = true
         } else {
             this.inputElement.value = value
         }
@@ -64,6 +70,8 @@ customElements.define('clinic-input', class extends HTMLElement {
             return this.inputElement.checked
         } else if (this.inputElement.tagName == 'P' || this.inputElement.tagName == 'SPAN') {
             return this.inputElement.innerText
+        } else if (this.inputElement.tagName == "FIELDSET") {
+            return this.inputElement.querySelector("input:checked")?.value
         } else {
             return this.inputElement.value
         }

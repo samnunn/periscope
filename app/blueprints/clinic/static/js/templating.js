@@ -59,6 +59,7 @@ let outputTemplates = {
 - Illicit drugs: {{drugs-freetext}}
 - Occupation: {{occupation-freetext}}
 - Functional status: {{functioning-freetext}}
+
 {{other-shx}}`,
 
     'rx': `# Medications
@@ -116,17 +117,15 @@ let outputTemplates = {
 
 
     'risk': `# Risk
-- ASA: {{asa}}
+- ASA: {{patient-asa}}
 - STOP-BANG: {{stopbang-score}}/8
---> {{stopbang-interpretation}}
 - Apfel: {{apfel-score}}/4
---> {{apfel-interpretation}}
 - RCRI: {{rcri-score}}/6
---> {{rcri-interpretation}}
-- SORT
---> {{sort-score}}% 30-day mortality`,
+- SORT: {{sort-score}}%`,
 
-    'plan': `# Assessment
+    'summary': `# Summary
+{{systems-summary}}
+
 # Key Issues
 {{issues}}
 
@@ -164,9 +163,13 @@ export function getRenderedSection(id) {
     // special case: pmhx
     if (id == 'medicalhx') {
         let output = ""
-
+        let hackyCounter = 1
         for (let d of document.querySelectorAll('clinic-diagnosis')) {
-            output += d.renderText()
+            let diagnosisText = d.renderText()
+            diagnosisText = diagnosisText.replace(/^\d*\./m, `${hackyCounter}.`)
+            hackyCounter += 1
+
+            output += diagnosisText
             output += '\n'
         }
 
@@ -176,12 +179,12 @@ export function getRenderedSection(id) {
     }
 
     // special case: citations
-    if (id == 'plan' && document.persistentDataProxy['citations']?.length > 0) {
+    if (id == 'summary' && document.persistentDataProxy['citations']?.length > 0) {
         let output = ""
         let count = 1
 
         let publications = []
-        for (let c of document.persistentDataProxy['citations']) {
+        for (let c of document.persistentDataProxy['citations'] || []) {
             let citation = citationSnippets.find(s => s.id == c)
             if (!citation) continue
             let publication = allPublications.find((p) => p.id == citation.publication)
@@ -194,6 +197,16 @@ export function getRenderedSection(id) {
         }
 
         template = template.replace('{{citations}}', output)
+    }
+
+    // special case: pathology summary
+    if (id == "summary") {
+        let output = ""
+        for (let ps of document.querySelectorAll("#pathology-summary clinic-input")) {
+            output += `- ${ps.renderText()}\n`
+        }
+        output = output.trim()
+        template = template.replace("{{systems-summary}}", output)
     }
 
     // general case

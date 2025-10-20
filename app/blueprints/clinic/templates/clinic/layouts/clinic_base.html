@@ -34,15 +34,20 @@
                 <span class="icon"><img src="{{ 'icons/colour_fast_forward.svg' | static_base64 }}"></span>
                 <span class="left">Shortcuts</span>
             </li>
-            <!-- <li title="Search (⌘K)" role="button" id="quick-find-button">
+            <li title="Search (⌘K)" role="button" id="quick-find-button">
                 <span class="icon"><img src="{{ 'icons/colour_search.svg' | static_base64 }}"></span>
                 <span class="left">Search</span>
                 <span class="right">⌘K</span>
-            </li> -->
+            </li>
+            <li title="Search (⌘K)" role="button">
+                <span class="icon"><img src="{{ 'icons/colour_brain.svg' | static_base64 }}"></span>
+                <span class="left">Suggestions</span>
+            </li>
 
             <hr>
+
             <li id="" title="Print Note" role="button" clinic-print-trigger>
-                <span class="icon"><img src="{{ 'icons/colour_zap.svg' | static_base64 }}"></span>
+                <span class="icon"><img src="{{ 'icons/colour_printer.svg' | static_base64 }}"></span>
                 <span class="left">Print</span>
             </li>
             <li id="copy-all" title="Copy Note" role="button">
@@ -58,12 +63,12 @@
                 <span class="left">Reset</span>
             </li>
             <hr>
-            <a class="invisible-link" target="_blank" href="https://github.com/samnunn/periscope">
+            <!-- <a class="invisible-link" target="_blank" href="https://github.com/samnunn/periscope">
                 <li title="Link to this project's source code" role="button">
                     <span class="icon"><img src="{{ 'icons/github_mark.svg' | static_base64 }}"></span>
                     <span class="left">Source Code</span>
                 </li>
-            </a>
+            </a> -->
             <a class="invisible-link" href="mailto:admin@periscope.net.au?subject=Bug%20Report%20for%20Periscope">
                 <li title="Report a Bug" role="button">
                     <span class="icon"><img src="{{ 'icons/colour_bug.svg' | static_base64 }}"></span>
@@ -91,13 +96,12 @@
 {% include 'clinic/components/toasts.html' %}
 
 <!-- DIALOGS -->
-{% include 'clinic/components/quick-find.html' %}
 {% include 'clinic/components/shortcuts.html' %}
 {% include 'tenant/auth.html' %}
 {% include 'tenant/surveys.html' %}
 
 <!-- PRINTING -->
-{% include "clinic/components/pretty-print.html" %}
+{% include "clinic/components/pretty-print/pretty-print.html" %}
 
 <!-- SCRIPTS -->
 <script type="module">{{ 'js/sidebar.js' | static_include | safe }}</script>

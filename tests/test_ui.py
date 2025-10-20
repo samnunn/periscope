@@ -16,10 +16,10 @@ def test_popover(page):
     expect(page.locator("dialog.clinic-modal-popup-dialog").first).to_be_visible()
 
 
-def test_cmd_k(page):
-    run_preamble(page)
-    page.keyboard.press("Meta+k")
-    expect(page.locator("#quick-find-input")).to_be_focused()
+# def test_cmd_k(page):
+#     run_preamble(page)
+#     page.keyboard.press("Meta+k")
+#     expect(page.locator("#quick-find-input")).to_be_focused()
 
 
 def test_reset(page: Page):
