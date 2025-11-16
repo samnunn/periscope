@@ -48,6 +48,25 @@ document.beagle.addEventListener('message', (m) => {
         boneList.insertAdjacentElement("afterbegin", issuePillContainer)
     }
 
+    let issuesList = document.querySelector("#suggestions-issues")
+    // add bones
+    if (m.data['type'] == 'beagle-bone-add') {
+        // create markup
+        let issuesSuggestionBox = document.createElement("div")
+        issuesSuggestionBox.classList.add("beagle-suggestion")
+        issuesSuggestionBox.classList.add("beagle-issue")
+        issuesSuggestionBox.classList.add("pill")
+
+        // auto-hide elements are "always on" but shouldn't be visible unless they also have a management suggestion
+        if (m.data["auto_hide"] == true) {
+            issuesSuggestionBox.classList.add('auto_hide')
+        }
+
+        issuesSuggestionBox.innerHTML = `<span>${m.data.name}</span><button tabindex="1">Add</button>`
+
+        issuesList.insertAdjacentElement("beforeend", issuesSuggestionBox)
+    }
+
     // update bones
     if (m.data['type'] == 'beagle-bone-update') {
         let staleBone = document.querySelector(`[beagle-bone-id="${m.data.id}"] > li.issue-pill > span`)

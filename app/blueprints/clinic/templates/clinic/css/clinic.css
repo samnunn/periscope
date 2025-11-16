@@ -356,7 +356,7 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     margin: 0;
     padding: 0;
 
-    & li {
+    & li, .pill {
         --pill-colour: var(--colour-lightgrey);
         list-style-type: none;
         background-color: var(--pill-colour);
