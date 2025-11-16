@@ -38,10 +38,10 @@
     <span class="icon"><img src="{{ 'icons/colour_check_circle.svg' | static_base64 }}"></span>
     <span class="left">Summary</span>
 </li>
-<li title="Suggestions" role="button" scroll-target="suggestions">
+<!-- <li title="Suggestions" role="button" scroll-target="suggestions">
     <span class="icon"><img src="{{ 'icons/colour_brain.svg' | static_base64 }}"></span>
     <span class="left">Suggestions</span>
-</li>
+</li> -->
 {% endblock %}
 
 {% block inputs %}
@@ -316,6 +316,7 @@
     </div>
     
 </section>
+{#
 <section id="summary">
     <div class="section-topper">
         <img class="icon" src="{{ 'icons/colour_check_circle.svg' | static_base64 }}">
@@ -349,9 +350,39 @@
             </div>
         </div>
     </div>
+</section> #}
+
+<section id="plan">
+    <div class="section-topper">
+        <img class="icon" src="{{ 'icons/colour_check_circle.svg' | static_base64 }}">
+        <h2><mark class="grey">Plan</mark></h2>
+        <button tabindex="2" class="section-copy">Copy Section</button>
+    </div>
+    <div class="vstack">
+        <div class="hstack">
+            <div class="vstack">
+                {{ clinic_input(name="issues", type="textarea", label="Issues List", classes="bigbox short autotall") }}
+                {{ clinic_input(name="plan", type="textarea", label="Anaesthetic Plan", classes="bigbox short autotall") }}
+            </div>
+            <div class="vstack" id="warnings-container">
+    <div class="label-ish">
+        Smart Suggestions ✨
+        <div id="redcap-prompts">
+            <ul class="pill-list">
+            </ul>
+        </div>
+        <div id="warnings">
+        </div>
+    </div>
+</div>
+        </div>
+        <div class="hstack">
+            {{ clinic_input(name="plan-medications", type="textarea", label="Medications and Fasting", classes="bigbox short") }}
+        </div>
+    </div>
 </section>
 
-<section id="suggestions">
+<!-- <section id="suggestions">
     <div class="section-topper">
         <img class="icon" src="{{ 'icons/colour_brain.svg' | static_base64 }}">
         <h2><mark class="grey">Suggestions</mark></h2>
@@ -370,7 +401,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <section id="disclaimer">
     <div class="section-topper">
         <img class="icon" src="{{ 'icons/colour_alert_octagon.svg' | static_base64 }}">

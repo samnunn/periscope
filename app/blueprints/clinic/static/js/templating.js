@@ -50,7 +50,7 @@ let outputTemplates = {
 - {{patient-mets}}
 - {{patient-flat}}
 - Exercise tolerance: {{patient-mets-details}}
-- Clinical frailty score: {{rockwood-cfs}}
+- {{rockwood-cfs}}
 
 # SHx
 - Smoking: {{smoking-status}}
@@ -123,7 +123,7 @@ let outputTemplates = {
 - RCRI: {{rcri-score}}/6
 - SORT: {{sort-score}}%`,
 
-    'summary': `# Summary
+    'plan': `# Summary
 {{systems-summary}}
 
 # Key Issues
