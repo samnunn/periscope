@@ -1,0 +1,152 @@
+{% raw %}
+<div id="addressograph">
+    ATTACH PATIENT LABEL
+</div>
+<header>
+    <h1>Anaesthetic Assessment</h1>
+</header>
+<div id="summary-sidebar" class="vstack">
+    <div class="hstack" id="age-asa-container-row">
+        <div class="box" id="age-box">
+            <span>{{patient-age}}{{patient-sex}}</span>
+        </div>
+        <div class="box alert" id="asa-box">
+            <span>ASA</span>
+            <span id="asa-readout">{{patient-asa}}</span>
+        </div>
+    </div>
+    <div class="box vstack">
+        <h3 class="box-title">Summary</h3>
+        <div class="summary-table">
+            <div class="summary-row" data-value="{{summary-previous-anaesthesia}}">
+                <span class="label">Prev. Anaesthesia</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-anaesthesia-issues}}">
+                <span class="label">Anaes. Issues</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-anaesthesia-issues-fhx}}">
+                <span class="label">FHx</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-mets}}">
+                <span class="label">&lt; 4 METs</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-cardiovascular}}">
+                <span class="label">CVS</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-respiratory}}">
+                <span class="label">Resp.</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-gord}}">
+                <span class="label">GORD</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-endocrine}}">
+                <span class="label">DM/Endo.</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-cns}}">
+                <span class="label">CNS</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-chronic-pain}}">
+                <span class="label">Chronic Pain</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-alcohol}}">
+                <span class="label">Alcohol</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-smoking}}">
+                <span class="label">Smoking</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+            <div class="summary-row" data-value="{{summary-subtance-use}}">
+                <span class="label">Substance Use</span>
+                <span class="cross">❌</span>
+                <span class="tick">✅</span>
+            </div>
+        </div>
+    </div>
+    <div class="box vstack">
+        <h3 class="box-title">Anthropometry</h3>
+        <div class="hstack" id="anthropometry">
+            <div class="summary-table">
+                <div class="summary-row">
+                    <span>Height</span>
+                    <span>{{patient-height}} cm</span>
+                </div>
+                <div class="summary-row">
+                    <span>Weight</span>
+                    <span>{{patient-weight}} kg</span>
+                </div>
+                <!-- <div class="summary-row">
+                    <span>↳ LBW</span>
+                    <span>{{patient-weight}} kg</span>
+                </div>
+                <div class="summary-row">
+                    <span>↳ ABW</span>
+                    <span>{{patient-weight}} kg</span>
+                </div> -->
+            </div> 
+            <div class="" id="bmi">
+                <span>BMI</span>
+                <span>{{patient-bmi}}</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="box vstack">
+        <h3 class="box-title">Airway</h3>
+        <div class="summary-table">
+            <div class="summary-row">
+                <span>Mallampati</span>
+                <span>{{airway-mallampati}}</span>
+            </div>
+            <div class="summary-row">
+                <span>Jaw protrusion</span>
+                <span>{{airway-jaw-protrusion}}</span>
+            </div>
+            <div class="summary-row">
+                <span>Thyromental</span>
+                <span>{{airway-tmd}} cm</span>
+            </div>
+            <div class="summary-row">
+                <span>Mouth Open.</span>
+                <span>{{airway-mouth-opening}} cm</span>
+            </div>
+            <div class="summary-row">
+                <span>Beard</span>
+                <span>{{airway-beard}}</span>
+            </div>
+            <div class="summary-row">
+                <span>Neck ROM</span>
+                <span>{{airway-neckrom}}</span>
+            </div>
+            <div class="summary-row">
+                <span>Cricothyroid</span>
+                <span>{{airway-cricothyroid}}</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endraw %}

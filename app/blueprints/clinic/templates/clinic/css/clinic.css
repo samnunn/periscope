@@ -28,7 +28,7 @@
     --colour-navy: #60a3bc;
     --colour-darkgrey: #1e272e;
     --colour-middlegrey: #576574;
-    --colour-lightgrey: #f0f1f4;
+    --colour-lightgrey: #f4f0f0;
 
     --sidebar-background-colour: var(--colour-darkgrey);
     /* --sidebar-background-colour: color-mix(in srgb, var(--colour-darkgrey), white 5%); */
@@ -58,7 +58,7 @@ html::view-transition-group(.diagnosis) {
 
 * {
     box-sizing: border-box;
-    transition: all 200ms ease;
+    /* transition: all 200ms ease; */
 }
 body {
     /* prevent unhelpful bounce scrolling */
@@ -109,17 +109,6 @@ mark {
 }
 
 /* STYLING */
-.visually-hidden {
-    pointer-events: none;
-    visibility: hidden;
-    display: none;
-}
-
-.outlined {
-    border: 2px solid lightgrey;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1rem 1rem 1rem;
-}
 .invisible-link {
     text-decoration: none;
     color: black;
@@ -169,12 +158,6 @@ section h4 {
     padding: 0 0 0.5rem 0;
 }
 
-.divot {
-    flex-grow: 1;
-    background-color: var(--colour-lightgrey);
-    border-radius: 1rem;
-}
-
 /* GRID */
 .hstack {
     display: grid;
@@ -186,7 +169,8 @@ section h4 {
 .vstack {
     display: flex;
     flex-direction: column;
-    gap: var(--vstack-gap);
+    row-gap: var(--vstack-gap);
+    column-gap: 0;
 }
 .double {
     grid-column-end: span 2;
@@ -517,6 +501,9 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     box-shadow: 0px 3px 10px rgba(0,0,0,0.3);
     border-right: 1px solid lightgray;
 
+    border-top-right-radius: 0.6rem;
+    border-bottom-right-radius: 0.6rem;
+
     hr {
         margin: 0 auto;
         /* width: 80%; */
@@ -553,6 +540,8 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
             outline: 1px solid transparent;
             border-radius: 0.6rem;
             font-size: 1rem;
+
+            transition: width 100ms ease;
 
             span.icon {
                 display: flex;
@@ -643,7 +632,7 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     }
 }
 
-@media (max-width: 680px) {
+@media screen and (max-width: 780px) {
     section .hstack {
         grid-template-columns: 1fr !important;
         gap: 1rem;
@@ -1078,4 +1067,84 @@ th {
     background-color: #2f3640;
     color: white;
     font-weight: bold;
+}
+
+/* Segmented controls */
+fieldset.segmented-control {
+    background-color: lightgrey;
+    border: 2px solid lightgrey;
+    outline: 2px solid transparent;
+    border-radius: 0.5rem;
+
+    margin: 0;
+    padding: 0;
+
+    /* makes the whole controller the width of three segments */
+    height: max-content;
+    width: max-content;
+
+    transition: all 100ms ease, outline 0ms ease;
+
+    display: flex;
+    flex-wrap: nowrap;
+
+    /* starting styles */
+    input[type="radio"] {
+        /* make inert */
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        margin: 0;
+        padding: 0.2rem;
+        height: calc(var(--input-box-height) * 0.75);
+        aspect-ratio: 1.2;
+        font-size: 0.9rem;
+        border-radius: 0.4rem;
+
+        transition: inherit;
+
+        user-select: none;
+    }
+
+    /* exceptional styles */
+    input[type="radio"]:checked + label {
+        background-color: white;
+    }
+    input[type="radio"]:not(:checked) + label {
+        filter: saturate(0);
+    }
+    &:focus-within, &:active {
+        outline-color: var(--colour-darkgrey);
+    }
+}
+
+clinic-input:has(fieldset.segmented-control) {
+
+}
+
+label:has(fieldset.segmented-control) {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    overflow-wrap: break-word;
+    align-items: center;
+}
+
+div#pathology-summary {
+    /* width: max-content; */
+    clinic-input>label {
+        gap: 1rem;
+        /* pointer-events: none; */
+    }
+}
+
+/* Special case for issues input */
+#keyissues-split {
+    grid-template-columns: 1fr minmax(15rem, auto);
 }

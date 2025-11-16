@@ -47,10 +47,10 @@ let outputTemplates = {
 {{pmhx}}
 
 # Fitness
-- Achieving {{patient-mets}} METs
+- {{patient-mets}}
 - {{patient-flat}}
 - Exercise tolerance: {{patient-mets-details}}
-- Clinical frailty score: {{rockwood-cfs}}
+- {{rockwood-cfs}}
 
 # SHx
 - Smoking: {{smoking-status}}
@@ -58,7 +58,8 @@ let outputTemplates = {
 - etOH: {{alcohol-freetext}}
 - Illicit drugs: {{drugs-freetext}}
 - Occupation: {{occupation-freetext}}
-- Functional status: {{functional-freetext}}
+- Functional status: {{functioning-freetext}}
+
 {{other-shx}}`,
 
     'rx': `# Medications
@@ -116,17 +117,15 @@ let outputTemplates = {
 
 
     'risk': `# Risk
-- ASA: {{asa}}
+- ASA: {{patient-asa}}
 - STOP-BANG: {{stopbang-score}}/8
---> {{stopbang-interpretation}}
 - Apfel: {{apfel-score}}/4
---> {{apfel-interpretation}}
 - RCRI: {{rcri-score}}/6
---> {{rcri-interpretation}}
-- SORT
---> {{sort-score}}% 30-day mortality`,
+- SORT: {{sort-score}}%`,
 
-    'plan': `# Assessment
+    'plan': `# Summary
+{{systems-summary}}
+
 # Key Issues
 {{issues}}
 
@@ -164,9 +163,13 @@ export function getRenderedSection(id) {
     // special case: pmhx
     if (id == 'medicalhx') {
         let output = ""
-
+        let hackyCounter = 1
         for (let d of document.querySelectorAll('clinic-diagnosis')) {
-            output += d.renderText()
+            let diagnosisText = d.renderText()
+            diagnosisText = diagnosisText.replace(/^\d*\./m, `${hackyCounter}.`)
+            hackyCounter += 1
+
+            output += diagnosisText
             output += '\n'
         }
 
@@ -176,12 +179,12 @@ export function getRenderedSection(id) {
     }
 
     // special case: citations
-    if (id == 'plan' && document.persistentDataProxy['citations']?.length > 0) {
+    if (id == 'summary' && document.persistentDataProxy['citations']?.length > 0) {
         let output = ""
         let count = 1
 
         let publications = []
-        for (let c of document.persistentDataProxy['citations']) {
+        for (let c of document.persistentDataProxy['citations'] || []) {
             let citation = citationSnippets.find(s => s.id == c)
             if (!citation) continue
             let publication = allPublications.find((p) => p.id == citation.publication)
@@ -194,6 +197,16 @@ export function getRenderedSection(id) {
         }
 
         template = template.replace('{{citations}}', output)
+    }
+
+    // special case: pathology summary
+    if (id == "summary") {
+        let output = ""
+        for (let ps of document.querySelectorAll("#pathology-summary clinic-input")) {
+            output += `- ${ps.renderText()}\n`
+        }
+        output = output.trim()
+        template = template.replace("{{systems-summary}}", output)
     }
 
     // general case
@@ -229,47 +242,6 @@ export function renderEntireDocument() {
 }
 document.renderEntireDocument = () => renderEntireDocument() // make available from main thread
 
-// PRETTY RENDERING
-export function renderPrettyDocument() {
-    // Create a text dump
-    let htmlDump = ''
-    let sectionElements = [...document.querySelectorAll('section')]
-
-    for (let s of sectionElements) {
-        // Render to markdown intermediate
-        let renderedMarkdown = getRenderedSection(s.id)
-
-        // Make markdown into HTML
-        var converter = new showdown.Converter()
-        let renderedHtml = converter.makeHtml(renderedMarkdown)
-
-        // Append section to htmlDump
-        htmlDump += renderedHtml.trim() + '\n\n'
-    }
-    let cssDump = `
-
-
-    <style>
-    body {
-        font-family: sans-serif;
-        margin: 2rem 3rem;
-    }
-    h1 {
-        font-size: 1.4rem;
-        padding-bottom: 0.1em;
-        &:before {
-            content: "# ";
-            color: grey;
-        }
-    }
-    h2, h3, h4 {
-        font-size: 1.1rem;
-    }
-    </style>
-    <span style="font-size: 2.2rem; font-weight: bold; text-align: center;">Royal Perth Hospital</span>`
-    return cssDump + htmlDump
-}
-document.renderPrettyDocument = () => renderPrettyDocument() // make available from main thread
 
 document.addEventListener('mousedown', (e) => {
     if (e.target.matches('div.section-topper, div.section-topper *')) {

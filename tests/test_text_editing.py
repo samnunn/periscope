@@ -6,19 +6,19 @@ from utils import run_preamble
 
 def test_text_expansion(page: Page) -> None:
     run_preamble(page)
-    page.get_by_label("Medications and Fasting").click()
-    page.get_by_label("Medications and Fasting").fill("@fast")
+    page.get_by_label("Key Issues").click()
+    page.get_by_label("Key Issues").fill("@fast")
     page.wait_for_timeout(50)
-    expect(page.get_by_label("Medications and Fasting")).to_have_value(
+    expect(page.get_by_label("Key Issues")).to_have_value(
         re.compile(r"fasting", re.IGNORECASE)
     )
 
 
 def test_auto_dotpoints(page: Page) -> None:
     run_preamble(page)
-    page.get_by_label("Medications and Fasting").click()
+    page.get_by_label("Key Issues").click()
     page.keyboard.insert_text("- Foo")
     page.keyboard.press("Enter")
     page.keyboard.insert_text("Bar")
     page.wait_for_timeout(50)
-    expect(page.get_by_label("Medications and Fasting")).to_have_value("- Foo\n- Bar")
+    expect(page.get_by_label("Key Issues")).to_have_value("- Foo\n- Bar")

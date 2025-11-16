@@ -1,5 +1,3 @@
-import { renderEntireDocument } from '/app/static/js/templating.js'
-
 //    ____                  _       _    ____                                      
 //   / ___| _ __   ___  ___(_) __ _| |  / ___|__ _ ___  ___  ___                   
 //   \___ \| '_ \ / _ \/ __| |/ _` | | | |   / _` / __|/ _ \/ __|                  
@@ -65,7 +63,7 @@ function downloadDocument() {
     // Fabricate a filename (date + UMRN)
     let filename = `${formattedDate} Clinic Patient.txt`
 
-    let textDump = renderEntireDocument()
+    let textDump = document.renderEntireDocument()
 
     // Create sham download link
     let downloadLink = document.createElement('a')
@@ -87,34 +85,10 @@ document.querySelector('#download')?.addEventListener('click', (e) => {
     }
 })
 
-function downloadPrettyDocument() {
-    // let formattedDate = new Date().toISOString().slice(0, 10)
-
-    // Fabricate a filename (date + UMRN)
-    // let filename = `${formattedDate} Clinic Patient.txt`
-
-    let textDump = document.renderPrettyDocument()
-    console.log(textDump)
-
-    // Create sham download link
-    // let downloadLink = document.createElement('a')
-    // downloadLink.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(textDump))
-    // downloadLink.setAttribute('download', filename)
-    // downloadLink.style.display = "none"
-    // document.body.appendChild(downloadLink)
-
-    // // Pull the lever, Kronk
-    // downloadLink.click()
-    let w = window.open()
-    w.document.write(textDump)
-    w.document.close()
-    w.print()
-    w.close()
-}
 document.querySelector('#copy-all')?.addEventListener('click', (e) => {
     // downloadPrettyDocument()
     try {
-        let text = renderEntireDocument()
+        let text = document.renderEntireDocument()
         navigator.clipboard.writeText(text)
         document.displayToast("Copied to clipboard", "success")
     } catch (e) {

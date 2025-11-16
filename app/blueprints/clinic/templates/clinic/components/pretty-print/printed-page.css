@@ -1,0 +1,280 @@
+@media print {
+
+    :root {
+        --spacing-base: 0.25cm;
+
+        --sidebar-width: 5cm;
+        --header-height: 2cm;
+        
+        --colour-red: rgb(192, 57, 43);
+        --colour-darkgrey: #1e272e;
+    
+        --print-border-radius: 0.4rem;
+    }
+
+    /* PAGE SETUP */
+    @page {
+        margin: 1.5cm 1.25cm 2cm 2.2cm;
+        @bottom-right {
+            content: "Page " counter(page) " of " counter(pages);
+        }
+        @bottom-left {
+            content: "{{ today_date }}";
+        }
+        @bottom-center {
+            content: "PLEASE TURN OVER";
+            font-weight: bold;
+            font-size: 8pt;
+        }
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 12pt;
+        font-family: sans-serif;
+        background-color: white;
+    }
+    * {
+        print-color-adjust: exact;
+        font-family: sans-serif;
+    }
+
+    /* TEXT SIZING/SPACING */
+    /* top-level elements were too far apart */
+    section > * {
+        margin-block: 12pt;
+    }
+    h1 {
+        font-size: 24pt;
+        margin: 24pt 0;
+    }
+    h2 {
+        font-size: 16pt;
+        margin: 10pt 0;
+    }
+    h3 {
+        font-size: 12pt;
+        margin: 8pt 0;
+    }
+    h4, h5, h6 {
+        font-size: 12pt;
+        margin: 6pt 0;
+        text-decoration: none;
+        border: none !important;
+        padding: 0 !important;
+    }
+    /* fixes a showdown bug where an empty line between two lists causes all <li> to contain a thicc-margined <p>  */
+    li > p {
+        margin: 0;
+    }
+
+
+    
+    /* GRID */
+    .hstack {
+        display: grid;
+        column-gap: var(--spacing-base);
+        row-gap: 0;
+        grid-template-columns: repeat(auto-fit, minmax(0%, 1fr));
+    }
+    .vstack {
+        display: flex;
+        flex-direction: column;
+        row-gap: var(--spacing-base);
+        column-gap: 0;
+    }
+    
+    /* HEADER */
+    header {
+        height: var(--header-height);
+        display: flex;
+        align-items: center;
+        margin: 0;
+    }
+    #addressograph {
+        height: var(--header-height);
+        aspect-ratio: 2.25;
+        position: absolute;
+        border: 1px dashed black;
+        top: 0;
+        right: 0;
+        font-size: 8pt;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* SIDEBAR POSITIONING */
+    /* (see below for sidebar styling) */
+    /* float: left allows subsequent <section> items to fill the space to the right */
+    /* all subequent <section> items are told to take up maximum-possible width */
+    /* when adjacent the sidebar, they will nestle up against it but on the south side of a page-break (1->2) they will once again nestle against the left side of the page  */
+    /* compare this with manually setting all <section> elements' width: that caused the south-side of a page-broken <section> to be weirdly far away from the left side of the page */
+    #summary-sidebar {
+        float: left;
+    }
+    ul, ol {
+        /* fixes a bug where nested lists (on the first page) were not indenting correctly when locagted to the right of the sidebar element */
+        /* https://stackoverflow.com/questions/11637049/formatting-div-to-the-right-of-a-float-left-problems-with-padding-and-lists */
+        overflow: hidden;
+    }
+
+
+    /* SIDEBAR STYLING */
+    #summary-sidebar {
+        font-size: 10pt;
+
+        width: var(--sidebar-width);
+        height: calc(95vh - var(--header-height)); /* going all the way to 100% seems to cause a page break, unclear why */
+        
+        margin: 0;
+        padding: 0;
+
+        /* this creates a gap between sidebar and <section> elements */
+        /* putting a left padding/margin on the <sections> directly doesn't work on the first page because that space collapses into the left-floated sidebar */
+        /* but a left margin IS put on the sections anyway, in service of the subsequent pages (otherwise the left-translated <h2>s would overflow off the page) */
+        /* applying padding to the elements within the <sections> messes with the nesting of lists */
+        /* multiplied by two because the big <h2>s in each section will be left-translated by 1x --spacing-base (looks nice!) */
+        margin-right: calc(var(--spacing-base) * 2);
+        
+    }
+    .box {
+        background-color: var(--colour-darkgrey);
+        border-radius: var(--print-border-radius);
+        padding: var(--spacing-base);
+        color: white;
+
+        .box-title {
+            margin-block-start: calc(var(--spacing-base) * 0.25);
+            margin-block-end: calc(var(--spacing-base) * 0.5);
+        }
+    }
+    .box.alert {
+        background-color: var(--colour-red);
+        text-align: center;
+        font-weight: bold;
+        color: white;
+    }
+
+    /* SUMMARY ERSATZ-TABLES (RE-IMPLEMENTED WITH GRID) */
+    .summary-table {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: calc(var(--spacing-base) * 0.1);
+    }
+    .summary-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-flow: column; /* when a grid child not accounted for by grid-template-columns necessitates creation of a new ("implicit") column/row, steer CSS towards creating more grid columns */
+        grid-auto-columns: auto; /* when such an implicit column is created, give it a width of `auto` */
+        column-gap: calc(var(--spacing-base) * 0.5);
+    }
+
+    /* TICKS AND CROSSES */
+    /* hide ticks and crosses by default, to be selectively revealed */
+    .summary-row {
+        .cross {
+            visibility: hidden;
+        }
+        .tick {
+            visibility: hidden;
+        }
+    }
+    /* selectively reveal ticks and crosses according to data-value */
+    .summary-row[data-value="yes"] {
+        .tick {
+            visibility: visible;
+        }
+    }
+    .summary-row[data-value="no"] {
+        .cross {
+            visibility: visible;
+        }
+    }
+    
+    /* CUSTOM SIDEBAR BOXES */
+    #anthropometry {
+        grid-template-columns: 1fr auto;
+
+        #bmi {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            font-size: 9pt;
+            padding-inline: 6pt;
+            span:last-of-type {
+                font-size: 18pt;
+                font-weight: bold;
+            }
+        }
+    }
+    #age-asa-container-row {
+        /* this has two functions */
+        /* 1. override media query that makes hstacks single-column on small screens */
+        /* 2. allows age to take up more space than just 50% */
+        grid-template-columns: 1fr minmax(auto, 35%);
+    }
+    #age-box {
+        font-weight: bold;
+        font-size: 26pt;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+    #asa-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        span#asa-readout {
+            font-weight: bold;
+            font-size: 26pt;
+        }
+    }
+
+    /* MAIN TEXT */
+    section.pretty-printed {
+        margin: 0;
+        break-inside: avoid;
+
+        margin-left: calc(var(--spacing-base) * 1);
+    }
+    /* SECTION HEADINGS */
+    section.pretty-printed > h2:first-child {
+        display: inline-block; /* stops dark background from taking up a full pagewidth */
+        margin: 0; /* inline-block kills margin collapse, so this obviates the need for it (sorta, sigh) */
+        padding: 0.3em 0.5em;
+        
+        color: white;
+        background-color: var(--colour-darkgrey);
+        border-radius: var(--print-border-radius);
+
+        transform: translateX(calc(-1 * var(--spacing-base)));
+    }
+    
+    /* move top-level lists a bit closer to inline-start */
+    section.pretty-printed > ul, ol {
+        padding-inline-start: 30px; /* standard is 40px in chromium */
+    }
+
+    section.pretty-printed:has(h2#medicalbackground) {
+        /* allow medical background to be split across multiple pages */
+        /* because it often appears on the first page but is commonly too long to fit */
+        break-inside: auto;
+        li {
+            break-inside: avoid;
+        }
+    }
+
+    /* hide any sections that don't have any rendered text other than the title */
+    /* this complements the js in pretty-print.html that removes any h3+ headers with nothing under them  */
+    /* hacky, but "it seemed like a good idea at the time" */
+    section.pretty-printed:has(>h2):not(:has(li, p)) {
+        display: none;
+    }
+}

@@ -1,8 +1,18 @@
 import base64
+import datetime
 import os
 import random
+import re
 
-from flask import Blueprint, redirect, render_template, url_for
+import jinja2
+from flask import (
+    Blueprint,
+    redirect,
+    render_template,
+    render_template_string,
+    request,
+    url_for,
+)
 from markupsafe import Markup
 
 clinic: Blueprint = Blueprint(
@@ -20,6 +30,11 @@ def index():
 @clinic.route("/preop")
 def preop():
     return render_template("clinic/layouts/pre_assessment.html")
+
+
+@clinic.route("/print")
+def print():
+    return render_template("clinic/layouts/print.html")
 
 
 # CONTEXT PROCESSORS AND FILTERS
@@ -54,27 +69,129 @@ def static_base64(str_in):
         return f"data:{map[ext]};base64," + b64.decode("utf-8")
 
 
-@clinic.context_processor
-def clinic_input_processor():
-    def clinic_input(parameter, label_visible=True, hidden=False, classes=""):
-        template_path = f"clinic/inputs/input-{parameter}.html"
-        return render_template(
-            template_path,
-            parameter=parameter,
-            label_visible=label_visible,
-            hidden=hidden,
-            classes=classes,
-        )
-
-    return dict(clinic_input=clinic_input)
+def render_template_from_file(template, **kwargs):
+    template_path = f"clinic/inputs/input-{template}.html"
+    output = render_template(
+        template_path,
+        parameter=template,
+        label_visible=kwargs.get("label_visible", True),
+        classes=kwargs.get("classes", ""),
+    )
+    return Markup(output)
 
 
 @clinic.context_processor
 def anon_input_processor() -> dict:
-    def anon_input(parameter: str, **kwargs) -> Markup:
-        return Markup("hmm: " + parameter)
+    def anon_input(
+        name="",
+        template="",
+        label="",
+        prefix="",
+        suffix="",
+        default="",
+        options=[],
+        *args,
+        **kwargs,
+    ) -> Markup:
+        # when template is set, render from template on disk
+        # otherwise proceed to render an "anonymous" input on the fly
+        if template:
+            return render_template_from_file(template, **kwargs)
 
-    return dict(anon_input=anon_input)
+        # sanity check
+        if not name:
+            raise TypeError('clinic_input() needs parameter "name" to be set')
+
+        name_validator = re.compile(r"^\w[\w-]+\w$")
+        matches = re.match(pattern=name_validator, string=name)
+        if not matches:
+            raise ValueError(
+                "clinic_input() needs a name containing only lowercase letters and en-dashes"
+            )
+
+        # preflight
+        if not hasattr(request, "anon_templates"):
+            request.anon_templates = []
+
+        # can't use an parameter name for more than one input
+        if name in request.anon_templates:
+            raise jinja2.TemplateError(
+                f"Namespace collision when rendering anonymous templates (the name '{name}' has already been used for another anonymous input)"
+            )
+        request.anon_templates.append(name)
+
+        # create a random id to be assigned to the input, for its <label for="boo"> to refer to
+        input_id = random.randint(10**9, 10**10 - 1)
+
+        # render
+        attrs = f' id="{input_id}"'
+        for key, val in kwargs.items():
+            attrs += f' {key}="{val}"'
+
+        # special case for type="select"
+        if kwargs.get("type", "") == "select":
+            optionstring = ""
+            for o in options:
+                if isinstance(o, str):
+                    optionstring += f'<option value="{o}">{o}</option>\n'
+                else:
+                    optionstring += f'<option value="{o[0]}">{o[1]}</option>\n'
+
+            inputblock = f"""
+            {{% block input %}}
+            <div class="selectbox">
+            <select{attrs}>
+            <option value="" selected></option>
+            {optionstring}
+            </select>
+            </div>
+            {{% endblock %}}
+            """
+
+        # special case for type="radio"
+        elif kwargs.get("type", "") == "radio":
+            radiobuttons = ""
+            for o in options:
+                radiobuttons += f"""
+                    <input type="radio" name="radios-{name}" id="{input_id}-{o[0]}" tabindex="0" value="{o[0]}">
+                    <label for="{input_id}-{o[0]}">{o[1]}</label>
+                """
+            inputblock = f"""
+            {{% block input %}}
+            <fieldset {attrs} class="segmented-control">
+            {radiobuttons}
+            </fieldset>
+            {{% endblock %}}
+            """
+
+        # special case for textarea
+        elif kwargs.get("type", "") == "textarea":
+            inputblock = f"""{{% block input %}}<textarea autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="{kwargs.get("placeholder", "")}"{attrs}></textarea>{{% endblock %}}"""
+
+        # general case
+        else:
+            inputblock = f"{{% block input %}}<input{attrs}>{{% endblock %}}"
+
+        templatestring = f"""
+        {{% extends 'clinic/inputs/_base_input.html' %}}
+        {{% block label %}}{label}{{% endblock %}}
+        {{% block prefix %}}{prefix or label or ""}{{% endblock %}}
+        {{% block suffix %}}{suffix}{{% endblock %}}
+        {inputblock}
+        """
+
+        output = render_template_string(
+            templatestring,
+            parameter=name,
+            input_id=input_id,
+            default_value=default,
+            label_visible=bool(label),
+            classes=kwargs.get("classes", ""),
+        )
+
+        return Markup(output)
+
+    return dict(clinic_input=anon_input)
 
 
 @clinic.context_processor
@@ -131,3 +248,8 @@ def random_number_processor():
         return "".join([str(random.randint(0, 9)) for _ in range(10)])
 
     return dict(random_number=random_number)
+
+
+@clinic.context_processor
+def inject_today_date():
+    return {"today_date": datetime.date.today()}

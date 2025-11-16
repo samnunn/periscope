@@ -4,9 +4,14 @@
     data-clinic-output-prefix="{% block prefix %}{% endblock %}"
     data-clinic-output-suffix="{% block suffix %}{% endblock %}"
     data-clinic-search-string="{% block search %}{% endblock %}"
+    data-clinic-default-value="{{ default_value }}"
     {% if hidden %}hidden{% endif %}
 >
-    {% if label_visible %}<label>{% endif %}
+    {% if label_visible %}
+        <label
+            {% if input_id %}for="{{ input_id }}"{% endif %}
+        >
+    {% endif %}
     {% if label_visible %}{% block label %}{% endblock %}{% endif %}
     {% block input %}{% endblock %}
     {% if label_visible %}</label>{% endif %}

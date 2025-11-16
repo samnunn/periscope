@@ -1,5 +1,5 @@
 import { sendToBeagle } from '/app/static/js/beagle-utils.js'
-import { insertClinicDiagnosis, diagnosisList } from '/app/static/js/historian.js'
+import { insertClinicDiagnosis } from '/app/static/js/historian.js'
 
 //    ____        _          ____               _     _                            
 //   |  _ \  __ _| |_ __ _  |  _ \ ___ _ __ ___(_)___| |_ ___ _ __   ___ ___       
@@ -79,7 +79,11 @@ window.addEventListener("DOMContentLoaded", async () => {
     // restore nested data in diagnoses
     for (let id of document.persistentDataProxy['diagnoses-order'] || []) {
         let storedData = document.persistentDataProxy[id]
-        insertClinicDiagnosis(storedData, diagnosisList, false)
+        if (storedData) {
+            insertClinicDiagnosis(id, false)
+        } else {
+            console.error(`Failed to re-instate diagnosis "${id}": no data in persistentDataProxy`)
+        }
     }
 
     // give Beagle its intial sniff (to generate issues/suggestions)

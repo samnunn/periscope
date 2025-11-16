@@ -7,24 +7,10 @@
 
 {% block inputs %}
 <div class="hstack">
-    <label>
-        Confirmed Diagnosis
-        <div class="selectbox">
-            <select diagnosis-parameter="Confirmed diagnosis">
-                <option selected="" value="">
-                </option>
-                <option value="YES">
-                    Yes
-                </option>
-                <option value="no">
-                    No
-                </option>
-            </select>
-        </div>
-    </label>
+    {{ clinic_input(name="anaphylaxis-confirmed", label="Confirmed Diagnosis", prefix="self", type="select", options=[
+        ("Confirmed diagnosis", "Yes"),
+        ("Unconfirmed diagnosis", "No")
+    ] ) }}
+    {{ clinic_input(name="anaphylaxis-triggers", label="Triggers", type="text") }}
 </div>
-<label>
-    Triggers
-    <input diagnosis-parameter="Triggers" type="text"/>
-</label>
 {% endblock %}

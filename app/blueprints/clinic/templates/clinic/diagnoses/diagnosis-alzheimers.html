@@ -6,33 +6,13 @@
 {% block deleted_callback %}{% endblock %}
 
 {% block inputs %}
-<label>
-    Type
-    <input diagnosis-parameter="Type" type="text"/>
-</label>
-<label>
-    Aetiology
-    <input diagnosis-parameter="Aetiology" type="text"/>
-</label>
+{{ clinic_input(name="dementia-type", label="Type", type="text") }}
+
 <div class="hstack">
-    <label>
-        Baseline MoCA/MMSE
-        <input diagnosis-parameter="Baseline MoCA/MMSE" max="30" min="0" step="1" type="number"/>
-    </label>
-    <label>
-        Can Lay Still
-        <div class="selectbox">
-            <select autocomplete="off" diagnosis-parameter="Can lay still">
-                <option selected="" value="">
-                </option>
-                <option value="yes">
-                    Yes
-                </option>
-                <option value="NO">
-                    No
-                </option>
-            </select>
-        </div>
-    </label>
+    {{ clinic_input(name="dementia-baseline-moca", label="Baseline MoCA", type="number", min="0", max="30", step="1") }}
+    {{ clinic_input(name="dementia-lays-still", label="Likely to Lay Still", prefix="self", type="select", options=[
+        ("Likely to lay still", "Yes"),
+        ("Unlikely to lay still", "No")
+    ] ) }}
 </div>
 {% endblock %}

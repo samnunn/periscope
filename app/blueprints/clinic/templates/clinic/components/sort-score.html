@@ -17,22 +17,22 @@
         </form>
         <ul id="smart-results" class="pill-list"></ul>
     </clinic-navigable-list>
-    {{ clinic_input("sort-group") | safe }}
-    {{ clinic_input("sort-subgroup") | safe }}
-    {{ clinic_input("sort-operation") | safe }}
+    {{ clinic_input(template="sort-group") }}
+    {{ clinic_input(template="sort-subgroup") }}
+    {{ clinic_input(template="sort-operation") }}
 
     <div class="hstack">
-        {{ clinic_input("patient-age") | safe }}
-        {{ clinic_input("patient-asa") | safe }}
+        {{ clinic_input(template="patient-age") }}
+        {{ clinic_input(template="patient-asa") }}
     </div>
     <div class="hstack">
-        {{ clinic_input("sort-urgency") | safe }}
-        {{ clinic_input("sort-malignancy") | safe }}
+        {{ clinic_input(template="sort-urgency") }}
+        {{ clinic_input(template="sort-malignancy") }}
     </div>
-    {{ clinic_input("sort-tgv") | safe }}
+    {{ clinic_input(template="sort-tgv") }}
     
     <span>
-        {{ clinic_input("sort-score", label_visible=False) | safe }} % 30-day mortality
+        ↳ {{ clinic_input(template="sort-score", label_visible=False) }} % 30-day mortality
         <clinic-modal-popup>
             <button class="infobutton" tabindex="-1"></button>
             <template>

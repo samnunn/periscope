@@ -6,66 +6,24 @@
 {% block deleted_callback %}{% endblock %}
 
 {% block inputs %}
+
 <div class="hstack">
-    <label>
-        Type
-        <div class="selectbox">
-            <select autocomplete="off" diagnosis-parameter="Type">
-                <option selected="" value="">
-                </option>
-                <option value="paroxysmal">
-                    Paroxysmal (≥ 7 days)
-                </option>
-                <option value="persistent">
-                    Persistent (≥ 7 days)
-                </option>
-                <option value="longstanding">
-                    Longstanding (≥ 1 year)
-                </option>
-                <option value="permanent">
-                    Permanent (cardioversion-resistant)
-                </option>
-            </select>
-        </div>
-    </label>
-    <label>
-        <span>
-            CHA
-            <sub>
-                2
-            </sub>
-            DS
-            <sub>
-                2
-            </sub>
-            -VASc
-        </span>
-        <input diagnosis-parameter="CHADS-VASc" max="8" min="0" step="1" type="number"/>
-    </label>
+{{ clinic_input(name="afib-type", label="Type", type="select", options=[
+    ("paroxysmal", "Paroxysmal (&lt; 7 days)"),
+    ("persistent", "Persistent (≥ 7 days)"),
+    ("longstanding", "Longstanding (≥ 1 year)"),
+    ("permanent", "Permanent (cardioversion-resistant)"),
+])}}
+{{ clinic_input(name="afib-chadsvasc", label="CHADS-VASc", type="number", min="0", max="8", step="1") }}
 </div>
+
 <div class="hstack">
-    <label>
-        Rate Control
-        <input diagnosis-parameter="Rate control" max="8" min="0" step="1" type="text"/>
-    </label>
-    <label>
-        Rhythm Control
-        <input diagnosis-parameter="Rhythm control" max="8" min="0" step="1" type="text"/>
-    </label>
+    {{ clinic_input(name="afib-ratecontrol", label="Rate Control", prefix="Rate control", type="text") }}
+    {{ clinic_input(name="afib-rhythmcontrol", label="Rhythm Control", prefix="Rhythm control", type="text") }}
 </div>
-<label>
-    Anticoagulated
-    <div class="selectbox">
-        <select autocomplete="off" diagnosis-parameter="Anticoagulated">
-            <option selected="" value="">
-            </option>
-            <option value="YES">
-                Yes
-            </option>
-            <option value="no">
-                No
-            </option>
-        </select>
-    </div>
-</label>
+
+{{ clinic_input(name="afib-anticoagulated", label="Anticoagulated", prefix="self", type="select", options=[
+    ("Anticoagulated", "Yes"),
+    ("NOT anticoagulated", "No")
+])}}
 {% endblock %}

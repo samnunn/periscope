@@ -7,13 +7,10 @@
 
 {% block inputs %}
 <div class="vstack">
-    <label>
-        Aetiology
-        <input diagnosis-parameter="Aetiology" type="text"/>
-    </label>
+    {{ clinic_input(name="hf-aetiology", label="Aetiology", type="text") }}
     <div class="hstack">
-        {{ clinic_input("hf-nyha") | safe }}
-        {{ clinic_input("hf-lvef") | safe }}
+        {{ clinic_input(template="hf-lvef") }}
+        {{ clinic_input(template="hf-nyha") }}
     </div>
 </div>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block default_name %}Ischaemic heart disease{% endblock %}
 {% block search_keywords %}ischaemic heart disease NSTEMI{% endblock %}
 {% block added_callback %}inputData['rcri-ihd'] = true{% endblock %}
-{% block deleted_callback %}{% endblock %}
+{% block deleted_callback %}inputData['rcri-ihd'] = false{% endblock %}
 
 {% block inputs %}
 <div class="hstack">
@@ -22,7 +22,7 @@
             </select>
         </div>
     </label>
-    {{ clinic_input("antiplatelet-use") | safe }}
+    {{ clinic_input(template="antiplatelet-use") }}
 </div>
 <label>
     Last Stress Test

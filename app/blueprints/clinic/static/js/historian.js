@@ -6,7 +6,7 @@ import { getAnyInputValue } from '/app/static/js/utils.js'
 //   |  _  | \__ \ || (_) | |  | | (_| | | | |                                     
 //   |_| |_|_|___/\__\___/|_|  |_|\__,_|_| |_|                                     
 
-export let diagnosisList = document.querySelector('#diagnosis-list')
+let diagnosisList = document.querySelector('#diagnosis-list')
 let diagnosisSearchBox = document.querySelector('#diagnosis-search input')
 let diagnosisSearchResultsList = document.querySelector('#diagnosis-results ul')
 
@@ -29,9 +29,7 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         // annoyingly, connectedCallback() also gets called
         // we don't want it to double-populate (or over-write) the element
         // if (this.getAttribute('clinic-parameter')) return
-
-        // set diagnosis title
-        this.querySelector('input.diagnosis-title').value = this.dataset.diagnosisDefaultName || ''
+        // TODO: replace this functionality
 
         // populate with stored data
 
@@ -73,7 +71,7 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         let output = ""
 
         // get name
-        output += `- ${data['name']}`
+        output += `1. ${data['name']}`
 
         // delete surplus keys
         delete data['name']
@@ -92,13 +90,12 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
         }
 
         // add in <clinic-input> elements
-        // TODO: eliminate the need for this hack
         for (let input of this.querySelectorAll('clinic-input')) {
             try {
-                let pre = input.dataset.clinicOutputPrefix
-                let main = document.persistentDataProxy[input.dataset.clinicParameter]
-                let suffix = input.dataset.clinicOutputSuffix || ""
-                output = output + `\n\t- ${pre}: ${main}${suffix}`
+                let inputText = input.renderText()
+                if (inputText.length > 0) {
+                    output += `\n\t- ${inputText}`
+                }
             } catch (e) {
                 console.error(`Failed to render text for <clinic-input> embedded in <clinic-diagnosis>`, e)
             }
@@ -135,10 +132,10 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
 
         // call removedCallback()
         try {
-            let callback = new Function('inputData', this.dataset.diagnosisRemovedCallback)
+            let callback = new Function('inputData', this.dataset.diagnosisDeletedCallback)
             callback(document.persistentDataProxy)
         } catch (e) {
-            console.warn(`Failed to execute diagnosis-removed-callback for ${this.dataset.diagnosisId}:\n`, e)
+            console.warn(`Failed to execute diagnosis-deleted-callback for ${this.dataset.diagnosisId}:\n`, e)
         }
 
         // delete from document.persistentDataProxy (which will trigger Beagle to re-evaulate too)
@@ -169,35 +166,35 @@ customElements.define('clinic-diagnosis', class extends HTMLElement {
     }
 })
 
-export function insertClinicDiagnosis(data, target, focus = true) {
-    let template = document.querySelector(`template#${data["id"]}`)
-    let customName
+export function insertClinicDiagnosis(diagnosisID, diagnosisName, focus = true) {
+    // find template
+    let template = document.querySelector(`template#${diagnosisID}`)
+    // or default to diagnosis-blank
     if (!template) {
         template = document.querySelector("template#diagnosis-blank")
-        customName = data["name"]
     }
     let newDiagnosisNode = template.content.cloneNode(true)
 
-    // Set a unique transition ID
-    // Each one needs its own unique ID so they can transition independently
-    newDiagnosisNode.style = `view-transition-name: ${data["id"]};`
-    newDiagnosisNode.querySelector("clinic-diagnosis").setAttribute("data-diagnosis-id", data["id"])
+    // over-write baked-in id (idempotent if using a built-in diagnosis, important when creating a custom one)
+    newDiagnosisNode.querySelector("clinic-diagnosis").setAttribute("data-diagnosis-id", diagnosisID)
 
-    // handle custom-named diagnoses
-    if (customName) {
-        newDiagnosisNode.querySelector("clinic-diagnosis").setAttribute("data-diagnosis-default-name", data["name"])
+    // write provided name to DOM
+    if (diagnosisName) {
+        let nameInput = newDiagnosisNode.querySelector(`[diagnosis-parameter="name"]`)
+        nameInput.value = diagnosisName
     }
 
-    // Create new diagnosis markup with data from target <li>
-    target.prepend(newDiagnosisNode)
-    let newDiagnosisElement = diagnosisList.querySelector("clinic-diagnosis")
+    // set a unique view-transition id, needed for the reordering animation
+    newDiagnosisNode.querySelector("clinic-diagnosis").style = `view-transition-name: ${diagnosisID};`
+
+    // add to dom
+    diagnosisList.prepend(newDiagnosisNode)
 
     if (focus == true) {
         // Open it and set focus on the first non-title input element (be it a textarea or an input)
+        let newDiagnosisElement = diagnosisList.querySelector("clinic-diagnosis")
         setFocusedDiagnosis(newDiagnosisElement, true)
     }
-
-    return newDiagnosisElement
 }
 
 // Handle expansion/shrinking of each diagnosis
@@ -232,11 +229,10 @@ diagnosisList?.addEventListener('keydown', (e) => {
 })
 
 // SEARCH RESULTS
-function insertSearchResult(target, data) {
+function insertSearchResult(diagnosisID, diagnosisName) {
 
     let newResult = document.createElement('li')
-    newResult.innerHTML = `<span>${data['name']}</span><button tabindex="-1">Add</button></li>`
-    newResult.data = data
+    newResult.innerHTML = `<span>${diagnosisName}</span><button tabindex="-1">Add</button></li>`
     newResult.onmousedown = (e) => {
         e.preventDefault() // don't steal focus
         let containingResultsList = e.target.closest('clinic-navigable-list')
@@ -247,12 +243,12 @@ function insertSearchResult(target, data) {
     newResult.onclick = (e) => {
         // insert new diagnosis
         // or focus existing version
-        let existingDiagnosis = document.querySelector(`[data-diagnosis-id="${data['id']}"]`)
+        let existingDiagnosis = document.querySelector(`[data-diagnosis-id="${diagnosisID}"]`)
         if (existingDiagnosis) {
             setFocusedDiagnosis(existingDiagnosis, true)
         } else {
             // add diagnosis
-            insertClinicDiagnosis(data, diagnosisList, true)
+            insertClinicDiagnosis(diagnosisID, diagnosisName, true)
 
             // dispatch drag event
             diagnosisList.parentElement.dispatchEvent(new Event('clinic:draglist-reorder', { bubbles: true }))
@@ -260,7 +256,7 @@ function insertSearchResult(target, data) {
         // clear search
         diagnosisSearchBox.value = ''
     }
-    target.insertAdjacentElement("beforeend", newResult)
+    diagnosisSearchResultsList.insertAdjacentElement("beforeend", newResult)
 }
 
 // diagnosis search setup
@@ -294,15 +290,14 @@ diagnosisSearchBox?.addEventListener('input', (e) => {
 
     // Post new results list
     for (let r of results) {
-        // send a shallow copy of the object
-        // prevents ['id] from being mutated by insertSearchResults()
-        // as much as rust is a pain, at least passing references vs copies is obvious
-        console.log()
-        insertSearchResult(diagnosisSearchResultsList, { ...r.obj })
+        insertSearchResult(r.obj["id"], r.obj["name"])
     }
     // Post unedited query string as the last option
     if (searchString.length > 0) {
-        insertSearchResult(diagnosisSearchResultsList, { name: escapeHTML(searchString), id: `diagnosis-user-defined-${Math.floor(Math.random() * 1000000000)}` })
+        insertSearchResult(
+            `diagnosis-user-defined-${Math.floor(Math.random() * 1000000000)}`, // random id
+            escapeHTML(searchString), // safely escaped name
+        )
     }
 
     // Mark first result as "selected"
