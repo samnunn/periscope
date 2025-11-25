@@ -500,10 +500,7 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     background-color: var(--sidebar-background-colour);
     box-shadow: 0px 3px 10px rgba(0,0,0,0.3);
     border-right: 1px solid lightgray;
-
-    border-top-right-radius: 0.6rem;
-    border-bottom-right-radius: 0.6rem;
-
+    
     hr {
         margin: 0 auto;
         /* width: 80%; */
