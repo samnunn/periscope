@@ -5,17 +5,17 @@
 <header>
     <h1>Anaesthetic Assessment</h1>
 </header>
-<div id="summary-sidebar" class="vstack">
+<div id="summary-sidebar" class="">
     <div class="hstack" id="age-asa-container-row">
-        <div class="box" id="age-box">
+        <div class="" id="age-box">
             <span>{{patient-age}}{{patient-sex}}</span>
         </div>
-        <div class="box alert" id="asa-box">
+        <div class="alert" id="asa-box">
             <span>ASA</span>
             <span id="asa-readout">{{patient-asa}}</span>
         </div>
     </div>
-    <div class="box vstack">
+    <div class="vstack">
         <h3 class="box-title">Summary</h3>
         <div class="summary-table">
             <div class="summary-row" data-value="{{summary-previous-anaesthesia}}">
@@ -85,7 +85,7 @@
             </div>
         </div>
     </div>
-    <div class="box vstack">
+    <div class="vstack">
         <h3 class="box-title">Anthropometry</h3>
         <div class="hstack" id="anthropometry">
             <div class="summary-table">
@@ -98,22 +98,22 @@
                     <span>{{patient-weight}} kg</span>
                 </div>
                 <!-- <div class="summary-row">
-                    <span>↳ LBW</span>
+                    <span>↳ Lean</span>
                     <span>{{patient-weight}} kg</span>
                 </div>
                 <div class="summary-row">
-                    <span>↳ ABW</span>
+                    <span>↳ Ideal</span>
                     <span>{{patient-weight}} kg</span>
                 </div> -->
+                <div class="summary-row">
+                    <span>BMI</span>
+                    <span>{{patient-bmi}}</span>
+                </div>
             </div> 
-            <div class="" id="bmi">
-                <span>BMI</span>
-                <span>{{patient-bmi}}</span>
-            </div>
         </div>
 
     </div>
-    <div class="box vstack">
+    <div class="vstack">
         <h3 class="box-title">Airway</h3>
         <div class="summary-table">
             <div class="summary-row">

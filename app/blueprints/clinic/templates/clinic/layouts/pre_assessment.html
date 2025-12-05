@@ -350,34 +350,50 @@
             </div>
         </div>
     </div>
-</section> #}
+</section>
+#}
 
-<section id="plan">
+<section id="summary">
     <div class="section-topper">
         <img class="icon" src="{{ 'icons/colour_check_circle.svg' | static_base64 }}">
-        <h2><mark class="grey">Plan</mark></h2>
+        <h2><mark class="grey">Summary</mark></h2>
         <button tabindex="2" class="section-copy">Copy Section</button>
     </div>
     <div class="vstack">
-        <div class="hstack">
+        <div class="hstack" style="grid-template-columns: 1fr 35ch; column-gap: calc(1.5 * var(--hstack-gap));">
             <div class="vstack">
-                {{ clinic_input(name="issues", type="textarea", label="Issues List", classes="bigbox short autotall") }}
-                {{ clinic_input(name="plan", type="textarea", label="Anaesthetic Plan", classes="bigbox short autotall") }}
+                {{ clinic_input(name="issues", type="textarea", label="Issues List", prefix="self", classes="bigbox short autotall") }}
+                {{ clinic_input(name="plan", type="textarea", label="Anaesthetic Plan", prefix="self", classes="bigbox short autotall") }}
             </div>
-            <div class="vstack" id="warnings-container">
-    <div class="label-ish">
-        Smart Suggestions ✨
-        <div id="redcap-prompts">
-            <ul class="pill-list">
-            </ul>
+            <div class="vstack" id="pathology-summary">
+                <div class="label-ish">
+                    <span> </span>
+                    {{ clinic_input(name="summary-previous-anaesthesia", label="Prev. Anaesthesia", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-anaesthesia-issues", label="Anaesthesia Issues", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-anaesthesia-issues-fhx", label="Family History", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-mets", label="≤ 4 METs", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-cardiovascular", label="Cardiovascular", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-respiratory", label="Respiratory", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-gord", label="GORD", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-endocrine", label="DM/Endocrine", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-cns", label="CNS", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-chronic-pain", label="Chronic Pain", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-alcohol", label="Alcohol", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-smoking", label="Smoking", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                    {{ clinic_input(name="summary-subtance-use", label="Substance Use", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
+                </div>
+            </div>
         </div>
-        <div id="warnings">
-        </div>
-    </div>
-</div>
-        </div>
-        <div class="hstack">
-            {{ clinic_input(name="plan-medications", type="textarea", label="Medications and Fasting", classes="bigbox short") }}
+        <div class="vstack" id="warnings-container">
+            <div class="label-ish">
+                Smart Suggestions ✨
+                <div id="redcap-prompts">
+                    <ul class="pill-list">
+                    </ul>
+                </div>
+                <div id="warnings">
+                </div>
+            </div>
         </div>
     </div>
 </section>

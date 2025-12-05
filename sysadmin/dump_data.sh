@@ -1,1 +1,0 @@
-docker exec -it periscope pipenv run python lib/dump_data.py
