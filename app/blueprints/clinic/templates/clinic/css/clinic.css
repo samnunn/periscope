@@ -338,11 +338,11 @@ footer {
 
 /* hide suggestions box when there are none */
 /* bit of an ugly selector, sigh */
-#warnings-container {
+#suggestions {
     display: none;
 }
-#warnings-container:has([beagle-suggestion-name], #warnings > ul:not(.auto_hide)) {
-    display: flex;
+#suggestions:has([beagle-suggestion-name], #warnings > ul:not(.auto_hide)) {
+    display: block;
 }
 ul.auto_hide:not(:has([beagle-suggestion-name])) {
     display: none;
