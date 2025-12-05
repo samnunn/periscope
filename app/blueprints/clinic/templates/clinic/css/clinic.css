@@ -28,7 +28,7 @@
     --colour-navy: #60a3bc;
     --colour-darkgrey: #1e272e;
     --colour-middlegrey: #576574;
-    --colour-lightgrey: #f4f0f0;
+    --colour-lightgrey: #f4f4f4;
 
     --sidebar-background-colour: var(--colour-darkgrey);
     /* --sidebar-background-colour: color-mix(in srgb, var(--colour-darkgrey), white 5%); */
@@ -401,11 +401,12 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
     
     li.added {
         /* crude but effective */
-        opacity: 0.4;
+        --pill-colour: color-mix(in srgb, var(--colour-lightgrey), transparent 60%);
+        color: rgba(0,0,0,0.4);
     }
 
     /* indented lists for the suggestions */
-    > ul {
+    /* > ul {
         --left-padding: 1.5rem;
         margin-left: var(--left-padding);
         position: relative;
@@ -421,7 +422,7 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
             position: absolute;
             right: 100%;
         }
-    }
+    } */
 
     @supports (-moz-appearance: none) {
         & >li::before {
@@ -1122,6 +1123,60 @@ fieldset.segmented-control {
     }
 }
 
+#warnings {
+    --arrow-gutter-width: 4rem;
+    
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    gap: 0.5rem;
+
+    ul.pill-list[beagle-bone-id] {
+        display: grid;
+        column-gap: var(--arrow-gutter-width);
+        grid-template-columns: 1fr 1fr;
+
+        
+        /* issue pill */
+        > li {
+            height: fit-content;
+            /* prevents pill from stretching vertically to fill the grid-row */
+        }
+        
+        /* associated suggestions */
+        > ul {
+            li {
+                position: relative;
+            }
+            li:nth-child(1)::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: var(--arrow-gutter-width);
+                transform: translateX(calc(-2px + -1 * var(--arrow-gutter-width)));
+                border-bottom: 2px solid lightgrey;
+            }
+            li:nth-child(n+2)::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 50%;
+                width: calc(0.5 * var(--arrow-gutter-width));
+                height: 125%;
+                transform: translateX(calc(-2px + -0.5 * var(--arrow-gutter-width)));
+                
+                border-bottom: 2px solid lightgrey;
+                border-left: 2px solid lightgrey;
+
+            }
+            li:last-child::before {
+                border-bottom-left-radius: 0.5rem;
+            }
+        }
+    }
+}
+
 clinic-input:has(fieldset.segmented-control) {
 
 }
@@ -1131,17 +1186,4 @@ label:has(fieldset.segmented-control) {
     grid-template-columns: 1fr auto;
     overflow-wrap: break-word;
     align-items: center;
-}
-
-div#pathology-summary {
-    /* width: max-content; */
-    clinic-input>label {
-        gap: 1rem;
-        /* pointer-events: none; */
-    }
-}
-
-/* Special case for issues input */
-#keyissues-split {
-    grid-template-columns: 1fr minmax(15rem, auto);
 }
