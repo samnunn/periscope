@@ -31,7 +31,6 @@
         margin: 0;
         padding: 0;
         font-size: 12pt;
-        font-family: sans-serif;
         background-color: white;
     }
     * {
@@ -92,8 +91,8 @@
         margin: 0;
     }
     #addressograph {
-        height: var(--header-height);
-        aspect-ratio: 2.25;
+        height: calc(var(--header-height) * 0.85);
+        aspect-ratio: 2.5;
         position: absolute;
         border: 1px dashed black;
         top: 0;
@@ -125,9 +124,10 @@
     /* SIDEBAR STYLING */
     #summary-sidebar {
         font-size: 10pt;
+        background-color: white;
 
         width: var(--sidebar-width);
-        height: calc(95vh - var(--header-height)); /* going all the way to 100% seems to cause a page break, unclear why */
+        height: calc(98vh - var(--header-height)); /* going all the way to 100% seems to cause a page break, unclear why */
         
         margin: 0;
         padding: 0;
@@ -138,24 +138,17 @@
         /* applying padding to the elements within the <sections> messes with the nesting of lists */
         /* multiplied by two because the big <h2>s in each section will be left-translated by 1x --spacing-base (looks nice!) */
         margin-right: calc(var(--spacing-base) * 2);
+        border-right: 2px solid black;
         
     }
-    .box {
-        background-color: var(--colour-darkgrey);
-        border-radius: var(--print-border-radius);
-        padding: var(--spacing-base);
-        color: white;
-
-        .box-title {
-            margin-block-start: calc(var(--spacing-base) * 0.25);
-            margin-block-end: calc(var(--spacing-base) * 0.5);
-        }
+    #summary-sidebar > div {
+        border-top: 2px solid black;
+        padding-right: var(--spacing-base);
+        padding-bottom: var(--spacing-base);
+        padding-top: var(--spacing-base);
     }
-    .box.alert {
-        background-color: var(--colour-red);
-        text-align: center;
-        font-weight: bold;
-        color: white;
+    .box-title {
+        margin: 0;
     }
 
     /* SUMMARY ERSATZ-TABLES (RE-IMPLEMENTED WITH GRID) */
@@ -197,25 +190,18 @@
     /* CUSTOM SIDEBAR BOXES */
     #anthropometry {
         grid-template-columns: 1fr auto;
-
-        #bmi {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-            font-size: 9pt;
-            padding-inline: 6pt;
-            span:last-of-type {
-                font-size: 18pt;
-                font-weight: bold;
-            }
-        }
     }
     #age-asa-container-row {
+        padding: 0 !important;
         /* this has two functions */
         /* 1. override media query that makes hstacks single-column on small screens */
         /* 2. allows age to take up more space than just 50% */
         grid-template-columns: 1fr minmax(auto, 35%);
+        gap: 0;
+
+        div {
+            padding-block: var(--spacing-base);
+        }
     }
     #age-box {
         font-weight: bold;
@@ -224,6 +210,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        border-right: 2px solid black;
 
     }
     #asa-box {
@@ -244,18 +231,10 @@
 
         margin-left: calc(var(--spacing-base) * 1);
     }
-    /* SECTION HEADINGS */
-    section.pretty-printed > h2:first-child {
-        display: inline-block; /* stops dark background from taking up a full pagewidth */
-        margin: 0; /* inline-block kills margin collapse, so this obviates the need for it (sorta, sigh) */
-        padding: 0.3em 0.5em;
-        
-        color: white;
-        background-color: var(--colour-darkgrey);
-        border-radius: var(--print-border-radius);
-
-        transform: translateX(calc(-1 * var(--spacing-base)));
+    section.pretty-printed:has(*) {
+        border-top: 2px solid black;
     }
+
     
     /* move top-level lists a bit closer to inline-start */
     section.pretty-printed > ul, ol {
