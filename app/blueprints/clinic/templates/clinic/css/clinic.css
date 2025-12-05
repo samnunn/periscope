@@ -1177,8 +1177,24 @@ fieldset.segmented-control {
     }
 }
 
-clinic-input:has(fieldset.segmented-control) {
+    /* placeholder */
+    &:not(:has(li[beagle-suggestion-name]))::after {
+        content: "Management suggestions will appear automatically.";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 50%;
+        height: 100%;
 
+        font-size: 1rem;
+        opacity: 0.3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        text-wrap: balance;
+        padding: 0 1rem;
+    }
 }
 
 label:has(fieldset.segmented-control) {
