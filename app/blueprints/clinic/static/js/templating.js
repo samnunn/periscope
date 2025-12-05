@@ -123,7 +123,7 @@ let outputTemplates = {
 - RCRI: {{rcri-score}}/6
 - SORT: {{sort-score}}%`,
 
-    'plan': `# Summary
+    'plan': `# Systems Review
 {{systems-summary}}
 
 # Key Issues
@@ -179,7 +179,7 @@ export function getRenderedSection(id) {
     }
 
     // special case: citations
-    if (id == 'summary' && document.persistentDataProxy['citations']?.length > 0) {
+    if (id == 'plan' && document.persistentDataProxy['citations']?.length > 0) {
         let output = ""
         let count = 1
 
@@ -200,7 +200,7 @@ export function getRenderedSection(id) {
     }
 
     // special case: pathology summary
-    if (id == "summary") {
+    if (id == "plan") {
         let output = ""
         for (let ps of document.querySelectorAll("#pathology-summary clinic-input")) {
             output += `- ${ps.renderText()}\n`
