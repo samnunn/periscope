@@ -358,9 +358,9 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
 
     & li, .pill {
         --pill-colour: var(--colour-lightgrey);
-        list-style-type: none;
         background-color: var(--pill-colour);
-        border: 2px solid lightgrey;
+        border: 2px solid color-mix(in srgb, black, var(--pill-colour) 85%);
+        list-style-type: none;
         margin: 0;
         padding: 0.5rem;
         border-radius: 0.5rem;
@@ -379,24 +379,15 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
         }
 
         &:hover {
-            background-color: color-mix(in srgb, white, var(--pill-colour) 80%);
+            background-color: color-mix(in oklab, white, var(--pill-colour) 90%);
         }
-        &:hover:active:not(:has(clinic-modal-popup:active)) {
-            border-color: var(--colour-darkgrey);
-            background-color: var(--pill-colour);
-            /* transform: scale(0.99); */
-        }
+
     }
 
 
     li[aria-selected] {
-        background-color: var(--colour-darkgrey);
-        border-color: color-mix(in oklab, var(--colour-darkgrey) 80%, black);
+        --pill-colour: var(--colour-darkgrey);
         color: white;
-
-        &:active {
-            background-color: color-mix(in oklab, var(--colour-darkgrey) 90%, black) !important;
-        }
     }
     
     li.added {
@@ -725,10 +716,6 @@ ul.auto_hide:not(:has([beagle-suggestion-name])) {
             display: grid;
         }
     }
-    li:not([aria-selected="true"]) {
-        background-color: color-mix(in srgb, black, var(--colour-lightgrey) 90%);
-        border-color: color-mix(in srgb, black, var(--colour-lightgrey) 80%);
-    }
 }
 
 #diagnosis-list {
@@ -749,7 +736,7 @@ clinic-diagnosis {
 
     --pill-colour: var(--colour-lightgrey);
     background-color: var(--pill-colour);
-    border: 2px solid lightgrey;
+    border: 2px solid color-mix(in srgb, black, var(--pill-colour) 85%);
     border-radius: 0.5rem;
 
     /* fix for border-radius not clipping when element is dragged */
@@ -1131,6 +1118,8 @@ fieldset.segmented-control {
     grid-auto-flow: row;
     gap: 0.5rem;
 
+    position: relative;
+
     ul.pill-list[beagle-bone-id] {
         display: grid;
         column-gap: var(--arrow-gutter-width);
@@ -1175,7 +1164,6 @@ fieldset.segmented-control {
             }
         }
     }
-}
 
     /* placeholder */
     &:not(:has(li[beagle-suggestion-name]))::after {
