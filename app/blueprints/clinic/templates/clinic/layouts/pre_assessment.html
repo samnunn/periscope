@@ -63,7 +63,7 @@
             {{ clinic_input(template="operation-freetext", classes="quintuple") }}
             <label>
                 <span>
-                    Risk
+                    Estimated Risk
                     <clinic-modal-popup>
                         <button class="infobutton" tabindex="-1"></button>
                         <template>
@@ -360,14 +360,27 @@
         <button tabindex="2" class="section-copy">Copy Section</button>
     </div>
     <div class="vstack">
-        <div class="hstack" style="grid-template-columns: 1fr 35ch; column-gap: calc(1.5 * var(--hstack-gap));">
+        <div class="hstack" style="grid-template-columns: 1fr 32ch; column-gap: calc(1.5 * var(--hstack-gap));">
             <div class="vstack">
                 {{ clinic_input(name="issues", type="textarea", label="Key Issues", prefix="self", classes="bigbox short autotall") }}
                 {{ clinic_input(name="plan", type="textarea", label="Anaesthetic Plan", prefix="self", classes="bigbox short autotall") }}
             </div>
-            <div class="vstack" id="pathology-summary">
+            <div class="vstack">
+                {{ clinic_input(template="patient-asa") }}
+                <label>
+                    <span>
+                        Estimated Risk
+                        <clinic-modal-popup>
+                            <button class="infobutton" tabindex="-1"></button>
+                            <template>
+                                <clinic-citation-snippet citation-id="esc-2022-severity"></clinic-citation-snippet>
+                            </template>
+                        </clinic-modal-popup>
+                    </span>
+                    {{ clinic_input(template="operation-risk", label_visible=False) }}
+                </label>
                 <div class="label-ish">
-                    <span> </span>
+                    <span> </span>
                     {{ clinic_input(name="summary-previous-anaesthesia", label="Prev. Anaesthesia", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
                     {{ clinic_input(name="summary-anaesthesia-issues", label="Anaesthesia Issues", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
                     {{ clinic_input(name="summary-anaesthesia-issues-fhx", label="Family History", type="radio", options=[("no", "❌"), ("unknown", "–"), ("yes", "✅")], default="unknown") }}
