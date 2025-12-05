@@ -34,7 +34,7 @@
     <span class="icon"><img src="{{ 'icons/colour_life_buoy.svg' | static_base64 }}"></span>
     <span class="left">Risk Profile</span>
 </li>
-<li title="Summary" role="button" scroll-target="summary">
+<li title="Summary" role="button" scroll-target="plan">
     <span class="icon"><img src="{{ 'icons/colour_check_circle.svg' | static_base64 }}"></span>
     <span class="left">Summary</span>
 </li>
@@ -352,8 +352,8 @@
     </div>
 </section>
 #}
-
-<section id="summary">
+<section id="summary" hidden></section>
+<section id="plan">
     <div class="section-topper">
         <img class="icon" src="{{ 'icons/colour_check_circle.svg' | static_base64 }}">
         <h2><mark class="grey">Summary</mark></h2>
@@ -362,7 +362,7 @@
     <div class="vstack">
         <div class="hstack" style="grid-template-columns: 1fr 35ch; column-gap: calc(1.5 * var(--hstack-gap));">
             <div class="vstack">
-                {{ clinic_input(name="issues", type="textarea", label="Issues List", prefix="self", classes="bigbox short autotall") }}
+                {{ clinic_input(name="issues", type="textarea", label="Key Issues", prefix="self", classes="bigbox short autotall") }}
                 {{ clinic_input(name="plan", type="textarea", label="Anaesthetic Plan", prefix="self", classes="bigbox short autotall") }}
             </div>
             <div class="vstack" id="pathology-summary">
