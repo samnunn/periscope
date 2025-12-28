@@ -338,15 +338,7 @@ footer {
 
 /* hide suggestions box when there are none */
 /* bit of an ugly selector, sigh */
-#suggestions {
-    display: none;
-}
-#suggestions:has([beagle-suggestion-name], #warnings > ul:not(.auto_hide)) {
-    display: block;
-}
-ul.auto_hide:not(:has([beagle-suggestion-name])) {
-    display: none;
-}
+
 .pill-list {
     display: grid;
     grid-template-columns: 1fr;
@@ -1183,6 +1175,16 @@ fieldset.segmented-control {
         text-wrap: balance;
         padding: 0 1rem;
     }
+}
+
+#suggestions {
+    display: none;
+}
+#suggestions:has([beagle-suggestion-name], #warnings > ul:not(.auto_hide)) {
+    display: block;
+}
+ul.auto_hide:not(:has([beagle-suggestion-name])) {
+    display: none !important;
 }
 
 label:has(fieldset.segmented-control) {
